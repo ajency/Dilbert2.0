@@ -1,0 +1,63 @@
+<div>
+	<div class="card">
+		<div class="item item-divider item-dark">
+   			Timeline
+  		</div>
+  		<div class="item item-text-wrap">
+			<div class='timeline'>
+
+				<div class='overflow-timeline'>
+					<ion-scroll direction="x" scrollbar-x="false" style="height:80px">
+						<div class='timeline-interval-region' style='height: auto; position: relative;min-width:1080px'>
+							
+							<div 
+								class='timeline-slot-region' 
+								ng-repeat="data in timeData" 
+								style="display:inline-flex" >
+								
+								<div class='slot-interval' ng-if="$index==0">
+									<div class="slot-interval-time first">{{getUnixTime(data.time)}}</div>
+								</div>
+								
+								<!-- <div ng-if="$index!==0" >{{renderTimeline(data.dataSlot,data.bgcolor,data.width)}}</div> -->
+								<div ng-if="$index!==0" data-slot='{{$index-1}}' class='slot' style='background-color: {{data.color}}; width:{{getSlotPercentage(data.time, $index)}}' ></div>
+
+								<div class='slot-interval' ng-if="$index!==0 && $index < timeData.length-1">
+									<div class="slot-interval-time">{{getUnixTime(data.time)}}</div>
+								</div>
+								<div class='slot-interval' ng-if="$index!==0 && $index >= timeData.length-1">
+									<div class="slot-interval-time last">{{getUnixTime(data.time)}}</div>
+								</div>							
+							</div>
+
+						</div>
+					</ion-scroll>
+				</div>
+
+			</div>
+  		</div>
+	</div>
+	
+	<div class="card">
+		<div class="item item-divider item-dark">
+   			Time Logs
+  		</div>
+		<div class='time-description'>
+
+		<div 
+			ng-repeat="time in timeData"
+			ng-if="$index!==0"
+			data-slot="{{$index-1}}" 
+			class='row slot item item-text-wrap' 
+			style='height:50px'
+			on-swipe-left='merge($event, $index-1)' 
+			on-swipe-right='split($event, $index-1)'>
+			
+			<div class='col slot' style='background:{{time.color}}' >
+				{{getSlotDifference($index)}}
+			</div>
+			<div class='col col-75' >{{timeData[$index-1].task}}</div>
+
+		</div>
+	</div>
+</div>

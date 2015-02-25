@@ -1,0 +1,16 @@
+total time will be got from server
+colors should depend on type
+
+Status
+---available
+---idle
+---offline
+
+Type
+ -break
+   ----Lunch
+   ----Gone out
+ -work
+   ----Project
+   ----Training
+   ----Fun Wednesday

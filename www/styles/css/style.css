@@ -1,0 +1,61 @@
+/* Empty. Add your own CSS if you like */
+.time-interval{
+	position: absolute;
+	display: inline-block;
+	width: 40px;
+	text-align: center;
+}
+.time-interval div{
+	position: absolute;
+	left: -15px;
+	}
+
+
+.timeline-slot-region .slot{
+		height: 60px;
+		display: inline-block;
+	}
+
+.timeline-slot-region .slot-interval{
+	display: inline-block;
+	position: absolute;
+	top: 26px;
+}
+.timeline-slot-region .slot-interval .slot-interval-time{
+	position: relative;
+	left: -18px;
+	margin-top:35px;
+}
+.timeline-slot-region .slot-interval .slot-interval-time.first{
+	left: 0px
+}
+.timeline-slot-region .slot-interval .slot-interval-time.last{
+	left: -36px
+}
+.time-interval{
+	position: absolute;
+	display: inline-block;
+	width: 40px;
+	text-align: center;
+}
+.time-interval div{
+	position: absolute;
+	left: -15px;
+}
+.time-interval{
+	position: absolute;
+	display: inline-block;
+	width: 40px;
+	text-align: center;
+}
+.time-interval div{
+	position: absolute;
+	left: -15px;
+}
+.timeline {
+	width:'100%';
+	overflow-x : 'hidden';
+}
+.overflow-timeline {
+	display:'inline-table';
+}

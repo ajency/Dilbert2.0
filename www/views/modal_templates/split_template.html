@@ -1,0 +1,38 @@
+<ion-modal-view>
+	<ion-header-bar class="bar bar-dark">
+		<h1 class="title">Split Time Slot</h1>
+		<div class="buttons">
+  			<button class="button button-clear icon ion-close " ng-click="closeModal('split')"></button>
+		</div>
+		</ion-header-bar>
+	<ion-content>
+		<div class="list list-inset">
+			<label class="item">
+				<span class="item-label">Start time: </span>
+				<span> {{displayStart}}</span>
+			</label>
+			<label class="item ">
+				<span class="item-label">End time: </span>
+				<span> {{displayEnd}}</span>
+			</label>
+			<label class="item">
+				<span class="item-label">Duration: </span>
+				<span> {{slotDuration}} minutes</span>
+			</label>
+			<label class="item">
+				<span class="item-label">Enter new slot time (in minutes): </span>
+				<input ng-model="newSlot" class="new-slot" type="number" maxlength="2" min="0">
+			</label>
+			<label class="item">
+				<span class="item-label">Task: </span>
+				<input ng-model="newTask" type="text">  
+			</label>
+			<label class="item item-radio">
+				<span class="item-label">Add new slot at: </span>
+    			<ion-radio ng-model="newSlotPosition" value="start">Start</ion-radio>
+    			<ion-radio ng-model="newSlotPosition" value="end">End</ion-radio>
+  			</label>
+  			<button class="button button-block button-balanced" ng-click="splitSlot(newSlot,newSlotPosition,newTask)">Split</button>
+		</div>
+	</ion-content>
+</ion-modal-view>
