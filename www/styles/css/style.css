@@ -14,6 +14,7 @@
 .timeline-slot-region .slot{
 		height: 60px;
 		display: inline-block;
+		border: 2px solid #FFFFFF;
 	}
 
 .timeline-slot-region .slot-interval{

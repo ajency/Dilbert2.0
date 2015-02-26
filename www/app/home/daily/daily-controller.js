@@ -73,11 +73,12 @@ angular.module('dilbert.home').controller('DailyController', [
       }
       newMomentUnix = newMoment.unix();
       if (newMomentUnix > $scope.slotStart && newMomentUnix < $scope.slotEnd) {
-        return $rootScope.slotData.push({
+        $rootScope.slotData.push({
           time: newMomentUnix,
           task: newTask,
-          color: '#000000'
+          status: 'available'
         });
+        return $scope.closeModal('split');
       }
     };
   }

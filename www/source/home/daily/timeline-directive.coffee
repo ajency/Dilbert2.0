@@ -11,9 +11,7 @@ angular.module 'daily.timeline.directive',[]
 		timeData = _.sortBy timeData, 'time'
 
 		scope.$watch 'slotData', (newValue)-> 
-			console.log 'From Watch'
 			console.log newValue
-			# scope.$apply ->
 			scope.timeData = _.sortBy newValue, 'time'
 			console.log scope.timeData
 		, true
@@ -52,9 +50,16 @@ angular.module 'daily.timeline.directive',[]
 			percentage = Math.floor(slotTime * pixelPerSecond)
 			"#{percentage}px"
 
+		scope.getTask = (index)->
+			task
+			if timeData[index].status is 'offline'
+				task='Break'
+			else
+				task=timeData[index].task
+			task
+
 		scope.getSlotDifference = (index)->
 			console.log 'getSlotDifference'
-		
 			slotStart = timeData[index-1].time	
 			slotEnd = timeData[index].time
 			duration = moment.unix(slotEnd).diff(slotStart*1000)

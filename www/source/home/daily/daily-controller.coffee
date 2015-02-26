@@ -82,6 +82,7 @@ angular.module 'dilbert.home'
  			$rootScope.slotData.push
  				time:newMomentUnix
  				task:newTask
- 				color: '#000000'
+ 				status:'available'
+ 			$scope.closeModal('split')
  		
 ]

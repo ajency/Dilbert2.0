@@ -8,7 +8,6 @@ angular.module('daily.timeline.directive', []).directive('timeLine', [
         timeData = scope.$eval(attrs.slotData);
         timeData = _.sortBy(timeData, 'time');
         scope.$watch('slotData', function(newValue) {
-          console.log('From Watch');
           console.log(newValue);
           scope.timeData = _.sortBy(newValue, 'time');
           return console.log(scope.timeData);
@@ -41,6 +40,16 @@ angular.module('daily.timeline.directive', []).directive('timeLine', [
           slotTime = time - timeData[index - 1].time;
           percentage = Math.floor(slotTime * pixelPerSecond);
           return "" + percentage + "px";
+        };
+        scope.getTask = function(index) {
+          task;
+          var task;
+          if (timeData[index].status === 'offline') {
+            task = 'Break';
+          } else {
+            task = timeData[index].task;
+          }
+          return task;
         };
         scope.getSlotDifference = function(index) {
           var diff, duration, slotEnd, slotStart;
