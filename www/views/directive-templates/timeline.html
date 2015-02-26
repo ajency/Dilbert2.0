@@ -16,21 +16,17 @@
 								style="display:inline-flex" >
 								
 								<div class='slot-interval' ng-if="$index==0">
-									<div class="slot-interval-time first">{{getUnixTime(timeData[$index].time)}}</div>
+									<div class="slot-interval-time first">{{ getUnixTime(timeData[$index].time) }}</div>
 								</div>
 								
-								<div 
-									ng-if="$index!==0" 
-									data-slot='{{$index-1}}' 
-									class='slot' 
-									style='background-color: {{getColor(timeData[$index].status)}}; width:{{getSlotPercentage(data.time, $index)}}' >
-								</div>
+								<!-- <div ng-if="$index!==0" >{{renderTimeline(data.dataSlot,data.bgcolor,data.width)}}</div> -->
+								<div ng-if="$index!==0" data-slot='{{$index-1}}' class='slot' style='background-color: {{getColor(timeData[$index].status)}}; width:{{getSlotPercentage(data.time, $index)}}' ></div>
 
 								<div class='slot-interval' ng-if="$index!==0 && $index < timeData.length-1">
-									<div class="slot-interval-time">{{getUnixTime(data.time)}}</div>
+									<div class="slot-interval-time">{{ getUnixTime(timeData[$index].time )}}</div>
 								</div>
 								<div class='slot-interval' ng-if="$index!==0 && $index >= timeData.length-1">
-									<div class="slot-interval-time last">{{getUnixTime(data.time)}}</div>
+									<div class="slot-interval-time last">{{ getUnixTime(timeData[$index].time) }}</div>
 								</div>							
 							</div>
 
@@ -47,21 +43,24 @@
    			Time Logs
   		</div>
 
-		<label class="item item-input item-select">
-	    	<div class="input-label">
-	      		Filter
-	    	</div>
-			<select ng-model="filterStatus">
-				<option value="available">Available</option>
-				<option value="idle">Idle</option>
-				<option value="offline">Offline</option>
-			</select>
-		</label>
+<!-- 		<label class="item item-input item-select">
+    	<div class="input-label">
+      		Filter
+    	</div>
+		<select ng-model="filterStatus">
+			<option value="available" selected>All</option>
+		     <option value="available">Available</option>
+		     <option value="idle">Idle</option>
+		     <option value="offline">Offline</option>
+		</select>
+		</label> -->
+
 
 		<div 
-			ng-repeat="time in timeData | filter:filterStatus"
+			ng-repeat="time in timeData"
 			ng-if="$index!==0"
-			data-slot="{{$index-1}}" 
+			data-slot="{{$index-1}}"
+			status="{{timeData[$index].status}}" 
 			class='row slot item item-text-wrap' 
 			style='height:50px'
 			on-swipe-left='merge($event, $index-1)' 
@@ -70,11 +69,9 @@
 			<div class='col slot' style='background:{{getColor(timeData[$index].status)}}' >
 				{{ getSlotDifference($index) }}
 			</div>
-			<!-- <div class='col col-75'>{{getTask($index)}}</div> -->
-			<div class='col col-75'>{{time.status}}</div>
+			<div class='col col-75'>{{getTask($index)}}</div>
+			<!-- <div class='col col-75'>{{time.status}}</div> -->
 
 		</div>
 	</div>
 </div>
-
-

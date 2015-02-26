@@ -29,7 +29,7 @@
 			</label>
 			<label class="item item-radio">
 				<span class="item-label">Add new slot at: </span>
-    			<ion-radio ng-model="newSlotPosition" value="start">Start</ion-radio>
+    			<ion-radio ng-model="newSlotPosition" ng-value="start">Start</ion-radio>
     			<ion-radio ng-model="newSlotPosition" value="end">End</ion-radio>
   			</label>
   			<button class="button button-block button-balanced" ng-click="splitSlot(newSlot,newSlotPosition,newTask)">Split</button>

@@ -51,6 +51,7 @@ angular.module('dilbert.home').controller('DailyController', [
         return;
       }
       slotNo = parseInt($(e.target).attr('data-slot'));
+      $scope.status = $(e.target).attr('status');
       $scope.slotStart = $scope.slotData[slotNo].time;
       $scope.slotEnd = $scope.slotData[slotNo + 1].time;
       $scope.displayStart = moment.unix($scope.slotStart).format('h:mm a');
@@ -78,7 +79,7 @@ angular.module('dilbert.home').controller('DailyController', [
         $rootScope.slotData.push({
           time: newMomentUnix,
           task: newTask,
-          status: 'available'
+          status: $scope.status
         });
         return $scope.closeModal('split');
       }
