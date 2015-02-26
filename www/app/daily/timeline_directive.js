@@ -1,10 +1,10 @@
-angular.module('daily.timeline.directive', []).directive('timeLine', [
+angular.module('dilbert.home').directive('timeLine', [
   '$rootScope', '$parse', '$compile', function($rootScope, $parse, $compile) {
     return {
       restrict: 'E',
       templateUrl: "views/directive_templates/timeline.html",
       link: function(scope, elem, attrs) {
-        var getEndTime, getStartTime, i, pixelPerSecond, pps, ppsTotal, shortestSlot, time, timeData, timeLineIntervalRegionWidth, _i, _len;
+        var i, pixelPerSecond, pps, ppsTotal, shortestSlot, time, timeData, timeLineWidth, _i, _len;
         timeData = scope.$eval(attrs.slotData);
         timeData = _.sortBy(timeData, 'time');
         scope.$watch('slotData', function(newValue) {
@@ -12,7 +12,7 @@ angular.module('daily.timeline.directive', []).directive('timeLine', [
           console.log(newValue);
           return scope.timeData = _.sortBy(newValue, 'time');
         }, true);
-        timeLineIntervalRegionWidth = $(elem).find('.timeline-interval-region').width();
+        timeLineWidth = $(elem).find('.timeline-interval-region').width();
         shortestSlot = 100000;
         for (i = _i = 0, _len = timeData.length; _i < _len; i = ++_i) {
           time = timeData[i];
@@ -24,14 +24,8 @@ angular.module('daily.timeline.directive', []).directive('timeLine', [
           }
         }
         pps = 40 / shortestSlot;
-        ppsTotal = timeLineIntervalRegionWidth / (timeData[timeData.length - 1].time - timeData[0].time);
+        ppsTotal = timeLineWidth / (timeData[timeData.length - 1].time - timeData[0].time);
         pixelPerSecond = pps > ppsTotal ? pps : ppsTotal;
-        getStartTime = function() {
-          return _.first(timeData).time;
-        };
-        getEndTime = function() {
-          return _.last(timeData).time;
-        };
         scope.getUnixTime = function(time) {
           return moment.unix(time).format('H:mm');
         };

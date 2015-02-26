@@ -1,11 +1,5 @@
 angular.module 'dilbert.home', []
 
-.controller 'HomeController', ['$scope', ($scope)->
-
-
-
-]
-
 
 .config ['$stateProvider', ($stateProvider)->
 
@@ -16,7 +10,6 @@ angular.module 'dilbert.home', []
 			parent: 'main'
 			views:
 				"mainContent":
-					controller: 'HomeController'
 					templateUrl: 'views/home.html'
 
 		.state "daily",

@@ -1,8 +1,8 @@
-#Project name
+#Dilbert
 
-#TODO: Make proper use of coffee script
+angular.module "dilbert", ["ionic" 
+	,"dilbert.login", "dilbert.home"]
 
-angular.module "dilbert", ["ionic", "dilbert.login", "dilbert.home", "daily.controller","daily.timeline.directive"]
 
 .run ['$ionicPlatform', '$rootScope', '$ionicPopup', ($ionicPlatform, $rootScope, $ionicPopup)->
 
@@ -26,6 +26,7 @@ angular.module "dilbert", ["ionic", "dilbert.login", "dilbert.home", "daily.cont
 			else 
 				console.log "Internet Connected"
 ]
+
 
 .config ($stateProvider, $urlRouterProvider) ->
 

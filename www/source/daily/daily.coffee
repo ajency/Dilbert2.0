@@ -1,4 +1,6 @@
-angular.module('daily.controller',[])
+angular.module 'dilbert.home'
+
+
 .controller 'DailyController',['$rootScope','$scope','$ionicModal','$ionicPopup',($rootScope,$scope,$ionicModal,$ionicPopup)->
 	times = [1422523800
 			1422526800

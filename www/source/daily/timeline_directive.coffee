@@ -1,4 +1,6 @@
-angular.module('daily.timeline.directive',[])
+angular.module 'dilbert.home'
+
+
 .directive 'timeLine', ['$rootScope','$parse', '$compile' ,($rootScope,$parse , $compile)->
 
 	restrict:'E'
@@ -12,35 +14,24 @@ angular.module('daily.timeline.directive',[])
 		scope.$watch 'slotData', (newValue)-> 
 			console.log 'From Watch'
 			console.log newValue
-			# scope.$apply ->
 			scope.timeData = _.sortBy newValue, 'time'
 		, true
 
-		timeLineIntervalRegionWidth = $ elem
-										.find '.timeline-interval-region'
-										.width()
+		timeLineWidth = $ elem
+							.find '.timeline-interval-region'
+							.width()
 
 		
-		#Pixel per windows
+		#Pixel per second
 		shortestSlot = 100000
 		for time,i in timeData
 			if i is 0 then continue
 			if shortestSlot > time - timeData[i-1].time
 				shortestSlot = time - timeData[i-1].time
 		pps = 40/shortestSlot
-		ppsTotal = timeLineIntervalRegionWidth/(timeData[timeData.length-1].time-timeData[0].time)
+		ppsTotal = timeLineWidth/(timeData[timeData.length-1].time-timeData[0].time)
 		pixelPerSecond = if pps > ppsTotal then pps else ppsTotal
 
-		
-
-		
-		getStartTime = ->
-			_.first timeData
-			.time
-
-		getEndTime = ->
-			_.last timeData
-			.time
 
 		scope.getUnixTime = (time)->
 			moment.unix(time).format 'H:mm'
@@ -65,3 +56,4 @@ angular.module('daily.timeline.directive',[])
 
 			diff
 ]
+
