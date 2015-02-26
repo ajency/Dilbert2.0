@@ -1,4 +1,4 @@
-angular.module('daily.service', []).service('DailyService', [
+angular.module('daily.service', []).factory('DailyService', [
   '$http', '$scope', function($http, $scope) {
     var timeLogs;
     $scope.data = [
@@ -36,8 +36,10 @@ angular.module('daily.service', []).service('DailyService', [
         }
       ]
     ];
-    return this.getDailyData = function() {
-      return $scope.data;
+    return {
+      getDailyData: function() {
+        return $scope.data;
+      }
     };
   }
 ]);

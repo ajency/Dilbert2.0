@@ -1,5 +1,5 @@
 angular.module('daily.service',[])
-.service 'DailyService',['$http','$scope',($http,$scope)->
+.factory 'DailyService',['$http','$scope',($http,$scope)->
 	$scope.data =[
 		starttime:1422523800
 		timeLogs=[
@@ -41,7 +41,7 @@ angular.module('daily.service',[])
 		]
 
 	]
-	@.getDailyData=()->
+	getDailyData:()->
 		$scope.data
 
 ]
