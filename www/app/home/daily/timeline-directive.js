@@ -9,7 +9,8 @@ angular.module('dilbert.home').directive('timeLine', [
         timeData = _.sortBy(timeData, 'time');
         scope.$watch('slotData', function(newValue) {
           console.log(newValue);
-          scope.timeData = _.sortBy(newValue, 'time');
+          timeData = _.sortBy(newValue, 'time');
+          scope.timeData = timeData;
           return console.log(scope.timeData);
         }, true);
         timeLineIntervalRegionWidth = $(elem).find('.timeline-interval-region').width();

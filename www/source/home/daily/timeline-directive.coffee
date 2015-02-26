@@ -12,7 +12,8 @@ angular.module 'dilbert.home'
 
 		scope.$watch 'slotData', (newValue)-> 
 			console.log newValue
-			scope.timeData = _.sortBy newValue, 'time'
+			timeData = _.sortBy newValue, 'time'
+			scope.timeData = timeData
 			console.log scope.timeData
 		, true
 
