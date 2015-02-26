@@ -14,6 +14,7 @@ angular.module('daily.timeline.directive',[])
 			console.log newValue
 			# scope.$apply ->
 			scope.timeData = _.sortBy newValue, 'time'
+			console.log scope.timeData
 		, true
 
 		timeLineIntervalRegionWidth = $ elem
@@ -36,11 +37,11 @@ angular.module('daily.timeline.directive',[])
 		
 		getStartTime = ->
 			_.first timeData
-			.time
+			.starttime
 
 		getEndTime = ->
 			_.last timeData
-			.time
+			.endtime
 
 		scope.getUnixTime = (time)->
 			moment.unix(time).format 'H:mm'
@@ -52,7 +53,8 @@ angular.module('daily.timeline.directive',[])
 
 		scope.getSlotDifference = (index)->
 			console.log 'getSlotDifference'
-			slotStart = timeData[index-1].time
+		
+			slotStart = timeData[index-1].time	
 			slotEnd = timeData[index].time
 			duration = moment.unix(slotEnd).diff(slotStart*1000)
 			diff = ''
@@ -64,4 +66,17 @@ angular.module('daily.timeline.directive',[])
 				diff += "#{moment.duration(duration).minutes()} min"
 
 			diff
-]
+
+		scope.getColor=(status)->
+			color
+			if status is 'available'
+				color = '#468966'
+
+			else if status is 'idle'	
+				color = '#FFB03B'
+
+			else 
+				color = '#4B4E50'
+
+			color	
+]			

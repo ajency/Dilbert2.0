@@ -10,7 +10,8 @@ angular.module('daily.timeline.directive', []).directive('timeLine', [
         scope.$watch('slotData', function(newValue) {
           console.log('From Watch');
           console.log(newValue);
-          return scope.timeData = _.sortBy(newValue, 'time');
+          scope.timeData = _.sortBy(newValue, 'time');
+          return console.log(scope.timeData);
         }, true);
         timeLineIntervalRegionWidth = $(elem).find('.timeline-interval-region').width();
         shortestSlot = 100000;
@@ -27,10 +28,10 @@ angular.module('daily.timeline.directive', []).directive('timeLine', [
         ppsTotal = timeLineIntervalRegionWidth / (timeData[timeData.length - 1].time - timeData[0].time);
         pixelPerSecond = pps > ppsTotal ? pps : ppsTotal;
         getStartTime = function() {
-          return _.first(timeData).time;
+          return _.first(timeData).starttime;
         };
         getEndTime = function() {
-          return _.last(timeData).time;
+          return _.last(timeData).endtime;
         };
         scope.getUnixTime = function(time) {
           return moment.unix(time).format('H:mm');
@@ -41,7 +42,7 @@ angular.module('daily.timeline.directive', []).directive('timeLine', [
           percentage = Math.floor(slotTime * pixelPerSecond);
           return "" + percentage + "px";
         };
-        return scope.getSlotDifference = function(index) {
+        scope.getSlotDifference = function(index) {
           var diff, duration, slotEnd, slotStart;
           console.log('getSlotDifference');
           slotStart = timeData[index - 1].time;
@@ -58,6 +59,18 @@ angular.module('daily.timeline.directive', []).directive('timeLine', [
             diff += "" + (moment.duration(duration).minutes()) + " min";
           }
           return diff;
+        };
+        return scope.getColor = function(status) {
+          color;
+          var color;
+          if (status === 'available') {
+            color = '#468966';
+          } else if (status === 'idle') {
+            color = '#FFB03B';
+          } else {
+            color = '#4B4E50';
+          }
+          return color;
         };
       }
     };
