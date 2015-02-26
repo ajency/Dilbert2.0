@@ -3,14 +3,12 @@ angular.module 'dilbert.home'
 
 .controller 'DailyController',['$rootScope','$scope','$ionicModal','$ionicPopup','DailyAPI'
 	,($rootScope,$scope,$ionicModal,$ionicPopup,DailyAPI)->
-	
 
-
-		$rootScope.slotData=[]
+		$rootScope.slotData = []
 
 		DailyAPI.getDailyData()
 		.then (dailyData)->
-			$rootScope.slotData=dailyData
+			$rootScope.slotData = dailyData
 			$scope.duration = $rootScope.slotData[0].duration
 
 		$scope.getCurrentDate = ->
@@ -89,3 +87,4 @@ angular.module 'dilbert.home'
  	
  		
 ]
+

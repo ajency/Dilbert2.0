@@ -10,38 +10,28 @@ angular.module 'dilbert.home'
 		timeData = scope.$eval(attrs.slotData)
 		timeData = _.sortBy timeData, 'time'
 
-		scope.$watch 'slotData', (newValue)-> 
+		scope.$watch attrs.slotData, (newValue)-> 
 			console.log newValue
-			scope.timeData = _.sortBy newValue, 'time'
-			console.log scope.timeData
+			timeData = _.sortBy newValue, 'time'
+			scope.timeData = timeData
 		, true
 
-		timeLineIntervalRegionWidth = $ elem
-										.find '.timeline-interval-region'
-										.width()
+		timeLineWidth = $ elem
+						.find '.timeline-interval-region'
+						.width()
 
 		
-		#Pixel per windows
+		#Pixel per second
 		shortestSlot = 100000
 		for time,i in timeData
 			if i is 0 then continue
 			if shortestSlot > time - timeData[i-1].time
 				shortestSlot = time - timeData[i-1].time
 		pps = 40/shortestSlot
-		ppsTotal = timeLineIntervalRegionWidth/(timeData[timeData.length-1].time-timeData[0].time)
+		ppsTotal = timeLineWidth/(timeData[timeData.length-1].time-timeData[0].time)
 		pixelPerSecond = if pps > ppsTotal then pps else ppsTotal
 
 		
-
-		
-		getStartTime = ->
-			_.first timeData
-			.starttime
-
-		getEndTime = ->
-			_.last timeData
-			.endtime
-
 		scope.getUnixTime = (time)->
 			moment.unix(time).format 'H:mm'
 
@@ -51,15 +41,13 @@ angular.module 'dilbert.home'
 			"#{percentage}px"
 
 		scope.getTask = (index)->
-			task
 			if timeData[index].status is 'offline'
-				task='Break'
+				task = 'Break'
 			else
-				task=timeData[index].task
+				task = timeData[index].task
 			task
 
 		scope.getSlotDifference = (index)->
-			# console.log 'getSlotDifference'
 			slotStart = timeData[index-1].time	
 			slotEnd = timeData[index].time
 			duration = moment.unix(slotEnd).diff(slotStart*1000)
@@ -74,7 +62,6 @@ angular.module 'dilbert.home'
 			diff
 
 		scope.getColor=(status)->
-			color
 			if status is 'available'
 				color = '#468966'
 
@@ -87,3 +74,4 @@ angular.module 'dilbert.home'
 			color
 
 ]
+

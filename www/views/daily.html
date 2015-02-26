@@ -1,14 +1,17 @@
-<ion-view view-title="Daily - {{getCurrentDate()}}" ng-init="refresh()">
+<ion-view view-title="Daily - {{getCurrentDate()}}">
+
 	<ion-nav-buttons side="right">
-      <button class="button button-clear icon ion-calendar " ng-click="openModal('calendar')"></button>
-    </ion-nav-buttons>
-  <ion-content class="padding">
-  <br>
-	<div class="card">
+		<button class="button button-clear icon ion-calendar " ng-click="openModal('calendar')"></button>
+	</ion-nav-buttons>
+
+	<ion-content class="padding">
+	
+		<div class="card">
 		<div class="item">Total hours: {{duration}}</div>
-	</div>
+		</div>
 
-	<time-line slot-data="slotData"></time-line>
+		<time-line slot-data="slotData"></time-line>
 
-  </ion-content>
+	</ion-content>
+
 </ion-view>

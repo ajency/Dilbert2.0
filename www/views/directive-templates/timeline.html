@@ -19,8 +19,12 @@
 									<div class="slot-interval-time first">{{getUnixTime(timeData[$index].time)}}</div>
 								</div>
 								
-								<!-- <div ng-if="$index!==0" >{{renderTimeline(data.dataSlot,data.bgcolor,data.width)}}</div> -->
-								<div ng-if="$index!==0" data-slot='{{$index-1}}' class='slot' style='background-color: {{getColor(timeData[$index].status)}}; width:{{getSlotPercentage(data.time, $index)}}' ></div>
+								<div 
+									ng-if="$index!==0" 
+									data-slot='{{$index-1}}' 
+									class='slot' 
+									style='background-color: {{getColor(timeData[$index].status)}}; width:{{getSlotPercentage(data.time, $index)}}' >
+								</div>
 
 								<div class='slot-interval' ng-if="$index!==0 && $index < timeData.length-1">
 									<div class="slot-interval-time">{{getUnixTime(data.time)}}</div>
@@ -44,16 +48,15 @@
   		</div>
 
 		<label class="item item-input item-select">
-    	<div class="input-label">
-      		Filter
-    	</div>
-		<select ng-model="filterStatus">
-		      <option value="available">Available</option>
-		      <option selected value="idle">Idle</option>
-		      <option value="offline">Offline</option>
-		</select>
+	    	<div class="input-label">
+	      		Filter
+	    	</div>
+			<select ng-model="filterStatus">
+				<option value="available">Available</option>
+				<option value="idle">Idle</option>
+				<option value="offline">Offline</option>
+			</select>
 		</label>
-
 
 		<div 
 			ng-repeat="time in timeData | filter:filterStatus"
@@ -73,3 +76,5 @@
 		</div>
 	</div>
 </div>
+
+
