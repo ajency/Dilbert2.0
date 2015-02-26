@@ -1,17 +1,16 @@
 angular.module('dilbert.home').directive('timeLine', [
-  '$rootScope', '$parse', '$compile', function($rootScope, $parse, $compile) {
+  '$rootScope', '$parse', function($rootScope, $parse) {
     return {
       restrict: 'E',
       templateUrl: "views/directive_templates/timeline.html",
+      scope: {
+        slotData: '='
+      },
       link: function(scope, elem, attrs) {
         var i, pixelPerSecond, pps, ppsTotal, shortestSlot, time, timeData, timeLineWidth, _i, _len;
-        timeData = scope.$eval(attrs.slotData);
-        timeData = _.sortBy(timeData, 'time');
-        scope.$watch('slotData', function(newValue) {
-          console.log('From Watch');
-          console.log(newValue);
-          return scope.timeData = _.sortBy(newValue, 'time');
-        }, true);
+        timeData = scope.slotData;
+        console.log(timeData);
+        scope.timeData = _.sortBy(timeData, 'time');
         timeLineWidth = $(elem).find('.timeline-interval-region').width();
         shortestSlot = 100000;
         for (i = _i = 0, _len = timeData.length; _i < _len; i = ++_i) {

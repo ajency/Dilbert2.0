@@ -1,21 +1,18 @@
 angular.module 'dilbert.home'
 
 
-.directive 'timeLine', ['$rootScope','$parse', '$compile' ,($rootScope,$parse , $compile)->
+.directive 'timeLine', ['$rootScope', '$parse', ($rootScope, $parse)->
 
 	restrict:'E'
 	templateUrl:"views/directive_templates/timeline.html"
+	scope: 
+		slotData: '='
 
 	link: (scope, elem, attrs)->
 
-		timeData = scope.$eval(attrs.slotData)
-		timeData = _.sortBy timeData, 'time'
-
-		scope.$watch 'slotData', (newValue)-> 
-			console.log 'From Watch'
-			console.log newValue
-			scope.timeData = _.sortBy newValue, 'time'
-		, true
+		timeData = scope.slotData
+		console.log timeData
+		scope.timeData = _.sortBy timeData, 'time'
 
 		timeLineWidth = $ elem
 							.find '.timeline-interval-region'
@@ -55,5 +52,11 @@ angular.module 'dilbert.home'
 				diff += "#{moment.duration(duration).minutes()} min"
 
 			diff
+
+		# scope.$watch 'slotData', (newValue)-> 
+		# 	console.log 'From Watch'
+		# 	console.log newValue
+		# 	scope.timeData = _.sortBy newValue, 'time'
+		# , true
 ]
 
