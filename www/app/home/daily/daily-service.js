@@ -1,7 +1,6 @@
-angular.module('daily.service', []).factory('DailyService', [
-  '$http', function($http) {
-    var data, factory;
-    factory = {};
+angular.module('dilbert.home').factory('DailyAPI', [
+  '$q', '$timeout', function($q, $timeout) {
+    var DailyAPI, data;
     data = [
       {
         time: 1422523800,
@@ -36,9 +35,15 @@ angular.module('daily.service', []).factory('DailyService', [
         time: 1422552600
       }
     ];
-    factory.getDailyData = function() {
-      return data;
+    return DailyAPI = {
+      getDailyData: function() {
+        var q;
+        q = $q.defer();
+        $timeout(function() {
+          return q.resolve(data);
+        });
+        return q.promise;
+      }
     };
-    return factory;
   }
 ]);

@@ -1,30 +1,32 @@
 #Dilbert
-
 angular.module "dilbert", ["ionic" 
-	,"dilbert.login", "dilbert.home", "daily.service","daily.timeline.directive"]
+	,"dilbert.login", "dilbert.home"]
 
 
-.run ['$ionicPlatform', '$rootScope', '$ionicPopup', ($ionicPlatform, $rootScope, $ionicPopup)->
+.run ['$ionicPlatform', '$rootScope', '$ionicPopup'
+	, ($ionicPlatform, $rootScope, $ionicPopup)->
 
+		#Initialize $rootScope variables
+		$rootScope.slotData = []
 
-	$ionicPlatform.ready ->
-		if window.cordova and window.cordova.plugins.Keyboard
-			cordova.plugins.Keyboard.hideKeyboardAccessoryBar true
+		$ionicPlatform.ready ->
+			if window.cordova and window.cordova.plugins.Keyboard
+				cordova.plugins.Keyboard.hideKeyboardAccessoryBar true
 
-		StatusBar.styleDefault()  if window.StatusBar
+			StatusBar.styleDefault()  if window.StatusBar
 
-		if window.connection
-			if navigator.connection.type is Connection.NONE
-				$ionicPopup.confirm (
-						title: "Internet Disconnected"
-						content: "Please connect to the internet and try again"
-					)
-				.then (result)->
-						if !result
-							ionic.Platform.exitApp
-					
-			else 
-				console.log "Internet Connected"
+			if window.connection
+				if navigator.connection.type is Connection.NONE
+					$ionicPopup.confirm (
+							title: "Internet Disconnected"
+							content: "Please connect to the internet and try again"
+						)
+					.then (result)->
+							if !result
+								ionic.Platform.exitApp
+						
+				else 
+					console.log "Internet Connected"
 ]
 
 

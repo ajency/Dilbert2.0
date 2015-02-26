@@ -1,6 +1,8 @@
-angular.module 'daily.service',[] 
-.factory 'DailyService',['$http',($http)->
-	factory={}
+angular.module 'dilbert.home'
+
+
+.factory 'DailyAPI', ['$q', '$timeout', ($q, $timeout)->
+
 	data =[
 		{
 			time:1422523800
@@ -43,9 +45,18 @@ angular.module 'daily.service',[]
 		}					
 
 	]
-	
-	factory.getDailyData=()->
-		data
 
-	factory
+	DailyAPI = 
+
+		getDailyData : ->
+
+			q = $q.defer()
+
+			$timeout ->
+				q.resolve data
+			# , 1500
+
+			q.promise
+
 ]
+
