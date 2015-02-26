@@ -1,4 +1,4 @@
-angular.module('daily.service',[])
+angular.module 'daily.service',[] 
 .factory 'DailyService',['$http',($http)->
 	factory={}
 	data =[

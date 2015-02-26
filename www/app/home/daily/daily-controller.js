@@ -1,4 +1,4 @@
-angular.module('daily.home').controller('DailyController', [
+angular.module('dilbert.home').controller('DailyController', [
   '$rootScope', '$scope', '$ionicModal', '$ionicPopup', 'DailyService', function($rootScope, $scope, $ionicModal, $ionicPopup, DailyService) {
     $rootScope.slotData = [];
     $rootScope.slotData = DailyService.getDailyData();
@@ -6,12 +6,12 @@ angular.module('daily.home').controller('DailyController', [
     $scope.getCurrentDate = function() {
       return moment().format("ddd MMM Do YYYY");
     };
-    $ionicModal.fromTemplateUrl('views/modal_templates/calender_template.html', {
+    $ionicModal.fromTemplateUrl('views/modal-templates/calender-template.html', {
       scope: $scope
     }).then(function(modal) {
       return $scope.calModal = modal;
     });
-    $ionicModal.fromTemplateUrl('views/modal_templates/split_template.html', {
+    $ionicModal.fromTemplateUrl('views/modal-templates/split-template.html', {
       backdrop: true,
       scope: $scope
     }).then(function(modal) {

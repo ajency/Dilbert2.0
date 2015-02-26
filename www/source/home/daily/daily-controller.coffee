@@ -1,4 +1,4 @@
-angular.module 'daily.home'
+angular.module 'dilbert.home'
 
 
 .controller 'DailyController',['$rootScope','$scope','$ionicModal','$ionicPopup','DailyService',($rootScope,$scope,$ionicModal,$ionicPopup,DailyService)->
@@ -14,12 +14,12 @@ angular.module 'daily.home'
 	$scope.getCurrentDate = ->
 		moment().format("ddd MMM Do YYYY");
 
-	$ionicModal.fromTemplateUrl 'views/modal_templates/calender_template.html',
+	$ionicModal.fromTemplateUrl 'views/modal-templates/calender-template.html',
 		scope:$scope
 	.then (modal)->
 		$scope.calModal = modal
 
-	$ionicModal.fromTemplateUrl 'views/modal_templates/split_template.html',
+	$ionicModal.fromTemplateUrl 'views/modal-templates/split-template.html',
 		backdrop: true
 		scope:$scope
 	.then (modal)->
