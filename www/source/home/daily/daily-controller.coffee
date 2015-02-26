@@ -1,4 +1,4 @@
-angular.module 'daily.home'
+angular.module 'dilbert.home'
 
 
 .controller 'DailyController',['$rootScope','$scope','$ionicModal','$ionicPopup','DailyService',($rootScope,$scope,$ionicModal,$ionicPopup,DailyService)->
@@ -6,32 +6,20 @@ angular.module 'daily.home'
 
 
 	$rootScope.slotData=[]
-	len=times.length-1
-	end=moment.duration(moment.unix(times[len]))
-	start=moment.duration(moment.unix(times[0]))
-	$scope.duration = moment.duration(end.subtract(start)).asHours()
 
-	recievedData=DailyService.getDailyData()
-	recievedData.then(
-          (payload)->
-             $rootScope.slotData = payload.data;
-             console.log $rootScope.slotData
 
-          ,
-          (errorPayload)->
-              $log.error 'failure fetching data', errorPayload
-	)
-
+	$rootScope.slotData=DailyService.getDailyData()
+	$scope.duration = $rootScope.slotData[0].duration
 
 	$scope.getCurrentDate = ->
 		moment().format("ddd MMM Do YYYY");
 
-	$ionicModal.fromTemplateUrl 'views/modal_templates/calender_template.html',
+	$ionicModal.fromTemplateUrl 'views/modal-templates/calender-template.html',
 		scope:$scope
 	.then (modal)->
 		$scope.calModal = modal
 
-	$ionicModal.fromTemplateUrl 'views/modal_templates/split_template.html',
+	$ionicModal.fromTemplateUrl 'views/modal-templates/split-template.html',
 		backdrop: true
 		scope:$scope
 	.then (modal)->

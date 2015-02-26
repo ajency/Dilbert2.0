@@ -13,14 +13,14 @@
 							<div 
 								class='timeline-slot-region' 
 								ng-repeat="data in timeData" 
-								style="display:inline-flex">
+								style="display:inline-flex" >
 								
 								<div class='slot-interval' ng-if="$index==0">
-									<div class="slot-interval-time first">{{getUnixTime(data.time)}}</div>
+									<div class="slot-interval-time first">{{getUnixTime(timeData[$index].time)}}</div>
 								</div>
 								
 								<!-- <div ng-if="$index!==0" >{{renderTimeline(data.dataSlot,data.bgcolor,data.width)}}</div> -->
-								<div ng-if="$index!==0" data-slot='{{$index-1}}' class='slot' style='background-color: {{timeData[$index-1].color}}; width:{{getSlotPercentage(data.time, $index)}}' ></div>
+								<div ng-if="$index!==0" data-slot='{{$index-1}}' class='slot' style='background-color: {{getColor(timeData[$index].status)}}; width:{{getSlotPercentage(data.time, $index)}}' ></div>
 
 								<div class='slot-interval' ng-if="$index!==0 && $index < timeData.length-1">
 									<div class="slot-interval-time">{{getUnixTime(data.time)}}</div>
@@ -44,23 +44,20 @@
   		</div>
 		<div class='time-description'>
 
-			<div 
-				ng-repeat="time in timeData"
-				ng-if="$index!==0"
-				data-slot="{{$index-1}}" 
-				class='row slot item item-text-wrap' 
-				style='height:50px'
-				on-swipe-left='merge($event, $index-1)' 
-				on-swipe-right='split($event, $index-1)'>
-				
-				<div class='col slot' style='background:{{timeData[$index-1].color}}' >
-					{{getSlotDifference($index)}}
-				</div>
-
-				<div class='col col-75' >{{timeData[$index-1].task}}</div>
+		<div 
+			ng-repeat="time in timeData"
+			ng-if="$index!==0"
+			data-slot="{{$index-1}}" 
+			class='row slot item item-text-wrap' 
+			style='height:50px'
+			on-swipe-left='merge($event, $index-1)' 
+			on-swipe-right='split($event, $index-1)'>
+			
+			<div class='col slot' style='background:{{getColor(timeData[$index].status)}}' >
+				{{getSlotDifference($index)}}
 			</div>
+			<div class='col col-75' >{{timeData[$index].task}}</div>
 
 		</div>
 	</div>
 </div>
-

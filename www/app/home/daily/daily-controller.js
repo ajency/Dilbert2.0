@@ -1,27 +1,17 @@
-angular.module('daily.home').controller('DailyController', [
+angular.module('dilbert.home').controller('DailyController', [
   '$rootScope', '$scope', '$ionicModal', '$ionicPopup', 'DailyService', function($rootScope, $scope, $ionicModal, $ionicPopup, DailyService) {
-    var end, len, recievedData, start;
     $rootScope.slotData = [];
-    len = times.length - 1;
-    end = moment.duration(moment.unix(times[len]));
-    start = moment.duration(moment.unix(times[0]));
-    $scope.duration = moment.duration(end.subtract(start)).asHours();
-    recievedData = DailyService.getDailyData();
-    recievedData.then(function(payload) {
-      $rootScope.slotData = payload.data;
-      return console.log($rootScope.slotData);
-    }, function(errorPayload) {
-      return $log.error('failure fetching data', errorPayload);
-    });
+    $rootScope.slotData = DailyService.getDailyData();
+    $scope.duration = $rootScope.slotData[0].duration;
     $scope.getCurrentDate = function() {
       return moment().format("ddd MMM Do YYYY");
     };
-    $ionicModal.fromTemplateUrl('views/modal_templates/calender_template.html', {
+    $ionicModal.fromTemplateUrl('views/modal-templates/calender-template.html', {
       scope: $scope
     }).then(function(modal) {
       return $scope.calModal = modal;
     });
-    $ionicModal.fromTemplateUrl('views/modal_templates/split_template.html', {
+    $ionicModal.fromTemplateUrl('views/modal-templates/split-template.html', {
       backdrop: true,
       scope: $scope
     }).then(function(modal) {
