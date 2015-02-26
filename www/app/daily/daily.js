@@ -1,4 +1,4 @@
-angular.module('daily.controller', []).controller('DailyController', [
+angular.module('dilbert.home').controller('DailyController', [
   '$rootScope', '$scope', '$ionicModal', '$ionicPopup', function($rootScope, $scope, $ionicModal, $ionicPopup) {
     var colors, end, i, len, start, tasks, times, _i, _ref;
     times = [1422523800, 1422526800, 1422528000, 1422534600, 1422538200, 1422541800, 1422546400, 1422552600];

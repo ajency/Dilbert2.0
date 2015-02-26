@@ -1,11 +1,10 @@
-angular.module('dilbert.home', []).controller('HomeController', ['$scope', function($scope) {}]).config([
+angular.module('dilbert.home', []).config([
   '$stateProvider', function($stateProvider) {
     return $stateProvider.state('home', {
       url: '/home',
       parent: 'main',
       views: {
         "mainContent": {
-          controller: 'HomeController',
           templateUrl: 'views/home.html'
         }
       }

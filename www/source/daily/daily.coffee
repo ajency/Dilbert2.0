@@ -1,15 +1,52 @@
-angular.module 'daily.home'
+angular.module 'dilbert.home'
 
 
-.controller 'DailyController',['$rootScope','$scope','$ionicModal','$ionicPopup','DailyService',($rootScope,$scope,$ionicModal,$ionicPopup,DailyService)->
-	
-
+.controller 'DailyController',['$rootScope','$scope','$ionicModal','$ionicPopup',($rootScope,$scope,$ionicModal,$ionicPopup)->
+	times = [1422523800
+			1422526800
+			1422528000
+			1422534600
+			1422538200
+			1422541800
+			1422546400
+			1422552600
+		]
+	colors = [
+		'#468966'
+		'#FFF0A5'
+		'#FFB03B'
+		'#B64926'
+		'#8E2800'
+		'#02CCC8'
+		'#FFAB1C'
+		'#99CF2D'
+		'#1C3D59'
+		'#5C832F'
+		'#363942'
+		]
+	tasks = ['Dilbert Mobile - Object Defination'
+			'Dilbert Mobile - Object Defination'
+			'Dilbert Mobile - WireFrame Design'
+			'Dilbert Mobile - WireFrame Design'
+			'Dilbert Mobile - Static Layout'
+			'Dilbert Mobile - Static Layout'
+			'Dilbert Mobile - Bug Fixes'
+			'Dilbert Mobile - Bug Fixes'
+	]
 
 	$rootScope.slotData=[]
+	len=times.length-1
+	end=moment.duration(moment.unix(times[len]))
+	start=moment.duration(moment.unix(times[0]))
+	$scope.duration = moment.duration(end.subtract(start)).asHours()
+	for i in [0..times.length-1] by 1
+		$rootScope.slotData.push 
+			time:times[i]
+			color:colors[i]
+			task:tasks[i]
 
-
-	$rootScope.slotData=DailyService.getDailyData()
-	$scope.duration = $rootScope.slotData[0].duration
+	# $scope.currentDate=moment()
+	# $scope.displayDate=moment($scope.currentDate).format("ddd MMM Do YYYY");
 
 	$scope.getCurrentDate = ->
 		moment().format("ddd MMM Do YYYY");
@@ -45,6 +82,12 @@ angular.module 'daily.home'
      		console.log e
 
 	$scope.split =(e,id) ->
+		# $ionicPopup.alert
+  #    		title: 'Split',
+  #    		template: "Split #{id}"
+  #    	.then (res)->
+  #    		console.log "split #{id}"
+  #    		console.log e
 
      	if $ e.target 
      		.closest('.time-description')

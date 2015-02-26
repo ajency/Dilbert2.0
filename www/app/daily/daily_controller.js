@@ -1,4 +1,4 @@
-angular.module('daily.controller', []).controller('DailyController', [
+angular.module('daily.home').controller('DailyController', [
   '$rootScope', '$scope', '$ionicModal', '$ionicPopup', 'DailyService', function($rootScope, $scope, $ionicModal, $ionicPopup, DailyService) {
     $rootScope.slotData = [];
     $rootScope.slotData = DailyService.getDailyData();
