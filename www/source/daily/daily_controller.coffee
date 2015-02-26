@@ -80,12 +80,6 @@ angular.module('daily.controller',[])
      		console.log e
 
 	$scope.split =(e,id) ->
-		# $ionicPopup.alert
-  #    		title: 'Split',
-  #    		template: "Split #{id}"
-  #    	.then (res)->
-  #    		console.log "split #{id}"
-  #    		console.log e
 
      	if $ e.target 
      		.closest('.time-description')
