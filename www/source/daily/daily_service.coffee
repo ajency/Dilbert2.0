@@ -1,7 +1,7 @@
 angular.module('daily.service',[])
 .factory 'DailyService',['$http','$scope',($http,$scope)->
 	$scope.data =[
-		starttime:1422523800
+		starttime=1422523800
 		timeLogs=[
 			{
 				task:'Dilbert Mobile - Object Defination'

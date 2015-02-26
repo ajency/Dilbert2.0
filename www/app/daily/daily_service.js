@@ -1,10 +1,8 @@
 angular.module('daily.service', []).factory('DailyService', [
   '$http', '$scope', function($http, $scope) {
-    var timeLogs;
+    var starttime, timeLogs;
     $scope.data = [
-      {
-        starttime: 1422523800
-      }, timeLogs = [
+      starttime = 1422523800, timeLogs = [
         {
           task: 'Dilbert Mobile - Object Defination',
           status: 'available',
