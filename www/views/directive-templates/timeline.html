@@ -38,14 +38,25 @@
   		</div>
 	</div>
 	
-	<div class="card">
+	<div class="card" >
 		<div class="item item-divider item-dark">
    			Time Logs
   		</div>
-		<div class='time-description'>
+
+		<label class="item item-input item-select">
+    	<div class="input-label">
+      		Filter
+    	</div>
+		<select ng-model="filterStatus">
+		      <option value="available">Available</option>
+		      <option selected value="idle">Idle</option>
+		      <option value="offline">Offline</option>
+		</select>
+		</label>
+
 
 		<div 
-			ng-repeat="time in timeData"
+			ng-repeat="time in timeData | filter:filterStatus"
 			ng-if="$index!==0"
 			data-slot="{{$index-1}}" 
 			class='row slot item item-text-wrap' 
@@ -54,9 +65,10 @@
 			on-swipe-right='split($event, $index-1)'>
 			
 			<div class='col slot' style='background:{{getColor(timeData[$index].status)}}' >
-				{{getSlotDifference($index)}}
+				{{ getSlotDifference($index) }}
 			</div>
-			<div class='col col-75' >{{getTask($index)}}</div>
+			<!-- <div class='col col-75'>{{getTask($index)}}</div> -->
+			<div class='col col-75'>{{time.status}}</div>
 
 		</div>
 	</div>

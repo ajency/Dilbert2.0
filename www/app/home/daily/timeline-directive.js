@@ -53,7 +53,6 @@ angular.module('daily.timeline.directive', []).directive('timeLine', [
         };
         scope.getSlotDifference = function(index) {
           var diff, duration, slotEnd, slotStart;
-          console.log('getSlotDifference');
           slotStart = timeData[index - 1].time;
           slotEnd = timeData[index].time;
           duration = moment.unix(slotEnd).diff(slotStart * 1000);

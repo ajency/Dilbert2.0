@@ -84,5 +84,6 @@ angular.module 'dilbert.home'
  				task:newTask
  				status:'available'
  			$scope.closeModal('split')
+ 	
  		
 ]
