@@ -1,7 +1,7 @@
 #Dilbert
 
 angular.module "dilbert", ["ionic" 
-	,"dilbert.login", "dilbert.home"]
+	,"dilbert.login", "dilbert.home", "daily.service"]
 
 
 .run ['$ionicPlatform', '$rootScope', '$ionicPopup', ($ionicPlatform, $rootScope, $ionicPopup)->
