@@ -1,21 +1,18 @@
 angular.module('daily.controller', []).controller('DailyController', [
-  '$rootScope', '$scope', '$ionicModal', '$ionicPopup', function($rootScope, $scope, $ionicModal, $ionicPopup) {
-    var colors, end, i, len, start, tasks, times, _i, _ref;
-    times = [1422523800, 1422526800, 1422528000, 1422534600, 1422538200, 1422541800, 1422546400, 1422552600];
-    colors = ['#468966', '#FFF0A5', '#FFB03B', '#B64926', '#8E2800', '#02CCC8', '#FFAB1C', '#99CF2D', '#1C3D59', '#5C832F', '#363942'];
-    tasks = ['Dilbert Mobile - Object Defination', 'Dilbert Mobile - Object Defination', 'Dilbert Mobile - WireFrame Design', 'Dilbert Mobile - WireFrame Design', 'Dilbert Mobile - Static Layout', 'Dilbert Mobile - Static Layout', 'Dilbert Mobile - Bug Fixes', 'Dilbert Mobile - Bug Fixes'];
+  '$rootScope', '$scope', '$ionicModal', '$ionicPopup', 'DailyService', function($rootScope, $scope, $ionicModal, $ionicPopup, DailyService) {
+    var end, len, recievedData, start;
     $rootScope.slotData = [];
     len = times.length - 1;
     end = moment.duration(moment.unix(times[len]));
     start = moment.duration(moment.unix(times[0]));
     $scope.duration = moment.duration(end.subtract(start)).asHours();
-    for (i = _i = 0, _ref = times.length - 1; _i <= _ref; i = _i += 1) {
-      $rootScope.slotData.push({
-        time: times[i],
-        color: colors[i],
-        task: tasks[i]
-      });
-    }
+    recievedData = DailyService.getDailyData();
+    recievedData.then(function(payload) {
+      $rootScope.slotData = payload.data;
+      return console.log($rootScope.slotData);
+    }, function(errorPayload) {
+      return $log.error('failure fetching data', errorPayload);
+    });
     $scope.getCurrentDate = function() {
       return moment().format("ddd MMM Do YYYY");
     };
