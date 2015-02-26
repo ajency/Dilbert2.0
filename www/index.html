@@ -5,19 +5,19 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title></title>
 
-    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <!-- Ionic css -->
+    <link href="lib/ionic/css/ionic.min.css" rel="stylesheet">
+
+    <!-- Dilbert css -->
     <link href="styles/css/style.css" rel="stylesheet">
-    <!-- ionic/angularjs js -->
+    
+    <!-- Ionic-Angular js-->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
 
     <!-- Plugins -->
-    <script type="text/javascript" src="lib/plugins/moment/min/moment.min.js"></script>
-    <script type="text/javascript" src="lib/plugins/jquery/dist/jquery.min.js"></script>
-    <script type="text/javascript" src="lib/plugins/underscore/underscore-min.js"></script>
-    <script type="text/javascript" src="lib/plugins/lodash/lodash.min.js"></script>
-
-    <!-- cordova script (this will be a 404 during development) -->
-    <script src="cordova.js"></script>
+    <script type="text/javascript" src="lib/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/lodash/lodash.min.js"></script>
+    <script type="text/javascript" src="lib/moment/min/moment.min.js"></script>
 
     <!-- Login module -->
     <script type="text/javascript" src="app/login/login.js"></script>
@@ -28,12 +28,17 @@
     <script type="text/javascript" src="app/daily/daily_controller.js"></script>
     <script type="text/javascript" src="app/daily/timeline_directive.js"></script>
     
+
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+
     <script src="app/app.js"></script>
+
   </head>
   
   <body ng-app="dilbert">
    
-    <ion-nav-view></ion-nav-view>
+    <ion-nav-view> </ion-nav-view>
     
   </body>
 </html>
