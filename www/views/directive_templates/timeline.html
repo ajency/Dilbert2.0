@@ -20,7 +20,7 @@
 								</div>
 								
 								<!-- <div ng-if="$index!==0" >{{renderTimeline(data.dataSlot,data.bgcolor,data.width)}}</div> -->
-								<div ng-if="$index!==0" data-slot='{{$index-1}}' class='slot' style='background-color: {{data.color}}; width:{{getSlotPercentage(data.time, $index)}}' ></div>
+								<div ng-if="$index!==0" data-slot='{{$index-1}}' class='slot' style='background-color: {{timeData[$index-1].color}}; width:{{getSlotPercentage(data.time, $index)}}' ></div>
 
 								<div class='slot-interval' ng-if="$index!==0 && $index < timeData.length-1">
 									<div class="slot-interval-time">{{getUnixTime(data.time)}}</div>
@@ -53,7 +53,7 @@
 			on-swipe-left='merge($event, $index-1)' 
 			on-swipe-right='split($event, $index-1)'>
 			
-			<div class='col slot' style='background:{{time.color}}' >
+			<div class='col slot' style='background:{{timeData[$index-1].color}}' >
 				{{getSlotDifference($index)}}
 			</div>
 			<div class='col col-75' >{{timeData[$index-1].task}}</div>

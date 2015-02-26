@@ -1,4 +1,4 @@
-angular.module("dilbert", ["ionic", "dilbert.login", "dilbert.home", "daily.controller"]).run([
+angular.module("dilbert", ["ionic", "dilbert.login", "dilbert.home", "daily.controller", "daily.timeline.directive"]).run([
   '$ionicPlatform', '$rootScope', '$ionicPopup', function($ionicPlatform, $rootScope, $ionicPopup) {
     return $ionicPlatform.ready(function() {
       if (window.cordova && window.cordova.plugins.Keyboard) {
