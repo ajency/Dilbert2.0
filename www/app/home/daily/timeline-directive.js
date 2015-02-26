@@ -1,4 +1,4 @@
-angular.module('daily.timeline.directive', []).directive('timeLine', [
+angular.module('dilbert.home').directive('timeLine', [
   '$rootScope', '$parse', '$compile', function($rootScope, $parse, $compile) {
     return {
       restrict: 'E',

@@ -1,5 +1,6 @@
-angular.module("dilbert", ["ionic", "dilbert.login", "dilbert.home", "daily.service", "daily.timeline.directive"]).run([
+angular.module("dilbert", ["ionic", "dilbert.login", "dilbert.home"]).run([
   '$ionicPlatform', '$rootScope', '$ionicPopup', function($ionicPlatform, $rootScope, $ionicPopup) {
+    $rootScope.slotData = [];
     return $ionicPlatform.ready(function() {
       if (window.cordova && window.cordova.plugins.Keyboard) {
         cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);

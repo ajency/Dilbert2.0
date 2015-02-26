@@ -1,7 +1,6 @@
 angular.module('dilbert.home').controller('DailyController', [
-  '$rootScope', '$scope', '$ionicModal', '$ionicPopup', 'DailyService', function($rootScope, $scope, $ionicModal, $ionicPopup, DailyService) {
-    $rootScope.slotData = [];
-    $rootScope.slotData = DailyService.getDailyData();
+  '$rootScope', '$scope', '$ionicModal', '$ionicPopup', 'DailyAPI', function($rootScope, $scope, $ionicModal, $ionicPopup, DailyAPI) {
+    $rootScope.slotData = DailyAPI.getDailyData();
     $scope.duration = $rootScope.slotData[0].duration;
     $scope.getCurrentDate = function() {
       return moment().format("ddd MMM Do YYYY");

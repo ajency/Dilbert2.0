@@ -1,10 +1,13 @@
 #Dilbert
 angular.module "dilbert", ["ionic" 
-	,"dilbert.login", "dilbert.home", "daily.service","daily.timeline.directive"]
+	,"dilbert.login", "dilbert.home"]
 
 
 .run ['$ionicPlatform', '$rootScope', '$ionicPopup'
 	, ($ionicPlatform, $rootScope, $ionicPopup)->
+
+		#Initialize $rootScope variables
+		$rootScope.slotData = []
 
 		$ionicPlatform.ready ->
 			if window.cordova and window.cordova.plugins.Keyboard

@@ -1,5 +1,8 @@
-angular.module 'daily.service',[] 
-.factory 'DailyService',['$http',($http)->
+angular.module 'dilbert.home'
+
+
+.factory 'DailyAPI',['$q', ($q)->
+	
 	factory={}
 	data =[
 		{
@@ -48,4 +51,9 @@ angular.module 'daily.service',[]
 		data
 
 	factory
+
+	# DailyAPI = 
+
+
 ]
+

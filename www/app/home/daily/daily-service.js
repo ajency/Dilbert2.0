@@ -1,5 +1,5 @@
-angular.module('daily.service', []).factory('DailyService', [
-  '$http', function($http) {
+angular.module('dilbert.home').factory('DailyAPI', [
+  '$q', function($q) {
     var data, factory;
     factory = {};
     data = [

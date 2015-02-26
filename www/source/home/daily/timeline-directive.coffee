@@ -1,4 +1,4 @@
-angular.module 'daily.timeline.directive',[]
+angular.module 'dilbert.home'
 
 .directive 'timeLine', ['$rootScope','$parse', '$compile' ,($rootScope,$parse , $compile)->
 
