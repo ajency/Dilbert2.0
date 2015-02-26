@@ -8,7 +8,7 @@
 		<div class="item">Total hours: {{duration}}</div>
 	</div>
 
-	<time-line slot-data="slotData"></time-line>
+	<time-line ng-if="available" slot-data="slotData"></time-line>
 
   </ion-content>
 </ion-view>

@@ -4,9 +4,15 @@ angular.module 'dilbert.home'
 .controller 'DailyController',['$rootScope', '$scope', '$ionicModal', '$ionicPopup', 'DailyAPI'
 	,($rootScope, $scope, $ionicModal, $ionicPopup, DailyAPI)->
 
+		$scope.available = false
 
-		$rootScope.slotData = DailyAPI.getDailyData()
-		$scope.duration = $rootScope.slotData[0].duration
+		DailyAPI.getDailyData()
+		.then (dailyData)->
+			$scope.available = true
+			$rootScope.slotData = dailyData
+			$scope.duration = $rootScope.slotData[0].duration
+
+
 
 		$scope.getCurrentDate = ->
 			moment().format("ddd MMM Do YYYY");
