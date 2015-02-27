@@ -1,5 +1,5 @@
 angular.module('dilbert.home').controller('DailyController', [
-  '$rootScope', '$scope', '$ionicModal', '$ionicPopup', 'DailyAPI', function($rootScope, $scope, $ionicModal, $ionicPopup, DailyAPI) {
+  '$rootScope', '$scope', '$ionicModal', '$ionicPopup', 'DailyAPI', '$state', function($rootScope, $scope, $ionicModal, $ionicPopup, DailyAPI, $state) {
     $rootScope.slotData = [];
     DailyAPI.getDailyData().then(function(dailyData) {
       $rootScope.slotData = dailyData;
@@ -42,18 +42,16 @@ angular.module('dilbert.home').controller('DailyController', [
         return console.log(e);
       });
     };
-    $scope.split = function(e, id) {
-      var slotNo;
+    $scope.split = function(e, id, status) {
       if ($(e.target).closest('.time-description').hasClass('combine-parent')) {
         return;
       }
       if (!$(e.target).hasClass('slot')) {
         return;
       }
-      slotNo = parseInt($(e.target).attr('data-slot'));
-      $scope.status = $(e.target).attr('status');
-      $scope.slotStart = $scope.slotData[slotNo].time;
-      $scope.slotEnd = $scope.slotData[slotNo + 1].time;
+      $scope.status = status;
+      $scope.slotStart = $rootScope.slotData[id].time;
+      $scope.slotEnd = $rootScope.slotData[id + 1].time;
       $scope.displayStart = moment.unix($scope.slotStart).format('h:mm a');
       $scope.displayEnd = moment.unix($scope.slotEnd).format('h:mm a');
       $scope.slotDuration = moment.unix($scope.slotEnd).diff(moment.unix($scope.slotStart), 'minutes');
@@ -81,7 +79,8 @@ angular.module('dilbert.home').controller('DailyController', [
           task: newTask,
           status: $scope.status
         });
-        return $scope.closeModal('split');
+        $scope.closeModal('split');
+        return $rootScope.slotData = _.sortBy($rootScope.slotData, 'time');
       }
     };
   }

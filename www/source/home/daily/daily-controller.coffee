@@ -1,8 +1,8 @@
 angular.module 'dilbert.home'
 
 
-.controller 'DailyController',['$rootScope','$scope','$ionicModal','$ionicPopup','DailyAPI'
-	,($rootScope,$scope,$ionicModal,$ionicPopup,DailyAPI)->
+.controller 'DailyController',['$rootScope','$scope','$ionicModal','$ionicPopup','DailyAPI','$state'
+	,($rootScope,$scope,$ionicModal,$ionicPopup,DailyAPI,$state)->
 
 		$rootScope.slotData = []
 
@@ -44,7 +44,7 @@ angular.module 'dilbert.home'
 	     		console.log "merge #{id}"
 	     		console.log e
 
-		$scope.split =(e,id) ->
+		$scope.split =(e,id,status) ->
 
 	     	if $ e.target 
 	     		.closest('.time-description')
@@ -53,16 +53,15 @@ angular.module 'dilbert.home'
 	     	if not $ e.target
 	     		.hasClass 'slot' 
 	     			return
-
-	     	slotNo = parseInt $(e.target).attr 'data-slot'
-	     	$scope.status= $(e.target).attr 'status'
-	     	$scope.slotStart = $scope.slotData[slotNo].time
-	     	$scope.slotEnd = $scope.slotData[slotNo+1].time
+	     	$scope.status= status
+	     	$scope.slotStart = $rootScope.slotData[id].time
+	     	$scope.slotEnd = $rootScope.slotData[id+1].time
 	     	$scope.displayStart=moment.unix($scope.slotStart).format('h:mm a')
 	     	$scope.displayEnd=moment.unix($scope.slotEnd).format('h:mm a')
 
 	     	$scope.slotDuration = moment.unix $scope.slotEnd 
 	     		.diff moment.unix($scope.slotStart),'minutes'
+
 	     	$scope.openModal('split')
 
 	 	$scope.splitSlot=(timeMinutes,slotPos,newTask)->
@@ -85,6 +84,8 @@ angular.module 'dilbert.home'
 	 				task:newTask
 	 				status:$scope.status
 	 			$scope.closeModal('split')
+	 			$rootScope.slotData = _.sortBy $rootScope.slotData, 'time'
+	 			
 
  	
  		

@@ -57,20 +57,18 @@
 
 
 		<div 
+			ng-model="slotData"
 			ng-repeat="time in timeData"
 			ng-if="$index!==0"
-			data-slot="{{$index-1}}"
-			status="{{timeData[$index].status}}" 
 			class='row slot item item-text-wrap' 
 			style='height:50px'
-			on-swipe-left='merge($event, $index-1)' 
-			on-swipe-right='split($event, $index-1)'>
+			on-swipe-left='merge($event, $index-1,timeData[$index].status)' 
+			on-swipe-right='split($event, $index-1,timeData[$index].status)'>
 			
 			<div class='col slot' style='background:{{getColor(timeData[$index].status)}}' >
 				{{ getSlotDifference($index) }}
 			</div>
 			<div class='col col-75'>{{getTask($index)}}</div>
-			<!-- <div class='col col-75'>{{time.status}}</div> -->
 
 		</div>
 	</div>

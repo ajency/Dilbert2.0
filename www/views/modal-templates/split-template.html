@@ -21,7 +21,7 @@
 			</label>
 			<label class="item">
 				<span class="item-label">Enter new slot time (in minutes): </span>
-				<input ng-model="newSlot" class="new-slot" type="number" maxlength="2" min="0">
+				<input ng-model="newSlot" class="new-slot" type="number" maxlength="2" min="0" max={{slotDuration}}>
 			</label>
 			<label class="item">
 				<span class="item-label">Task: </span>

@@ -5,11 +5,11 @@ angular.module('dilbert.home').directive('timeLine', [
       templateUrl: "views/directive-templates/timeline.html",
       link: function(scope, elem, attrs) {
         var i, pixelPerSecond, pps, ppsTotal, shortestSlot, time, timeData, timeLineWidth, _i, _len;
-        timeData = scope.$eval(attrs.slotData);
+        timeData = $rootScope.slotData;
         timeData = _.sortBy(timeData, 'time');
-        scope.$watch(attrs.slotData, function(newValue) {
+        scope.$watch('slotData', function(newValue) {
           console.log(newValue);
-          timeData = _.sortBy(newValue, 'time');
+          timeData = newValue;
           return scope.timeData = timeData;
         }, true);
         timeLineWidth = $(elem).find('.timeline-interval-region').width();

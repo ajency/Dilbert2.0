@@ -7,12 +7,12 @@ angular.module 'dilbert.home'
 
 	link: (scope, elem, attrs)->
 
-		timeData = scope.$eval(attrs.slotData)
+		timeData = $rootScope.slotData
 		timeData = _.sortBy timeData, 'time'
 
-		scope.$watch attrs.slotData, (newValue)-> 
+		scope.$watch 'slotData', (newValue)-> 
 			console.log newValue
-			timeData = _.sortBy newValue, 'time'
+			timeData = newValue
 			scope.timeData = timeData
 		, true
 
