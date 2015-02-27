@@ -1,8 +1,8 @@
 angular.module 'dilbert.home'
 
 
-.controller 'DailyController',['$rootScope','$scope','$ionicModal','$ionicPopup','DailyAPI','$state'
-	,($rootScope,$scope,$ionicModal,$ionicPopup,DailyAPI,$state)->
+.controller 'DailyController',['$rootScope','$scope','$ionicModal','$ionicPopup','DailyAPI'
+	,($rootScope,$scope,$ionicModal,$ionicPopup,DailyAPI)->
 
 		$rootScope.slotData = []
 
@@ -36,13 +36,36 @@ angular.module 'dilbert.home'
 
 		
 
-		$scope.merge =(e,id) ->
-			$ionicPopup.alert
-	     		title: 'Merge',
-	     		template: "Merge #{id}"
-	     	.then (res)->
-	     		console.log "merge #{id}"
-	     		console.log e
+		# $scope.merge =(e,id) ->
+		# 	if $ e.target 
+		# 		.closest '.time-description' 
+		# 		.hasClass 'combine-parent' then return
+		# 	if not $ e.target 
+		# 		.hasClass 'slot' then return
+
+		# 	isFirst= if id is 0 then true else false
+		# 	isLast = if id is $rootScope.slotData.length-2 then true else false
+
+		# 	if isFirst and isLast then return
+
+		# 	$ e.target 
+		# 	.closest '.time-description' 
+		# 	.addClass 'combine-parent'
+
+		# 	$ e.target 
+		# 	.addClass 'combine-current'
+
+		# 	$ e.target 
+		# 	.append '<span class="cancel-combine"><i class="icon ion-close"></i></span>'
+
+		# 	if not isFirst
+		# 		$('.time-description.combine-parent .slot[data-slot="'+(id-1)+'"]').addClass 'combine-neighbour'
+
+		# 	if not isLast 
+		# 		$('.time-description.combine-parent .slot[data-slot="'+(id+1)+'"]').addClass 'combine-neighbour'
+
+		# 	return false
+
 
 		$scope.split =(e,id,status) ->
 
@@ -53,6 +76,7 @@ angular.module 'dilbert.home'
 	     	if not $ e.target
 	     		.hasClass 'slot' 
 	     			return
+
 	     	$scope.status= status
 	     	$scope.slotStart = $rootScope.slotData[id].time
 	     	$scope.slotEnd = $rootScope.slotData[id+1].time
@@ -65,8 +89,6 @@ angular.module 'dilbert.home'
 	     	$scope.openModal('split')
 
 	 	$scope.splitSlot=(timeMinutes,slotPos,newTask)->
-	 		console.log 'split'
-	 		console.log timeMinutes+" "+slotPos+" "+newTask
 	 		timeMinutes = Number(timeMinutes)
 	 		slotMinutes = if timeMinutes >0 and timeMinutes < $scope.slotDuration then timeMinutes else ''
 	 		if slotMinutes is '' then return

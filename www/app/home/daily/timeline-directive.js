@@ -8,7 +8,6 @@ angular.module('dilbert.home').directive('timeLine', [
         timeData = $rootScope.slotData;
         timeData = _.sortBy(timeData, 'time');
         scope.$watch('slotData', function(newValue) {
-          console.log(newValue);
           timeData = newValue;
           return scope.timeData = timeData;
         }, true);

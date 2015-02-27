@@ -1,5 +1,5 @@
 angular.module('dilbert.home').controller('DailyController', [
-  '$rootScope', '$scope', '$ionicModal', '$ionicPopup', 'DailyAPI', '$state', function($rootScope, $scope, $ionicModal, $ionicPopup, DailyAPI, $state) {
+  '$rootScope', '$scope', '$ionicModal', '$ionicPopup', 'DailyAPI', function($rootScope, $scope, $ionicModal, $ionicPopup, DailyAPI) {
     $rootScope.slotData = [];
     DailyAPI.getDailyData().then(function(dailyData) {
       $rootScope.slotData = dailyData;
@@ -33,15 +33,6 @@ angular.module('dilbert.home').controller('DailyController', [
         return $scope.splitModal.hide();
       }
     };
-    $scope.merge = function(e, id) {
-      return $ionicPopup.alert({
-        title: 'Merge',
-        template: "Merge " + id
-      }).then(function(res) {
-        console.log("merge " + id);
-        return console.log(e);
-      });
-    };
     $scope.split = function(e, id, status) {
       if ($(e.target).closest('.time-description').hasClass('combine-parent')) {
         return;
@@ -59,8 +50,6 @@ angular.module('dilbert.home').controller('DailyController', [
     };
     return $scope.splitSlot = function(timeMinutes, slotPos, newTask) {
       var newMoment, newMomentUnix, slotMinutes;
-      console.log('split');
-      console.log(timeMinutes + " " + slotPos + " " + newTask);
       timeMinutes = Number(timeMinutes);
       slotMinutes = timeMinutes > 0 && timeMinutes < $scope.slotDuration ? timeMinutes : '';
       if (slotMinutes === '') {

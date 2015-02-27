@@ -11,7 +11,6 @@ angular.module 'dilbert.home'
 		timeData = _.sortBy timeData, 'time'
 
 		scope.$watch 'slotData', (newValue)-> 
-			console.log newValue
 			timeData = newValue
 			scope.timeData = timeData
 		, true
@@ -72,6 +71,8 @@ angular.module 'dilbert.home'
 				color = '#4B4E50'
 
 			color
+
+		
 
 ]
 
