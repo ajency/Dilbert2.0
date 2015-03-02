@@ -3,8 +3,9 @@ angular.module('dilbert.home').directive('timeLine', [
     return {
       restrict: 'E',
       templateUrl: "views/directive-templates/timeline.html",
+      replace: true,
       link: function(scope, elem, attrs) {
-        var i, pixelPerSecond, pps, ppsTotal, shortestSlot, time, timeData, timeLineWidth, _i, _len;
+        var combineSlots, i, pixelPerSecond, pps, ppsTotal, shortestSlot, stopCombineSlot, time, timeData, timeLineWidth, _i, _len;
         timeData = $rootScope.slotData;
         timeData = _.sortBy(timeData, 'time');
         scope.$watch('slotData', function(newValue) {
@@ -87,9 +88,9 @@ angular.module('dilbert.home').directive('timeLine', [
           ModalData.setData(status, slotStart, slotEnd, displayStart, displayEnd, slotDuration);
           return scope.openModal('split');
         };
-        return scope.merge = function(e, id) {
+        scope.merge = function(e, id) {
           var isFirst, isLast;
-          console.log(e.target);
+          scope.id = id;
           if ($(e.target).closest('.time-description').hasClass('combine-parent')) {
             return;
           }
@@ -102,13 +103,37 @@ angular.module('dilbert.home').directive('timeLine', [
             return;
           }
           console.log(isFirst + ' ' + isLast);
+          $(e.target).closest('.time-description').addClass('combine-parent');
+          $(e.target).addClass('combine-current');
+          $(e.target).append('<span class="cancel-combine" style="float:right"><i class="icon ion-close"></i></span>');
           if (!isFirst) {
             $('.time-description.combine-parent .slot[data-slot="' + (id - 1) + '"]').addClass('combine-neighbour');
           }
           if (!isLast) {
             $('.time-description.combine-parent .slot[data-slot="' + (id + 1) + '"]').addClass('combine-neighbour');
           }
+          $('.time-description.combine-parent .slot.combine-neighbour').on('tap', combineSlots.bind(id, e));
+          $('.time-description.combine-parent .slot.combine-current .cancel-combine').on('tap', stopCombineSlot.bind(e));
           return false;
+        };
+        combineSlots = function(slotNo, e) {
+          var neighbourSlot;
+          slotNo = scope.id;
+          neighbourSlot = $(e.target).attr('data-slot');
+          neighbourSlot = Number(neighbourSlot);
+          if (neighbourSlot < slotNo) {
+            $rootScope.slotData.splice(slotNo, 1);
+          } else if (neighbourSlot > slotNo) {
+            $rootScope.slotData.splice(slotNo + 1, 1);
+          }
+          scope.$apply();
+          return stopCombineSlot(e);
+        };
+        return stopCombineSlot = function(e) {
+          $('.time-description.combine-parent .slot.combine-current .cancel-combine').off().remove();
+          $('.time-description.combine-parent .slot.combine-neighbour').off('tap').removeClass('combine-neighbour');
+          $('.time-description.combine-parent .slot.combine-current').removeClass('combine-current');
+          return $('.time-description.combine-parent ').removeClass('combine-parent');
         };
       }
     };

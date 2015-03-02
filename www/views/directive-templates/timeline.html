@@ -43,7 +43,7 @@
 		<div class="item item-divider item-dark">
    			Time Logs
   		</div>
-		<div class='time-description'>
+		<div class='time-description '>
 
 			<div 
 				ng-repeat="time in timeData"
@@ -54,12 +54,10 @@
 				on-swipe-left='merge($event, $index-1,timeData[$index].status)' 
 				on-swipe-right='split($event, $index-1,timeData[$index].status)'>
 				
-				
-				<div class='col slot' style='background:{{getColor(timeData[$index].status)}}' >
+				<div class='col' data-slot="{{$index-1}}" style='background:{{getColor(timeData[$index].status)}}'>
 					{{ getSlotDifference($index) }}
 				</div>
-				<div class='col col-75 taskinfo'>{{getTask($index)}}</div>
-
+				<div class='col col-75 taskInfo' data-slot="{{$index-1}}">{{getTask($index)}}</div>
 			</div>
 		</div>
 	</div>

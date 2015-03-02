@@ -1,15 +1,23 @@
 angular.module 'dilbert.home'
 
 
-.controller 'DailyController',['$rootScope','$scope','$ionicModal','$ionicPopup','DailyAPI','ModalData'
-	,($rootScope,$scope,$ionicModal,$ionicPopup,DailyAPI,ModalData)->
-
+.controller 'DailyController',['$rootScope','$scope','$ionicModal','$ionicPopup','DailyAPI','ModalData','$ionicLoading'
+	,($rootScope,$scope,$ionicModal,$ionicPopup,DailyAPI,ModalData,$ionicLoading)->
+		$ionicLoading.show
+    		content: 'Loading'
+    		animation: 'fade-in'
+    		showBackdrop: true
+    		maxWidth: 200
+    		showDelay: 0
+  		$scope.dataAvailable=false
 		$rootScope.slotData = []
 		$scope.mData=[]
 		DailyAPI.getDailyData()
 		.then (dailyData)->
 			$rootScope.slotData = dailyData
 			$scope.duration = $rootScope.slotData[0].duration
+			$ionicLoading.hide();
+			$scope.dataAvailable=true
 
 		$scope.getCurrentDate = ->
 			moment().format("ddd MMM Do YYYY");

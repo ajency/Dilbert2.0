@@ -4,6 +4,7 @@ angular.module 'dilbert.home'
 
 	restrict:'E'
 	templateUrl:"views/directive-templates/timeline.html"
+	replace: true
 
 	link: (scope, elem, attrs)->
 
@@ -93,7 +94,7 @@ angular.module 'dilbert.home'
 	     	scope.openModal('split')
 
 		scope.merge =(e,id) ->
-			console.log e.target
+			scope.id=id
 			if $ e.target 
 				.closest '.time-description' 
 				.hasClass 'combine-parent' then return
@@ -105,15 +106,15 @@ angular.module 'dilbert.home'
 
 			if isFirst and isLast then return
 			console.log  isFirst+' '+isLast
-			# $ e.target 
-			# .closest '.time-description' 
-			# .addClass 'combine-parent'
+			$ e.target 
+			.closest '.time-description' 
+			.addClass 'combine-parent'
 
-			# $ e.target 
-			# .addClass 'combine-current'
+			$ e.target 
+			.addClass 'combine-current'
 
-			# $ e.target 
-			# .append '<span class="cancel-combine" style="float:right"><i class="icon ion-close"></i></span>'
+			$ e.target 
+			.append '<span class="cancel-combine" style="float:right"><i class="icon ion-close"></i></span>'
 
 			if not isFirst
 				$('.time-description.combine-parent .slot[data-slot="'+(id-1)+'"]').addClass 'combine-neighbour'
@@ -121,7 +122,42 @@ angular.module 'dilbert.home'
 			if not isLast 
 				$('.time-description.combine-parent .slot[data-slot="'+(id+1)+'"]').addClass 'combine-neighbour'
 
+			$ '.time-description.combine-parent .slot.combine-neighbour'
+			.on 'tap',combineSlots.bind id,e
+
+			$ '.time-description.combine-parent .slot.combine-current .cancel-combine'
+			.on 'tap',stopCombineSlot.bind e
 			return false
+
+		combineSlots = (slotNo, e)->
+			slotNo=scope.id
+			neighbourSlot = $ e.target 
+			.attr 'data-slot'
+			neighbourSlot=Number neighbourSlot
+			if neighbourSlot < slotNo
+				$rootScope.slotData
+				.splice slotNo,1
+			else if neighbourSlot > slotNo
+				$rootScope.slotData
+				.splice slotNo+1, 1
+			scope.$apply()
+			stopCombineSlot e
+
+		stopCombineSlot = (e)->
+			$ '.time-description.combine-parent .slot.combine-current .cancel-combine' 
+			.off()
+			.remove()
+
+			$ '.time-description.combine-parent .slot.combine-neighbour'
+			.off 'tap' 
+			.removeClass 'combine-neighbour'
+
+			$ '.time-description.combine-parent .slot.combine-current'
+			.removeClass 'combine-current'
+
+			$ '.time-description.combine-parent '
+			.removeClass 'combine-parent'
+
 
 
 
