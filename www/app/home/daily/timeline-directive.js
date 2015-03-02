@@ -1,5 +1,5 @@
 angular.module('dilbert.home').directive('timeLine', [
-  '$rootScope', '$parse', '$compile', function($rootScope, $parse, $compile) {
+  '$rootScope', '$parse', '$compile', 'ModalData', function($rootScope, $parse, $compile, ModalData) {
     return {
       restrict: 'E',
       templateUrl: "views/directive-templates/timeline.html",
@@ -60,7 +60,7 @@ angular.module('dilbert.home').directive('timeLine', [
           }
           return diff;
         };
-        return scope.getColor = function(status) {
+        scope.getColor = function(status) {
           var color;
           if (status === 'available') {
             color = '#468966';
@@ -70,6 +70,45 @@ angular.module('dilbert.home').directive('timeLine', [
             color = '#4B4E50';
           }
           return color;
+        };
+        scope.split = function(e, id, status) {
+          var displayEnd, displayStart, slotDuration, slotEnd, slotStart;
+          if ($(e.target).closest('.time-description').hasClass('combine-parent')) {
+            return;
+          }
+          if (!$(e.target).hasClass('slot')) {
+            return;
+          }
+          slotStart = $rootScope.slotData[id].time;
+          slotEnd = $rootScope.slotData[id + 1].time;
+          displayStart = moment.unix(slotStart).format('h:mm a');
+          displayEnd = moment.unix(slotEnd).format('h:mm a');
+          slotDuration = moment.unix(slotEnd).diff(moment.unix(slotStart), 'minutes');
+          ModalData.setData(status, slotStart, slotEnd, displayStart, displayEnd, slotDuration);
+          return scope.openModal('split');
+        };
+        return scope.merge = function(e, id) {
+          var isFirst, isLast;
+          console.log(e.target);
+          if ($(e.target).closest('.time-description').hasClass('combine-parent')) {
+            return;
+          }
+          if (!$(e.target).hasClass('slot')) {
+            return;
+          }
+          isFirst = id === 0 ? true : false;
+          isLast = id === $rootScope.slotData.length - 2 ? true : false;
+          if (isFirst && isLast) {
+            return;
+          }
+          console.log(isFirst + ' ' + isLast);
+          if (!isFirst) {
+            $('.time-description.combine-parent .slot[data-slot="' + (id - 1) + '"]').addClass('combine-neighbour');
+          }
+          if (!isLast) {
+            $('.time-description.combine-parent .slot[data-slot="' + (id + 1) + '"]').addClass('combine-neighbour');
+          }
+          return false;
         };
       }
     };

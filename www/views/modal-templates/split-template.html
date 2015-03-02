@@ -1,4 +1,4 @@
-<ion-modal-view>
+<ion-modal-view ng-controller="SplitController">
 	<ion-header-bar class="bar bar-dark">
 		<h1 class="title">Split Time Slot</h1>
 		<div class="buttons">
@@ -9,19 +9,19 @@
 		<div class="list list-inset">
 			<label class="item">
 				<span class="item-label">Start time: </span>
-				<span> {{displayStart}}</span>
+				<span> {{ mData.displayStart }}</span>
 			</label>
 			<label class="item ">
 				<span class="item-label">End time: </span>
-				<span> {{displayEnd}}</span>
+				<span> {{mData.displayEnd}}</span>
 			</label>
 			<label class="item">
 				<span class="item-label">Duration: </span>
-				<span> {{slotDuration}} minutes</span>
+				<span> {{mData.slotDuration}} minutes</span>
 			</label>
 			<label class="item">
 				<span class="item-label">Enter new slot time (in minutes): </span>
-				<input ng-model="newSlot" class="new-slot" type="number" maxlength="2" min="0" max={{slotDuration}}>
+				<input ng-model="newSlot" class="new-slot" type="number" maxlength="2" min="0" max={{mData.slotDuration}}>
 			</label>
 			<label class="item">
 				<span class="item-label">Task: </span>
@@ -32,7 +32,9 @@
     			<ion-radio ng-model="newSlotPosition" ng-value="start">Start</ion-radio>
     			<ion-radio ng-model="newSlotPosition" value="end">End</ion-radio>
   			</label>
-  			<button class="button button-block button-balanced" ng-click="splitSlot(newSlot,newSlotPosition,newTask)">Split</button>
+  			<button class="button button-block button-balanced" 
+  			ng-click='splitSlot(newSlot,newSlotPosition,newTask)'
+  			>Split</button>
 		</div>
 	</ion-content>
 </ion-modal-view>

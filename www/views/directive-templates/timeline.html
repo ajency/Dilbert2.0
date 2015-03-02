@@ -54,6 +54,7 @@
 				on-swipe-left='merge($event, $index-1,timeData[$index].status)' 
 				on-swipe-right='split($event, $index-1,timeData[$index].status)'>
 				
+				
 				<div class='col slot' style='background:{{getColor(timeData[$index].status)}}' >
 					{{ getSlotDifference($index) }}
 				</div>

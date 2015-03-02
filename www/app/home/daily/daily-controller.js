@@ -1,6 +1,7 @@
 angular.module('dilbert.home').controller('DailyController', [
-  '$rootScope', '$scope', '$ionicModal', '$ionicPopup', 'DailyAPI', function($rootScope, $scope, $ionicModal, $ionicPopup, DailyAPI) {
+  '$rootScope', '$scope', '$ionicModal', '$ionicPopup', 'DailyAPI', 'ModalData', function($rootScope, $scope, $ionicModal, $ionicPopup, DailyAPI, ModalData) {
     $rootScope.slotData = [];
+    $scope.mData = [];
     DailyAPI.getDailyData().then(function(dailyData) {
       $rootScope.slotData = dailyData;
       return $scope.duration = $rootScope.slotData[0].duration;
@@ -23,50 +24,40 @@ angular.module('dilbert.home').controller('DailyController', [
       if (modal_name === 'calendar') {
         return $scope.calModal.show();
       } else if (modal_name === 'split') {
+        $scope.mData = [];
+        $scope.mData = ModalData.getData();
         return $scope.splitModal.show();
       }
     };
-    $scope.closeModal = function(modal_name) {
+    return $scope.closeModal = function(modal_name) {
       if (modal_name === 'calendar') {
         return $scope.calModal.hide();
       } else if (modal_name === 'split') {
         return $scope.splitModal.hide();
       }
     };
-    $scope.split = function(e, id, status) {
-      if ($(e.target).closest('.time-description').hasClass('combine-parent')) {
-        return;
-      }
-      if (!$(e.target).hasClass('slot')) {
-        return;
-      }
-      $scope.status = status;
-      $scope.slotStart = $rootScope.slotData[id].time;
-      $scope.slotEnd = $rootScope.slotData[id + 1].time;
-      $scope.displayStart = moment.unix($scope.slotStart).format('h:mm a');
-      $scope.displayEnd = moment.unix($scope.slotEnd).format('h:mm a');
-      $scope.slotDuration = moment.unix($scope.slotEnd).diff(moment.unix($scope.slotStart), 'minutes');
-      return $scope.openModal('split');
-    };
+  }
+]).controller('SplitController', [
+  '$rootScope', '$scope', 'ModalData', function($rootScope, $scope, ModalData) {
     return $scope.splitSlot = function(timeMinutes, slotPos, newTask) {
       var newMoment, newMomentUnix, slotMinutes;
       timeMinutes = Number(timeMinutes);
-      slotMinutes = timeMinutes > 0 && timeMinutes < $scope.slotDuration ? timeMinutes : '';
+      slotMinutes = timeMinutes > 0 && timeMinutes < $scope.mData.slotDuration ? timeMinutes : '';
       if (slotMinutes === '') {
         return;
       }
-      newMoment = moment.unix($scope.slotStart);
+      newMoment = moment.unix($scope.mData.slotStart);
       if (slotPos === 'end') {
-        newMoment.add($scope.slotDuration - slotMinutes, 'm');
+        newMoment.add($scope.mData.slotDuration - slotMinutes, 'm');
       } else {
         newMoment.add(slotMinutes, 'm');
       }
       newMomentUnix = newMoment.unix();
-      if (newMomentUnix > $scope.slotStart && newMomentUnix < $scope.slotEnd) {
+      if (newMomentUnix > $scope.mData.slotStart && newMomentUnix < $scope.mData.slotEnd) {
         $rootScope.slotData.push({
           time: newMomentUnix,
           task: newTask,
-          status: $scope.status
+          status: $scope.mData.status
         });
         $scope.closeModal('split');
         return $rootScope.slotData = _.sortBy($rootScope.slotData, 'time');

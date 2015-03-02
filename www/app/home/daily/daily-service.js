@@ -46,4 +46,24 @@ angular.module('dilbert.home').factory('DailyAPI', [
       }
     };
   }
+]).service('ModalData', [
+  function() {
+    var data;
+    data = {};
+    return {
+      setData: function(status, slotStart, slotEnd, displayStart, displayEnd, slotDuration) {
+        return data = {
+          status: status,
+          slotStart: slotStart,
+          slotEnd: slotEnd,
+          displayStart: displayStart,
+          displayEnd: displayEnd,
+          slotDuration: slotDuration
+        };
+      },
+      getData: function() {
+        return data;
+      }
+    };
+  }
 ]);
