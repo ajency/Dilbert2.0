@@ -14,3 +14,15 @@ Type
    ----Project
    ----Training
    ----Fun Wednesday
+
+prepare,build,run
+
+
+
+Search wrt Status and Type
+show modal when merging to askk user which data to keep.
+
+if 1 slot has offline then both are offline
+if 1 has idle the both are idle
+
+offline has the highest priority followed by idle then availables 

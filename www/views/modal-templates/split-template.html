@@ -23,21 +23,21 @@
 				<span class="item-label">Enter new slot time (in minutes): </span>
 				<input ng-model="newSlot" class="new-slot" type="number" maxlength="2" min="0" max={{mData.slotDuration}}>
 			</label>
-<!-- 			<label class="item item-input item-select">
+			<label class="item item-input item-select">
     			<div class="input-label">
       				Task
     			</div>
     			<select ng-model="newTask">
       				<option ng-repeat="task in tasks">#{{task.taskId}} {{task.task}}</option>
     			</select>
-  			</label> -->
+  			</label>
 			<label class="item item-radio">
 				<span class="item-label">Add new slot at: </span>
     			<ion-radio ng-model="newSlotPosition" ng-value="start">Start</ion-radio>
     			<ion-radio ng-model="newSlotPosition" value="end">End</ion-radio>
   			</label>
   			<button class="button button-block button-balanced" 
-  			ng-click='splitSlot(newSlot,newSlotPosition)'
+  			ng-click='splitSlot(newSlot,newSlotPosition,newTask)'
   			>Split</button>
 		</div>
 	</ion-content>

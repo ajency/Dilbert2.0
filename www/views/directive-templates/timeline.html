@@ -57,11 +57,11 @@
 				<div class='col col-25' style='background:{{getColor(timeData[$index].status)}}' >
 					{{ getSlotDifference($index) }}
 				</div>
-				<div class='col col-50' data-slot="{{$index-1}}" style="padding:5px;"><!-- {{getTask($index)}} -->
-					<select class="item">
+				<div class='col col-50' data-slot="{{$index-1}}" style="padding:5px;">{{getTask($index)}}
+					<!-- <select class="item">
 						<option>{{getTask($index)}}</option>
       					<option ng-repeat="task in tasks" >#{{task.taskId}} {{task.task}}</option>
-    				</select>
+    				</select> -->
 				</div>
 				<div class='col col-20'  data-slot="{{$index-1}}">
 					{{ time.status }}
