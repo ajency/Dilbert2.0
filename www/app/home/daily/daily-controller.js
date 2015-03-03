@@ -1,5 +1,5 @@
 angular.module('dilbert.home').controller('DailyController', [
-  '$rootScope', '$scope', '$ionicModal', '$ionicPopup', 'DailyAPI', 'ModalData', '$ionicLoading', function($rootScope, $scope, $ionicModal, $ionicPopup, DailyAPI, ModalData, $ionicLoading) {
+  '$rootScope', '$scope', '$ionicModal', '$ionicPopup', 'DailyAPI', 'DailyTasks', 'ModalData', '$ionicLoading', function($rootScope, $scope, $ionicModal, $ionicPopup, DailyAPI, DailyTasks, ModalData, $ionicLoading) {
     $ionicLoading.show({
       content: 'Loading',
       animation: 'fade-in',
@@ -9,12 +9,17 @@ angular.module('dilbert.home').controller('DailyController', [
     });
     $scope.dataAvailable = false;
     $rootScope.slotData = [];
+    $scope.tasks = [];
     $scope.mData = [];
     DailyAPI.getDailyData().then(function(dailyData) {
       $rootScope.slotData = dailyData;
       $scope.duration = $rootScope.slotData[0].duration;
-      $ionicLoading.hide();
       return $scope.dataAvailable = true;
+    });
+    DailyTasks.getDailyTasks().then(function(dailyTask) {
+      $scope.tasks = dailyTask;
+      $scope.tasks = _.sortBy($scope.tasks, 'taskId');
+      return $ionicLoading.hide();
     });
     $scope.getCurrentDate = function() {
       return moment().format("ddd MMM Do YYYY");

@@ -1,8 +1,8 @@
 angular.module 'dilbert.home'
 
 
-.controller 'DailyController',['$rootScope','$scope','$ionicModal','$ionicPopup','DailyAPI','ModalData','$ionicLoading'
-	,($rootScope,$scope,$ionicModal,$ionicPopup,DailyAPI,ModalData,$ionicLoading)->
+.controller 'DailyController',['$rootScope','$scope','$ionicModal','$ionicPopup','DailyAPI','DailyTasks','ModalData','$ionicLoading'
+	,($rootScope,$scope,$ionicModal,$ionicPopup,DailyAPI,DailyTasks,ModalData,$ionicLoading)->
 		$ionicLoading.show
     		content: 'Loading'
     		animation: 'fade-in'
@@ -11,13 +11,21 @@ angular.module 'dilbert.home'
     		showDelay: 0
   		$scope.dataAvailable=false
 		$rootScope.slotData = []
+		$scope.tasks=[]
 		$scope.mData=[]
+
 		DailyAPI.getDailyData()
 		.then (dailyData)->
 			$rootScope.slotData = dailyData
 			$scope.duration = $rootScope.slotData[0].duration
-			$ionicLoading.hide();
 			$scope.dataAvailable=true
+
+		DailyTasks.getDailyTasks()
+		.then (dailyTask)->
+			$scope.tasks = dailyTask
+			$scope.tasks =_.sortBy $scope.tasks, 'taskId'
+			$ionicLoading.hide();
+
 
 		$scope.getCurrentDate = ->
 			moment().format("ddd MMM Do YYYY");

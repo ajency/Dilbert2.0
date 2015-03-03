@@ -19,7 +19,6 @@
 									<div class="slot-interval-time first">{{ getUnixTime(timeData[$index].time) }}</div>
 								</div>
 								
-								<!-- <div ng-if="$index!==0" >{{renderTimeline(data.dataSlot,data.bgcolor,data.width)}}</div> -->
 								<div ng-if="$index!==0" data-slot='{{$index-1}}' class='slot' style='background-color: {{getColor(timeData[$index].status)}}; width:{{getSlotPercentage(data.time, $index)}}' ></div>
 
 								<div class='slot-interval' ng-if="$index!==0 && $index < timeData.length-1">
@@ -49,15 +48,20 @@
 				ng-repeat="time in timeData"
 				ng-if="$index!==0"
 				data-slot="{{$index-1}}" 
-				class='row slot item item-text-wrap' 
-				style='height:50px'
+				class='row slot item item-text-wrap taskInfo' 
+				style='height:60px'
 				on-swipe-left='merge($event, $index-1,timeData[$index].status)' 
 				on-swipe-right='split($event, $index-1,timeData[$index].status)'>
 				
-				<div class='col' data-slot="{{$index-1}}" style='background:{{getColor(timeData[$index].status)}}'>
+				<div class='col' style='background:{{getColor(timeData[$index].status)}}' >
 					{{ getSlotDifference($index) }}
 				</div>
-				<div class='col col-75 taskInfo' data-slot="{{$index-1}}">{{getTask($index)}}</div>
+				<div class='col col-75' data-slot="{{$index-1}}" style="padding:5px;"><!-- {{getTask($index)}} -->
+					<select class="item">
+						<option>{{getTask($index)}}</option>
+      					<option ng-repeat="task in tasks" >#{{task.taskId}} {{task.task}}</option>
+    				</select>
+				</div>
 			</div>
 		</div>
 	</div>

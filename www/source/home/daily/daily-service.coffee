@@ -74,3 +74,71 @@ angular.module 'dilbert.home'
 	getData:->
 		data
 ]
+
+.factory 'DailyTasks', ['$q', '$timeout', ($q, $timeout)->
+
+	data =[
+		{
+			task:'Dilbert Re render issue'
+			label:'bug'
+			taskId:1
+			project:'Dilbert 2.0'
+		}	
+		{
+			task:'Dilbert Split Functionality'
+			label:'feature'
+			taskId:2
+			project:'Dilbert 2.0'
+		}
+		{
+			task:'Dilbert Mobile - Object Defination'
+			label:'feature'
+			taskId:3
+			project:'Dilbert 2.0'
+		}
+		{
+			task:'Dilbert Mobile - WireFrame Design'
+			label:'feature'
+			taskId:4
+			project:'Dilbert 2.0'
+		}
+		{
+			task:'Dilbert Mobile Merge Functionality'
+			label:'feature'
+			taskId:5
+			project:'Dilbert 2.0'
+		}
+		{
+			task:'Dilbert Mobile Merge Functionality'
+			label:'feature'
+			taskId:6
+			project:'Dilbert 2.0'
+		}
+		{
+			task:'Dilbert Mobile - Static Layout'
+			label:'feature'
+			taskId:8
+			project:'Dilbert 2.0'
+		}
+		{
+			task:'Dilbert Mobile - Bug Fixes'
+			label:'bug'
+			taskId:7
+			project:'Dilbert 2.0'
+		}					
+
+	]
+
+	TaskAPI = 
+
+		getDailyTasks : ->
+
+			q = $q.defer()
+
+			$timeout ->
+				q.resolve data
+			# , 1500
+
+			q.promise
+
+]

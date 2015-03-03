@@ -114,7 +114,8 @@ angular.module 'dilbert.home'
 			.addClass 'combine-current'
 
 			$ e.target 
-			.append '<span class="cancel-combine" style="float:right"><i class="icon ion-close"></i></span>'
+			.closest '.taskInfo'
+			.append '<span class="cancel-combine" style="float:right;padding-top: 65px;"><i class="icon ion-close"></i></span>'
 
 			if not isFirst
 				$('.time-description.combine-parent .slot[data-slot="'+(id-1)+'"]').addClass 'combine-neighbour'

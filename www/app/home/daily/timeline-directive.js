@@ -105,7 +105,7 @@ angular.module('dilbert.home').directive('timeLine', [
           console.log(isFirst + ' ' + isLast);
           $(e.target).closest('.time-description').addClass('combine-parent');
           $(e.target).addClass('combine-current');
-          $(e.target).append('<span class="cancel-combine" style="float:right"><i class="icon ion-close"></i></span>');
+          $(e.target).closest('.taskInfo').append('<span class="cancel-combine" style="float:right;padding-top: 65px;"><i class="icon ion-close"></i></span>');
           if (!isFirst) {
             $('.time-description.combine-parent .slot[data-slot="' + (id - 1) + '"]').addClass('combine-neighbour');
           }
