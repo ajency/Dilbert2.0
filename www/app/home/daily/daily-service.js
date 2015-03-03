@@ -51,14 +51,15 @@ angular.module('dilbert.home').factory('DailyAPI', [
     var data;
     data = {};
     return {
-      setData: function(status, slotStart, slotEnd, displayStart, displayEnd, slotDuration) {
+      setData: function(status, slotStart, slotEnd, displayStart, displayEnd, slotDuration, task) {
         return data = {
           status: status,
           slotStart: slotStart,
           slotEnd: slotEnd,
           displayStart: displayStart,
           displayEnd: displayEnd,
-          slotDuration: slotDuration
+          slotDuration: slotDuration,
+          task: task
         };
       },
       getData: function() {

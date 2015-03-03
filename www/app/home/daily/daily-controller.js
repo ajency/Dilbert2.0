@@ -54,7 +54,7 @@ angular.module('dilbert.home').controller('DailyController', [
   }
 ]).controller('SplitController', [
   '$rootScope', '$scope', 'ModalData', function($rootScope, $scope, ModalData) {
-    return $scope.splitSlot = function(timeMinutes, slotPos, newTask) {
+    return $scope.splitSlot = function(timeMinutes, slotPos) {
       var newMoment, newMomentUnix, slotMinutes;
       timeMinutes = Number(timeMinutes);
       slotMinutes = timeMinutes > 0 && timeMinutes < $scope.mData.slotDuration ? timeMinutes : '';
@@ -62,6 +62,7 @@ angular.module('dilbert.home').controller('DailyController', [
         return;
       }
       newMoment = moment.unix($scope.mData.slotStart);
+      console.log($scope.mData.slotDuration);
       if (slotPos === 'end') {
         newMoment.add($scope.mData.slotDuration - slotMinutes, 'm');
       } else {
@@ -71,12 +72,14 @@ angular.module('dilbert.home').controller('DailyController', [
       if (newMomentUnix > $scope.mData.slotStart && newMomentUnix < $scope.mData.slotEnd) {
         $rootScope.slotData.push({
           time: newMomentUnix,
-          task: newTask,
+          task: $scope.mData.task,
           status: $scope.mData.status
         });
         $scope.closeModal('split');
-        return $rootScope.slotData = _.sortBy($rootScope.slotData, 'time');
       }
+      console.log($rootScope.slotData);
+      $rootScope.slotData = _.sortBy($rootScope.slotData, 'time');
+      return console.log('split');
     };
   }
 ]);

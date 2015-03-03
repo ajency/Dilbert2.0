@@ -86,11 +86,12 @@ angular.module 'dilbert.home'
 	     
 	     	slotStart = $rootScope.slotData[id].time
 	     	slotEnd = $rootScope.slotData[id+1].time
+	     	task = $rootScope.slotData[id+1].task
 	     	displayStart=moment.unix(slotStart).format('h:mm a')
 	     	displayEnd=moment.unix(slotEnd).format('h:mm a')
 	     	slotDuration = moment.unix slotEnd 
 	     		.diff moment.unix(slotStart),'minutes'
-	     	ModalData.setData status,slotStart,slotEnd,displayStart,displayEnd,slotDuration
+	     	ModalData.setData status,slotStart,slotEnd,displayStart,displayEnd,slotDuration,task
 	     	scope.openModal('split')
 
 		scope.merge =(e,id) ->
@@ -142,6 +143,8 @@ angular.module 'dilbert.home'
 				$rootScope.slotData
 				.splice slotNo+1, 1
 			scope.$apply()
+			console.log 'merge'
+			console.log $rootScope.slotData
 			stopCombineSlot e
 
 		stopCombineSlot = (e)->

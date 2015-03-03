@@ -73,7 +73,7 @@ angular.module('dilbert.home').directive('timeLine', [
           return color;
         };
         scope.split = function(e, id, status) {
-          var displayEnd, displayStart, slotDuration, slotEnd, slotStart;
+          var displayEnd, displayStart, slotDuration, slotEnd, slotStart, task;
           if ($(e.target).closest('.time-description').hasClass('combine-parent')) {
             return;
           }
@@ -82,10 +82,11 @@ angular.module('dilbert.home').directive('timeLine', [
           }
           slotStart = $rootScope.slotData[id].time;
           slotEnd = $rootScope.slotData[id + 1].time;
+          task = $rootScope.slotData[id + 1].task;
           displayStart = moment.unix(slotStart).format('h:mm a');
           displayEnd = moment.unix(slotEnd).format('h:mm a');
           slotDuration = moment.unix(slotEnd).diff(moment.unix(slotStart), 'minutes');
-          ModalData.setData(status, slotStart, slotEnd, displayStart, displayEnd, slotDuration);
+          ModalData.setData(status, slotStart, slotEnd, displayStart, displayEnd, slotDuration, task);
           return scope.openModal('split');
         };
         scope.merge = function(e, id) {
@@ -127,6 +128,8 @@ angular.module('dilbert.home').directive('timeLine', [
             $rootScope.slotData.splice(slotNo + 1, 1);
           }
           scope.$apply();
+          console.log('merge');
+          console.log($rootScope.slotData);
           return stopCombineSlot(e);
         };
         return stopCombineSlot = function(e) {

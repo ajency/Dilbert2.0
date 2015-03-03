@@ -42,10 +42,11 @@
 		<div class="item item-divider item-dark">
    			Time Logs
   		</div>
+  		
 		<div class='time-description '>
-
+		<input ng-model="searchText">
 			<div 
-				ng-repeat="time in timeData"
+				ng-repeat="time in timeData | filter:searchText"
 				ng-if="$index!==0"
 				data-slot="{{$index-1}}" 
 				class='row slot item item-text-wrap taskInfo' 
@@ -53,14 +54,17 @@
 				on-swipe-left='merge($event, $index-1,timeData[$index].status)' 
 				on-swipe-right='split($event, $index-1,timeData[$index].status)'>
 				
-				<div class='col' style='background:{{getColor(timeData[$index].status)}}' >
+				<div class='col col-25' style='background:{{getColor(timeData[$index].status)}}' >
 					{{ getSlotDifference($index) }}
 				</div>
-				<div class='col col-75' data-slot="{{$index-1}}" style="padding:5px;"><!-- {{getTask($index)}} -->
+				<div class='col col-50' data-slot="{{$index-1}}" style="padding:5px;"><!-- {{getTask($index)}} -->
 					<select class="item">
 						<option>{{getTask($index)}}</option>
       					<option ng-repeat="task in tasks" >#{{task.taskId}} {{task.task}}</option>
     				</select>
+				</div>
+				<div class='col col-20'  data-slot="{{$index-1}}">
+					{{ time.status }}
 				</div>
 			</div>
 		</div>

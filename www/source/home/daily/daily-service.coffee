@@ -62,7 +62,7 @@ angular.module 'dilbert.home'
 
 .service 'ModalData',[()->
 	data={}
-	setData:(status,slotStart,slotEnd,displayStart,displayEnd,slotDuration)->
+	setData:(status,slotStart,slotEnd,displayStart,displayEnd,slotDuration,task)->
 		data=
 			status:status
 			slotStart:slotStart
@@ -70,6 +70,7 @@ angular.module 'dilbert.home'
 			displayStart:displayStart
 			displayEnd:displayEnd
 			slotDuration:slotDuration
+			task:task
 
 	getData:->
 		data

@@ -55,11 +55,12 @@ angular.module 'dilbert.home'
 ]
 
 .controller 'SplitController',['$rootScope','$scope','ModalData',($rootScope,$scope,ModalData)->
-	$scope.splitSlot=(timeMinutes,slotPos,newTask)->
+	$scope.splitSlot=(timeMinutes,slotPos)->
 		timeMinutes = Number(timeMinutes)
 		slotMinutes = if timeMinutes >0 and timeMinutes < $scope.mData.slotDuration then timeMinutes else ''
 		if slotMinutes is '' then return
 		newMoment = moment.unix($scope.mData.slotStart)
+		console.log $scope.mData.slotDuration
 		if slotPos is 'end'
 			newMoment.add $scope.mData.slotDuration-slotMinutes, 'm'
 		else
@@ -70,8 +71,11 @@ angular.module 'dilbert.home'
 		if newMomentUnix > $scope.mData.slotStart and newMomentUnix < $scope.mData.slotEnd
 			$rootScope.slotData.push
 				time:newMomentUnix
-				task:newTask
+				task:$scope.mData.task
 				status:$scope.mData.status
 			$scope.closeModal('split')
-			$rootScope.slotData = _.sortBy $rootScope.slotData, 'time'
+		console.log $rootScope.slotData
+		$rootScope.slotData = _.sortBy $rootScope.slotData, 'time'
+		console.log 'split'
+		
 ]
