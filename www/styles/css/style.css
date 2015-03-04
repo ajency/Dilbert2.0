@@ -91,3 +91,6 @@
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#77e860', endColorstr='#37801a',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 
 }
+.popup{
+	width:80% !important;
+}

@@ -1,5 +1,5 @@
 angular.module('dilbert.home').directive('timeLine', [
-  '$rootScope', '$parse', '$compile', 'ModalData', function($rootScope, $parse, $compile, ModalData) {
+  '$rootScope', '$parse', '$compile', 'ModalData', '$ionicPopup', function($rootScope, $parse, $compile, ModalData, $ionicPopup) {
     return {
       restrict: 'E',
       templateUrl: "views/directive-templates/timeline.html",
@@ -102,10 +102,9 @@ angular.module('dilbert.home').directive('timeLine', [
           if (isFirst && isLast) {
             return;
           }
-          console.log(isFirst + ' ' + isLast);
           $(e.target).closest('.time-description').addClass('combine-parent');
           $(e.target).addClass('combine-current');
-          $(e.target).closest('.taskInfo').append('<span class="cancel-combine" style="float:right;padding-top: 65px;"><i class="icon ion-close"></i></span>');
+          $(e.target).closest('.taskInfo').append('<span class="cancel-combine" style="float:right;padding-top: 65px;"><i class="icon ion-close-round" style="color:white"></i></span>');
           if (!isFirst) {
             $('.time-description.combine-parent .slot[data-slot="' + (id - 1) + '"]').addClass('combine-neighbour');
           }
@@ -118,17 +117,63 @@ angular.module('dilbert.home').directive('timeLine', [
         };
         combineSlots = function(slotNo, e) {
           var neighbourSlot;
+          scope.text = {
+            data: ''
+          };
           slotNo = scope.id;
           neighbourSlot = $(e.target).attr('data-slot');
           neighbourSlot = Number(neighbourSlot);
-          if (neighbourSlot < slotNo) {
-            $rootScope.slotData.splice(slotNo, 1);
-          } else if (neighbourSlot > slotNo) {
-            $rootScope.slotData.splice(slotNo + 1, 1);
-          }
-          scope.$apply();
-          console.log('merge');
-          console.log($rootScope.slotData);
+          scope.clickedSlot = {
+            task: $rootScope.slotData[slotNo + 1].task,
+            duration: moment.unix($rootScope.slotData[slotNo + 1].time).diff(moment.unix($rootScope.slotData[slotNo].time), 'minutes'),
+            status: $rootScope.slotData[slotNo + 1].status
+          };
+          scope.nSlot = {
+            task: $rootScope.slotData[neighbourSlot + 1].task,
+            duration: moment.unix($rootScope.slotData[neighbourSlot + 1].time).diff(moment.unix($rootScope.slotData[neighbourSlot].time), 'minutes'),
+            status: $rootScope.slotData[neighbourSlot + 1].status
+          };
+          $ionicPopup.show({
+            title: 'Merge Summary',
+            template: '<div>' + "<h4>Clicked Slot</h4>" + ("<p class='item item-input'>Task: " + scope.clickedSlot.task + "</p>") + ("<p class='item item-input'>Duration: " + scope.clickedSlot.duration + " minutes</p>") + "<h4>Slot to be merged with</h4>" + ("<p class='item item-input'>Task: " + scope.nSlot.task + "</p>") + ("<p class='item item-input'>Duration: " + scope.nSlot.duration + " minutes</p><br>") + "<label class='item item-input item-select'><div class='input-label'>Task for Merged slot</div>" + ("<select ng-model='text.data' selected><option>" + scope.clickedSlot.task + "</option><option>" + scope.nSlot.task + "</option></select></label>") + "</div>",
+            scope: scope,
+            buttons: [
+              {
+                text: 'Cancel',
+                onTap: function(e) {
+                  return stopCombineSlot(e);
+                }
+              }, {
+                text: 'Confirm',
+                type: 'button-positive',
+                onTap: function(e) {
+                  var status;
+                  status = '';
+                  if (scope.clickedSlot.status === 'offline' || scope.nSlot.status === 'offline') {
+                    status = 'offline';
+                  } else if (scope.clickedSlot.status === 'idle' && scope.nSlot.status === 'idle') {
+                    status = 'idle';
+                  } else if ((scope.clickedSlot.status === 'idle' && scope.nSlot.status === 'available') || (scope.clickedSlot.status === 'available' && scope.nSlot.status === 'idle')) {
+                    status = 'idle';
+                  } else if (scope.clickedSlot.status === 'available' && scope.nSlot.status === 'available') {
+                    status = 'available';
+                  }
+                  if (neighbourSlot < slotNo) {
+                    $rootScope.slotData.splice(slotNo, 1);
+                    $rootScope.slotData[slotNo].task = scope.text.data;
+                    $rootScope.slotData[slotNo].status = status;
+                  } else if (neighbourSlot > slotNo) {
+                    $rootScope.slotData.splice(slotNo + 1, 1);
+                    $rootScope.slotData[slotNo + 1].task = scope.text.data;
+                    $rootScope.slotData[slotNo + 1].status = status;
+                  }
+                  return console.log('merge executed');
+                }
+              }
+            ]
+          }).then(function(res) {
+            return console.log('Merge closed');
+          });
           return stopCombineSlot(e);
         };
         return stopCombineSlot = function(e) {

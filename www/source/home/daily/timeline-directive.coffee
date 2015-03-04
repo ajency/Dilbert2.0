@@ -1,6 +1,6 @@
 angular.module 'dilbert.home'
 
-.directive 'timeLine', ['$rootScope','$parse', '$compile' ,'ModalData',($rootScope,$parse , $compile,ModalData)->
+.directive 'timeLine', ['$rootScope','$parse', '$compile' ,'ModalData','$ionicPopup',($rootScope,$parse , $compile,ModalData,$ionicPopup)->
 
 	restrict:'E'
 	templateUrl:"views/directive-templates/timeline.html"
@@ -105,7 +105,6 @@ angular.module 'dilbert.home'
 			isLast = if id is $rootScope.slotData.length-2 then true else false
 
 			if isFirst and isLast then return
-			console.log  isFirst+' '+isLast
 			$ e.target 
 			.closest '.time-description' 
 			.addClass 'combine-parent'
@@ -115,7 +114,7 @@ angular.module 'dilbert.home'
 
 			$ e.target 
 			.closest '.taskInfo'
-			.append '<span class="cancel-combine" style="float:right;padding-top: 65px;"><i class="icon ion-close"></i></span>'
+			.append '<span class="cancel-combine" style="float:right;padding-top: 65px;"><i class="icon ion-close-round" style="color:white"></i></span>'
 
 			if not isFirst
 				$('.time-description.combine-parent .slot[data-slot="'+(id-1)+'"]').addClass 'combine-neighbour'
@@ -131,20 +130,77 @@ angular.module 'dilbert.home'
 			return false
 
 		combineSlots = (slotNo, e)->
+			scope.text = 
+				data: ''
 			slotNo=scope.id
 			neighbourSlot = $ e.target 
 			.attr 'data-slot'
 			neighbourSlot=Number neighbourSlot
-			if neighbourSlot < slotNo
-				$rootScope.slotData
-				.splice slotNo,1
-			else if neighbourSlot > slotNo
-				$rootScope.slotData
-				.splice slotNo+1, 1
-			scope.$apply()
-			console.log 'merge'
-			console.log $rootScope.slotData
+
+			scope.clickedSlot=
+				task:$rootScope.slotData[slotNo+1].task
+				duration:moment.unix $rootScope.slotData[slotNo+1].time 
+	     		.diff moment.unix($rootScope.slotData[slotNo].time),'minutes'
+	     		status:$rootScope.slotData[slotNo+1].status
+
+			scope.nSlot=
+				task:$rootScope.slotData[neighbourSlot+1].task
+				duration:moment.unix $rootScope.slotData[neighbourSlot+1].time 
+	     		.diff moment.unix($rootScope.slotData[neighbourSlot].time),'minutes'
+	     		status:$rootScope.slotData[neighbourSlot+1].status	
+
+			$ionicPopup.show
+				title:'Merge Summary'
+				template:'<div>'+
+				"<h4>Clicked Slot</h4>"+
+				"<p class='item item-input'>Task: #{scope.clickedSlot.task}</p>"+
+				"<p class='item item-input'>Duration: #{scope.clickedSlot.duration} minutes</p>"+
+
+				"<h4>Slot to be merged with</h4>"+
+				"<p class='item item-input'>Task: #{scope.nSlot.task}</p>"+
+				"<p class='item item-input'>Duration: #{scope.nSlot.duration} minutes</p><br>"+
+
+				"<label class='item item-input item-select'><div class='input-label'>Task for Merged slot</div>"+
+					"<select ng-model='text.data' selected><option>#{scope.clickedSlot.task}</option><option>#{scope.nSlot.task}</option></select></label>"+
+				"</div>"
+				scope:scope
+				buttons:[
+					{ 
+						text: 'Cancel'
+						onTap:(e)->
+							stopCombineSlot e
+					},
+					{
+						text:'Confirm'
+						type: 'button-positive'
+						onTap:(e)->
+							status=''
+							if scope.clickedSlot.status is 'offline' || scope.nSlot.status is 'offline' then status='offline'
+							else if scope.clickedSlot.status is 'idle' && scope.nSlot.status is 'idle' then status='idle'
+							else if (scope.clickedSlot.status is 'idle' && scope.nSlot.status is 'available') || (scope.clickedSlot.status is 'available' && scope.nSlot.status is 'idle') then status='idle'
+							else if scope.clickedSlot.status is 'available' && scope.nSlot.status is 'available' then status='available'
+
+							if neighbourSlot < slotNo
+								
+								$rootScope.slotData
+								.splice slotNo,1
+								$rootScope.slotData[slotNo].task=scope.text.data
+								$rootScope.slotData[slotNo].status=status
+							else if neighbourSlot > slotNo
+								
+								$rootScope.slotData
+								.splice slotNo+1, 1
+								$rootScope.slotData[slotNo+1].task=scope.text.data
+								$rootScope.slotData[slotNo+1].status=status
+							console.log 'merge executed'
+					}
+				]
+
+			.then (res)->
+				console.log 'Merge closed'
 			stopCombineSlot e
+
+
 
 		stopCombineSlot = (e)->
 			$ '.time-description.combine-parent .slot.combine-current .cancel-combine' 
@@ -160,9 +216,6 @@ angular.module 'dilbert.home'
 
 			$ '.time-description.combine-parent '
 			.removeClass 'combine-parent'
-
-
-
 
 ]
 
