@@ -75,7 +75,5 @@ angular.module 'dilbert.home'
 			$scope.closeModal('split')
 
 		$rootScope.slotData = _.sortBy $rootScope.slotData, 'time'
-		console.log $rootScope.slotData
-		console.log 'split'
 		
 ]

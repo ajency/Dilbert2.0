@@ -74,31 +74,36 @@ angular.module 'dilbert.home'
 			color
 
 		scope.split =(e,id,status) ->
-
-	     	if $ e.target 
+			console.log id
+			if $ e.target 
+				.parent().parent().parent()
 	     		.closest('.time-description')
 	     		.hasClass 'combine-parent' then return
 
-	     	if not $ e.target
+			if not $ e.target
+				.parent().parent().parent()
 	     		.hasClass 'slot' 
 	     			return
 
 	     
-	     	slotStart = $rootScope.slotData[id].time
-	     	slotEnd = $rootScope.slotData[id+1].time
-	     	displayStart=moment.unix(slotStart).format('h:mm a')
-	     	displayEnd=moment.unix(slotEnd).format('h:mm a')
-	     	slotDuration = moment.unix slotEnd 
-	     		.diff moment.unix(slotStart),'minutes'
-	     	ModalData.setData status,slotStart,slotEnd,displayStart,displayEnd,slotDuration
-	     	scope.openModal('split')
+			slotStart = $rootScope.slotData[id].time
+			slotEnd = $rootScope.slotData[id+1].time
+			displayStart=moment.unix(slotStart).format('h:mm a')
+			displayEnd=moment.unix(slotEnd).format('h:mm a')
+			slotDuration = moment.unix slotEnd
+			.diff moment.unix(slotStart),'minutes'
+			ModalData.setData status,slotStart,slotEnd,displayStart,displayEnd,slotDuration
+			scope.openModal('split')
 
 		scope.merge =(e,id) ->
 			scope.id=id
-			if $ e.target 
+
+			if $ e.target
+				.parent().parent().parent() 
 				.closest '.time-description' 
 				.hasClass 'combine-parent' then return
 			if not $ e.target 
+				.parent().parent().parent() 
 				.hasClass 'slot' then return
 
 			isFirst= if id is 0 then true else false
@@ -106,13 +111,16 @@ angular.module 'dilbert.home'
 
 			if isFirst and isLast then return
 			$ e.target 
+			.parent().parent().parent()
 			.closest '.time-description' 
 			.addClass 'combine-parent'
 
-			$ e.target 
+			$ e.target
+			.parent().parent().parent()
 			.addClass 'combine-current'
 
-			$ e.target 
+			$ e.target
+			.parent().parent().parent()
 			.closest '.taskInfo'
 			.append '<span class="cancel-combine" style="float:right;padding-top: 65px;"><i class="icon ion-close-round" style="color:white"></i></span>'
 
@@ -174,6 +182,9 @@ angular.module 'dilbert.home'
 						text:'Confirm'
 						type: 'button-positive'
 						onTap:(e)->
+							if scope.text.data is ''
+								scope.text.data=scope.clickedSlot.task
+								
 							status=''
 							if scope.clickedSlot.status is 'offline' || scope.nSlot.status is 'offline' then status='offline'
 							else if scope.clickedSlot.status is 'idle' && scope.nSlot.status is 'idle' then status='idle'

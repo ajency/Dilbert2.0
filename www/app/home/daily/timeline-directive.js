@@ -74,10 +74,11 @@ angular.module('dilbert.home').directive('timeLine', [
         };
         scope.split = function(e, id, status) {
           var displayEnd, displayStart, slotDuration, slotEnd, slotStart;
-          if ($(e.target).closest('.time-description').hasClass('combine-parent')) {
+          console.log(id);
+          if ($(e.target).parent().parent().parent().closest('.time-description').hasClass('combine-parent')) {
             return;
           }
-          if (!$(e.target).hasClass('slot')) {
+          if (!$(e.target).parent().parent().parent().hasClass('slot')) {
             return;
           }
           slotStart = $rootScope.slotData[id].time;
@@ -91,10 +92,10 @@ angular.module('dilbert.home').directive('timeLine', [
         scope.merge = function(e, id) {
           var isFirst, isLast;
           scope.id = id;
-          if ($(e.target).closest('.time-description').hasClass('combine-parent')) {
+          if ($(e.target).parent().parent().parent().closest('.time-description').hasClass('combine-parent')) {
             return;
           }
-          if (!$(e.target).hasClass('slot')) {
+          if (!$(e.target).parent().parent().parent().hasClass('slot')) {
             return;
           }
           isFirst = id === 0 ? true : false;
@@ -102,9 +103,9 @@ angular.module('dilbert.home').directive('timeLine', [
           if (isFirst && isLast) {
             return;
           }
-          $(e.target).closest('.time-description').addClass('combine-parent');
-          $(e.target).addClass('combine-current');
-          $(e.target).closest('.taskInfo').append('<span class="cancel-combine" style="float:right;padding-top: 65px;"><i class="icon ion-close-round" style="color:white"></i></span>');
+          $(e.target).parent().parent().parent().closest('.time-description').addClass('combine-parent');
+          $(e.target).parent().parent().parent().addClass('combine-current');
+          $(e.target).parent().parent().parent().closest('.taskInfo').append('<span class="cancel-combine" style="float:right;padding-top: 65px;"><i class="icon ion-close-round" style="color:white"></i></span>');
           if (!isFirst) {
             $('.time-description.combine-parent .slot[data-slot="' + (id - 1) + '"]').addClass('combine-neighbour');
           }
@@ -148,6 +149,9 @@ angular.module('dilbert.home').directive('timeLine', [
                 type: 'button-positive',
                 onTap: function(e) {
                   var status;
+                  if (scope.text.data === '') {
+                    scope.text.data = scope.clickedSlot.task;
+                  }
                   status = '';
                   if (scope.clickedSlot.status === 'offline' || scope.nSlot.status === 'offline') {
                     status = 'offline';

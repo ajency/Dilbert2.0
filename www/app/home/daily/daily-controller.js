@@ -76,9 +76,7 @@ angular.module('dilbert.home').controller('DailyController', [
         });
         $scope.closeModal('split');
       }
-      $rootScope.slotData = _.sortBy($rootScope.slotData, 'time');
-      console.log($rootScope.slotData);
-      return console.log('split');
+      return $rootScope.slotData = _.sortBy($rootScope.slotData, 'time');
     };
   }
 ]);
