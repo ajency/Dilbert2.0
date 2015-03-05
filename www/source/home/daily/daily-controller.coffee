@@ -13,6 +13,7 @@ angular.module 'dilbert.home'
 		$rootScope.slotData = []
 		$scope.tasks=[]
 		$scope.mData=[]
+		$scope.searchtext='all'
 
 		DailyAPI.getDailyData()
 		.then (dailyData)->
@@ -41,16 +42,27 @@ angular.module 'dilbert.home'
 		.then (modal)->
 			$scope.splitModal = modal
 
+		$ionicModal.fromTemplateUrl 'views/modal-templates/edit-template.html',
+			backdrop: true
+			scope:$scope
+		.then (modal)->
+			$scope.editModal = modal
+
 		$scope.openModal =(modal_name)->
 			if modal_name is 'calendar' then $scope.calModal.show()
 			else if modal_name is 'split'
 				$scope.mData=[]
 				$scope.mData=ModalData.getData()
 				$scope.splitModal.show()
+			else if modal_name is 'edit'
+				$scope.mData=[]
+				$scope.mData=ModalData.getData()
+				$scope.editModal.show()
 
 		$scope.closeModal =(modal_name)->
 			if modal_name is 'calendar' then $scope.calModal.hide()
 			else if modal_name is 'split' then $scope.splitModal.hide()
+			else if modal_name is 'edit' then $scope.editModal.hide()
 
 ]
 
@@ -65,7 +77,7 @@ angular.module 'dilbert.home'
 		else
 			newMoment.add slotMinutes, 'm'
 
-		newMomentUnix = newMoment.unix()
+		console.log newMomentUnix = newMoment.unix()
 
 		if newMomentUnix > $scope.mData.slotStart and newMomentUnix < $scope.mData.slotEnd
 			$rootScope.slotData.push

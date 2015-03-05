@@ -62,7 +62,7 @@ angular.module 'dilbert.home'
 
 .service 'ModalData',[()->
 	data={}
-	setData:(status,slotStart,slotEnd,displayStart,displayEnd,slotDuration)->
+	setData:(status,slotStart,slotEnd,displayStart,displayEnd,slotDuration,slotTask)->
 		data=
 			status:status
 			slotStart:slotStart
@@ -70,6 +70,7 @@ angular.module 'dilbert.home'
 			displayStart:displayStart
 			displayEnd:displayEnd
 			slotDuration:slotDuration
+			slotTask:slotTask
 
 	getData:->
 		data
@@ -109,7 +110,7 @@ angular.module 'dilbert.home'
 			project:'Dilbert 2.0'
 		}
 		{
-			task:'Dilbert Mobile Merge Functionality'
+			task:'Dilbert Mobile CSS'
 			label:'feature'
 			taskId:6
 			project:'Dilbert 2.0'

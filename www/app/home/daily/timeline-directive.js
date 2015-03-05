@@ -37,6 +37,9 @@ angular.module('dilbert.home').directive('timeLine', [
         };
         scope.getTask = function(index) {
           var task;
+          if (index === 0) {
+            return;
+          }
           if (timeData[index].status === 'offline') {
             task = 'Break';
           } else {
@@ -46,6 +49,9 @@ angular.module('dilbert.home').directive('timeLine', [
         };
         scope.getSlotDifference = function(index) {
           var diff, duration, slotEnd, slotStart;
+          if (index === 0) {
+            return;
+          }
           slotStart = timeData[index - 1].time;
           slotEnd = timeData[index].time;
           duration = moment.unix(slotEnd).diff(slotStart * 1000);
@@ -61,8 +67,12 @@ angular.module('dilbert.home').directive('timeLine', [
           }
           return diff;
         };
-        scope.getColor = function(status) {
-          var color;
+        scope.getColor = function(index) {
+          var color, status;
+          if (index === 0) {
+            return;
+          }
+          status = timeData[index].status;
           if (status === 'available') {
             color = '#468966';
           } else if (status === 'idle') {
@@ -74,13 +84,14 @@ angular.module('dilbert.home').directive('timeLine', [
         };
         scope.split = function(e, id, status) {
           var displayEnd, displayStart, slotDuration, slotEnd, slotStart;
-          console.log(id);
+          scope.searchtext = 'all';
           if ($(e.target).parent().parent().parent().closest('.time-description').hasClass('combine-parent')) {
             return;
           }
           if (!$(e.target).parent().parent().parent().hasClass('slot')) {
             return;
           }
+          status = $rootScope.slotData[id + 1].status;
           slotStart = $rootScope.slotData[id].time;
           slotEnd = $rootScope.slotData[id + 1].time;
           displayStart = moment.unix(slotStart).format('h:mm a');
@@ -89,9 +100,28 @@ angular.module('dilbert.home').directive('timeLine', [
           ModalData.setData(status, slotStart, slotEnd, displayStart, displayEnd, slotDuration);
           return scope.openModal('split');
         };
+        scope.editSlot = function(e, id) {
+          var displayEnd, displayStart, slotDuration, slotEnd, slotStart, status, task;
+          if ($(e.target).parent().parent().parent().closest('.time-description').hasClass('combine-parent')) {
+            return;
+          }
+          if (!$(e.target).parent().parent().parent().hasClass('slot')) {
+            return;
+          }
+          status = $rootScope.slotData[id + 1].status;
+          task = $rootScope.slotData[id + 1].task;
+          slotStart = $rootScope.slotData[id].time;
+          slotEnd = $rootScope.slotData[id + 1].time;
+          displayStart = moment.unix(slotStart).format('h:mm a');
+          displayEnd = moment.unix(slotEnd).format('h:mm a');
+          slotDuration = moment.unix(slotEnd).diff(moment.unix(slotStart), 'minutes');
+          ModalData.setData(status, slotStart, slotEnd, displayStart, displayEnd, slotDuration, task);
+          return scope.openModal('edit');
+        };
         scope.merge = function(e, id) {
           var isFirst, isLast;
           scope.id = id;
+          scope.searchtext = 'all';
           if ($(e.target).parent().parent().parent().closest('.time-description').hasClass('combine-parent')) {
             return;
           }

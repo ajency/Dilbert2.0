@@ -11,6 +11,7 @@ angular.module('dilbert.home').controller('DailyController', [
     $rootScope.slotData = [];
     $scope.tasks = [];
     $scope.mData = [];
+    $scope.searchtext = 'all';
     DailyAPI.getDailyData().then(function(dailyData) {
       $rootScope.slotData = dailyData;
       $scope.duration = $rootScope.slotData[0].duration;
@@ -35,6 +36,12 @@ angular.module('dilbert.home').controller('DailyController', [
     }).then(function(modal) {
       return $scope.splitModal = modal;
     });
+    $ionicModal.fromTemplateUrl('views/modal-templates/edit-template.html', {
+      backdrop: true,
+      scope: $scope
+    }).then(function(modal) {
+      return $scope.editModal = modal;
+    });
     $scope.openModal = function(modal_name) {
       if (modal_name === 'calendar') {
         return $scope.calModal.show();
@@ -42,6 +49,10 @@ angular.module('dilbert.home').controller('DailyController', [
         $scope.mData = [];
         $scope.mData = ModalData.getData();
         return $scope.splitModal.show();
+      } else if (modal_name === 'edit') {
+        $scope.mData = [];
+        $scope.mData = ModalData.getData();
+        return $scope.editModal.show();
       }
     };
     return $scope.closeModal = function(modal_name) {
@@ -49,6 +60,8 @@ angular.module('dilbert.home').controller('DailyController', [
         return $scope.calModal.hide();
       } else if (modal_name === 'split') {
         return $scope.splitModal.hide();
+      } else if (modal_name === 'edit') {
+        return $scope.editModal.hide();
       }
     };
   }
@@ -67,7 +80,7 @@ angular.module('dilbert.home').controller('DailyController', [
       } else {
         newMoment.add(slotMinutes, 'm');
       }
-      newMomentUnix = newMoment.unix();
+      console.log(newMomentUnix = newMoment.unix());
       if (newMomentUnix > $scope.mData.slotStart && newMomentUnix < $scope.mData.slotEnd) {
         $rootScope.slotData.push({
           time: newMomentUnix,

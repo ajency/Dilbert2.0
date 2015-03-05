@@ -17,7 +17,7 @@ Type
 
 prepare,build,run
 
-
+ionic prepare android && ionic build android && ionic run android
 
 Search wrt Status and Type
 show modal when merging to askk user which data to keep.

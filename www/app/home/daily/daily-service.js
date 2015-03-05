@@ -51,14 +51,15 @@ angular.module('dilbert.home').factory('DailyAPI', [
     var data;
     data = {};
     return {
-      setData: function(status, slotStart, slotEnd, displayStart, displayEnd, slotDuration) {
+      setData: function(status, slotStart, slotEnd, displayStart, displayEnd, slotDuration, slotTask) {
         return data = {
           status: status,
           slotStart: slotStart,
           slotEnd: slotEnd,
           displayStart: displayStart,
           displayEnd: displayEnd,
-          slotDuration: slotDuration
+          slotDuration: slotDuration,
+          slotTask: slotTask
         };
       },
       getData: function() {
@@ -96,7 +97,7 @@ angular.module('dilbert.home').factory('DailyAPI', [
         taskId: 5,
         project: 'Dilbert 2.0'
       }, {
-        task: 'Dilbert Mobile Merge Functionality',
+        task: 'Dilbert Mobile CSS',
         label: 'feature',
         taskId: 6,
         project: 'Dilbert 2.0'

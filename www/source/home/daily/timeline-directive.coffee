@@ -41,6 +41,7 @@ angular.module 'dilbert.home'
 			"#{percentage}px"
 
 		scope.getTask = (index)->
+			if index is 0 then return
 			if timeData[index].status is 'offline'
 				task = 'Break'
 			else
@@ -48,6 +49,7 @@ angular.module 'dilbert.home'
 			task
 
 		scope.getSlotDifference = (index)->
+			if index is 0 then return
 			slotStart = timeData[index-1].time	
 			slotEnd = timeData[index].time
 			duration = moment.unix(slotEnd).diff(slotStart*1000)
@@ -61,7 +63,9 @@ angular.module 'dilbert.home'
 
 			diff
 
-		scope.getColor=(status)->
+		scope.getColor=(index)->
+			if index is 0 then return
+			status=timeData[index].status
 			if status is 'available'
 				color = '#468966'
 
@@ -74,7 +78,7 @@ angular.module 'dilbert.home'
 			color
 
 		scope.split =(e,id,status) ->
-			console.log id
+			scope.searchtext='all'
 			if $ e.target 
 				.parent().parent().parent()
 	     		.closest('.time-description')
@@ -86,6 +90,7 @@ angular.module 'dilbert.home'
 	     			return
 
 	     
+			status= $rootScope.slotData[id+1].status
 			slotStart = $rootScope.slotData[id].time
 			slotEnd = $rootScope.slotData[id+1].time
 			displayStart=moment.unix(slotStart).format('h:mm a')
@@ -95,9 +100,32 @@ angular.module 'dilbert.home'
 			ModalData.setData status,slotStart,slotEnd,displayStart,displayEnd,slotDuration
 			scope.openModal('split')
 
+		scope.editSlot=(e,id)->
+			if $ e.target 
+				.parent().parent().parent()
+	     		.closest('.time-description')
+	     		.hasClass 'combine-parent' then return
+
+			if not $ e.target
+				.parent().parent().parent()
+	     		.hasClass 'slot' 
+	     			return
+
+	     	status= $rootScope.slotData[id+1].status
+	     	task= $rootScope.slotData[id+1].task
+	     	slotStart = $rootScope.slotData[id].time
+			slotEnd = $rootScope.slotData[id+1].time
+			displayStart=moment.unix(slotStart).format('h:mm a')
+			displayEnd=moment.unix(slotEnd).format('h:mm a')
+			slotDuration = moment.unix slotEnd
+			.diff moment.unix(slotStart),'minutes'
+			ModalData.setData status,slotStart,slotEnd,displayStart,displayEnd,slotDuration,task
+			scope.openModal('edit')
+
+
 		scope.merge =(e,id) ->
 			scope.id=id
-
+			scope.searchtext='all'
 			if $ e.target
 				.parent().parent().parent() 
 				.closest '.time-description' 
@@ -129,7 +157,7 @@ angular.module 'dilbert.home'
 
 			if not isLast 
 				$('.time-description.combine-parent .slot[data-slot="'+(id+1)+'"]').addClass 'combine-neighbour'
-
+			
 			$ '.time-description.combine-parent .slot.combine-neighbour'
 			.on 'tap',combineSlots.bind id,e
 
@@ -204,6 +232,7 @@ angular.module 'dilbert.home'
 								$rootScope.slotData[slotNo+1].task=scope.text.data
 								$rootScope.slotData[slotNo+1].status=status
 							console.log 'merge executed'
+
 					}
 				]
 

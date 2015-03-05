@@ -1,0 +1,54 @@
+<ion-modal-view>
+	<ion-header-bar class="bar bar-dark">
+		<h1 class="title">Edit Time Slot</h1>
+		<div class="buttons">
+  			<button class="button button-clear icon ion-close " ng-click="closeModal('edit')"></button>
+		</div>
+		</ion-header-bar>
+	<ion-content>
+	<div class="card">
+		<div class="item item-divider item-dark">
+   			Current Task
+  		</div>
+  		
+		<div class="list list-inset">
+			<label class="item ">
+				<span class="item-label">Task Name: </span>
+				<span> {{ mData.slotTask }}</span>
+			</label>
+			<label class="item">
+				<span class="item-label">Task Duration: </span>
+				<span> {{ mData.slotDuration }} mins</span>
+			</label>
+		</div>
+
+		<div class="item item-divider item-dark">
+   			Edit Task
+  		</div>
+  		<label class="item item-input item-select">
+			<div class="input-label">
+  				Task
+			</div>
+			<select ng-model="newTask">
+  				<option ng-repeat="task in tasks">{{task.task}}</option>
+			</select>
+  		</label>
+		<label ng-repeat="task in tasks | filter:newTask" ng-show="newTask">
+			<label class="item">
+				<span class="item-label">Task ID: </span>
+				<span>#{{task.taskId}}</span>
+			</label>
+			<label class="item">
+				<span class="item-label">Task Label: </span>
+				<span>{{task.label}}</span>
+			</label>
+			<label class="item">
+				<span class="item-label">Project Name: </span>
+				<span>{{task.project}}</span>
+			</label>
+		</label>
+
+
+	</div>
+	</ion-content>
+</ion-modal-view>

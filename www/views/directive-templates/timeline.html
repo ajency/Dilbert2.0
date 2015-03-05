@@ -19,7 +19,7 @@
 									<div class="slot-interval-time first">{{ getUnixTime(timeData[$index].time) }}</div>
 								</div>
 								
-								<div ng-if="$index!==0" data-slot='{{$index-1}}' class='slot' style='background-color: {{getColor(timeData[$index].status)}}; width:{{getSlotPercentage(data.time, $index)}}' ></div>
+								<div ng-if="$index!==0" data-slot='{{$index-1}}' class='slot' style='background-color: {{getColor($index)}}; width:{{getSlotPercentage(data.time, $index)}}' ></div>
 
 								<div class='slot-interval' ng-if="$index!==0 && $index < timeData.length-1">
 									<div class="slot-interval-time">{{ getUnixTime(timeData[$index].time )}}</div>
@@ -42,7 +42,17 @@
 		<div class="item item-divider item-dark">
    			Time Logs
   		</div>
-  		
+  		<label class="item item-input item-select">
+	  		<div class="input-label" style="float:right">
+	  			Search by Status
+			</div>
+	  		<select ng-model="searchtext">
+				<option >all</option>
+				<option >available</option>
+				<option >idle</option>
+				<option >offline</option>
+			</select>
+		</label>
 		<div class='time-description'>
 
 			<div 
@@ -52,10 +62,11 @@
 				data-slot="{{$index-1}}" 
 				class='row slot item item-text-wrap taskInfo responsive-sm' 
 				style='height:60px'
+				ng-show="searchtext==time.status || searchtext==='all'"
 				>
 
-				<div ng-hide="showCtrl" class="row item item-text-wrap" ng-click="showCtrl=true">
-					<div class='col col-25' style='background:{{getColor(timeData[$index].status)}}'>
+				<div ng-hide="showCtrl" class="row" ng-click="showCtrl=true">
+					<div class='col col-25' style='background:{{getColor($index)}}'>
 						{{ getSlotDifference($index) }}
 					</div>
 					<div class='col col-50' data-slot="{{$index-1}}" style="padding:5px;" >{{getTask($index)}}
@@ -65,7 +76,7 @@
 					</div>
 				</div>
 
-				<div ng-show="showCtrl" class="row">
+				<div ng-show="showCtrl" class="row" >
 					<div class='col col-25'>
 						<button class="button button-block button-clear button-dark" ng-click="showCtrl=false;split($event, $index-1,timeData[$index].status)">
 	  						Split
@@ -79,7 +90,7 @@
 						</button>
 					</div>
 					<div class='col col-25'>
-						<button class="button button-block button-clear button-dark">
+						<button class="button button-block button-clear button-dark" ng-click="showCtrl=false;editSlot($event,$index-1)">
 	  						Edit
 						</button>
 					</div>
