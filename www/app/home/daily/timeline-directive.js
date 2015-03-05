@@ -118,10 +118,12 @@ angular.module('dilbert.home').directive('timeLine', [
           ModalData.setData(status, slotStart, slotEnd, displayStart, displayEnd, slotDuration, task);
           return scope.openModal('edit');
         };
+        scope.mergeFlag = false;
         scope.merge = function(e, id) {
           var isFirst, isLast;
           scope.id = id;
           scope.searchtext = 'all';
+          scope.mergeFlag = true;
           if ($(e.target).parent().parent().parent().closest('.time-description').hasClass('combine-parent')) {
             return;
           }
@@ -214,7 +216,8 @@ angular.module('dilbert.home').directive('timeLine', [
           $('.time-description.combine-parent .slot.combine-current .cancel-combine').off().remove();
           $('.time-description.combine-parent .slot.combine-neighbour').off('tap').removeClass('combine-neighbour');
           $('.time-description.combine-parent .slot.combine-current').removeClass('combine-current');
-          return $('.time-description.combine-parent ').removeClass('combine-parent');
+          $('.time-description.combine-parent ').removeClass('combine-parent');
+          return scope.mergeFlag = false;
         };
       }
     };

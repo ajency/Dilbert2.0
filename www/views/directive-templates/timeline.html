@@ -65,7 +65,7 @@
 				ng-show="searchtext==time.status || searchtext==='all'"
 				>
 
-				<div ng-hide="showCtrl" class="row" ng-click="showCtrl=true">
+				<div ng-hide="showCtrl" class="row" ng-click="mergeFlag===false?showCtrl=true:showCtrl=false">
 					<div class='col col-25' style='background:{{getColor($index)}}'>
 						{{ getSlotDifference($index) }}
 					</div>
@@ -76,7 +76,7 @@
 					</div>
 				</div>
 
-				<div ng-show="showCtrl" class="row" >
+				<div ng-show="showCtrl" class="row">
 					<div class='col col-25'>
 						<button class="button button-block button-clear button-dark" ng-click="showCtrl=false;split($event, $index-1,timeData[$index].status)">
 	  						Split

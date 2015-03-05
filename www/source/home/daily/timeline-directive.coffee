@@ -122,10 +122,12 @@ angular.module 'dilbert.home'
 			ModalData.setData status,slotStart,slotEnd,displayStart,displayEnd,slotDuration,task
 			scope.openModal('edit')
 
-
+		scope.mergeFlag=false
 		scope.merge =(e,id) ->
 			scope.id=id
 			scope.searchtext='all'
+			scope.mergeFlag=true
+
 			if $ e.target
 				.parent().parent().parent() 
 				.closest '.time-description' 
@@ -256,6 +258,8 @@ angular.module 'dilbert.home'
 
 			$ '.time-description.combine-parent '
 			.removeClass 'combine-parent'
+			scope.mergeFlag=false
+
 
 ]
 
