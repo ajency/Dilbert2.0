@@ -1,4 +1,4 @@
-angular.module('dilbert.home', []).config([
+angular.module('dilbert.home', ["angucomplete"]).config([
   '$stateProvider', function($stateProvider) {
     return $stateProvider.state('home', {
       url: '/home',

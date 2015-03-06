@@ -1,4 +1,4 @@
-angular.module 'dilbert.home', []
+angular.module 'dilbert.home', ["angucomplete"]
 
 
 .config ['$stateProvider', ($stateProvider)->

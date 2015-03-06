@@ -1,7 +1,7 @@
 angular.module('dilbert.home').controller('DailyController', [
   '$rootScope', '$scope', '$ionicModal', '$ionicPopup', 'DailyAPI', 'DailyTasks', 'ModalData', '$ionicLoading', function($rootScope, $scope, $ionicModal, $ionicPopup, DailyAPI, DailyTasks, ModalData, $ionicLoading) {
     $ionicLoading.show({
-      content: 'Loading',
+      template: '<i class="icon ion-loading-c"></i> Loading...',
       animation: 'fade-in',
       showBackdrop: true,
       maxWidth: 200,
@@ -90,6 +90,14 @@ angular.module('dilbert.home').controller('DailyController', [
         $scope.closeModal('split');
       }
       return $rootScope.slotData = _.sortBy($rootScope.slotData, 'time');
+    };
+  }
+]).controller('EditController', [
+  '$rootScope', '$scope', function($rootScope, $scope) {
+    return $scope.updateSlot = function(status, newTask) {
+      $rootScope.slotData[$scope.mData.slotId].task = newTask;
+      $rootScope.slotData[$scope.mData.slotId].status = status;
+      return $scope.closeModal('edit');
     };
   }
 ]);

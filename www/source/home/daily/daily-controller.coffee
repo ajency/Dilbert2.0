@@ -4,7 +4,7 @@ angular.module 'dilbert.home'
 .controller 'DailyController',['$rootScope','$scope','$ionicModal','$ionicPopup','DailyAPI','DailyTasks','ModalData','$ionicLoading'
 	,($rootScope,$scope,$ionicModal,$ionicPopup,DailyAPI,DailyTasks,ModalData,$ionicLoading)->
 		$ionicLoading.show
-    		content: 'Loading'
+    		template: '<i class="icon ion-loading-c"></i> Loading...'
     		animation: 'fade-in'
     		showBackdrop: true
     		maxWidth: 200
@@ -27,7 +27,7 @@ angular.module 'dilbert.home'
 			$scope.tasks =_.sortBy $scope.tasks, 'taskId'
 			$ionicLoading.hide();
 
-
+		
 		$scope.getCurrentDate = ->
 			moment().format("ddd MMM Do YYYY");
 
@@ -88,4 +88,13 @@ angular.module 'dilbert.home'
 
 		$rootScope.slotData = _.sortBy $rootScope.slotData, 'time'
 		
+]
+
+.controller 'EditController', ['$rootScope','$scope',($rootScope,$scope)->
+	$scope.updateSlot=(status,newTask)->
+		$rootScope.slotData[$scope.mData.slotId].task=newTask
+		$rootScope.slotData[$scope.mData.slotId].status=status
+		$scope.closeModal('edit')
+
+
 ]

@@ -51,7 +51,7 @@ angular.module('dilbert.home').factory('DailyAPI', [
     var data;
     data = {};
     return {
-      setData: function(status, slotStart, slotEnd, displayStart, displayEnd, slotDuration, slotTask) {
+      setData: function(status, slotStart, slotEnd, displayStart, displayEnd, slotDuration, slotTask, id) {
         return data = {
           status: status,
           slotStart: slotStart,
@@ -59,7 +59,8 @@ angular.module('dilbert.home').factory('DailyAPI', [
           displayStart: displayStart,
           displayEnd: displayEnd,
           slotDuration: slotDuration,
-          slotTask: slotTask
+          slotTask: slotTask,
+          slotId: id
         };
       },
       getData: function() {

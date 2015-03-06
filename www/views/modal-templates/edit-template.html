@@ -1,4 +1,4 @@
-<ion-modal-view>
+<ion-modal-view ng-controller="EditController"> 
 	<ion-header-bar class="bar bar-dark">
 		<h1 class="title">Edit Time Slot</h1>
 		<div class="buttons">
@@ -6,7 +6,7 @@
 		</div>
 		</ion-header-bar>
 	<ion-content>
-	<div class="card">
+
 		<div class="item item-divider item-dark">
    			Current Task
   		</div>
@@ -21,19 +21,35 @@
 				<span> {{ mData.slotDuration }} mins</span>
 			</label>
 		</div>
-
+	<div class="card">
 		<div class="item item-divider item-dark">
    			Edit Task
   		</div>
   		<label class="item item-input item-select">
-			<div class="input-label">
-  				Task
+	  		<div class="input-label" style="float:right">
+	  			Set Status
 			</div>
-			<select ng-model="newTask">
-  				<option ng-repeat="task in tasks">{{task.task}}</option>
+	  		<select ng-model="status">
+				<option >available</option>
+				<option >offline</option>
 			</select>
-  		</label>
-		<label ng-repeat="task in tasks | filter:newTask" ng-show="newTask">
+		</label>
+
+  		<label ng-show="status==='available'">
+	  		<angucomplete 
+	              placeholder="Search Tasks"
+	              pause="300"
+	              selectedobject="newTask"
+	              localdata="tasks"
+	              searchfields="task"
+	              titlefield="task"
+	              minlength="2"
+	              inputClass="input-label"
+	              />
+
+		</label>
+
+		<label ng-repeat="task in tasks | filter:newTask.title | limitTo:1" ng-if="newTask">
 			<label class="item">
 				<span class="item-label">Task ID: </span>
 				<span>#{{task.taskId}}</span>
@@ -47,8 +63,10 @@
 				<span>{{task.project}}</span>
 			</label>
 		</label>
-
-
+		<button ng-show="newTask" class="button button-block button-balanced" 
+  			ng-click='updateSlot(status,newTask.title)'>Update</button>
 	</div>
+
+	
 	</ion-content>
 </ion-modal-view>

@@ -119,7 +119,7 @@ angular.module 'dilbert.home'
 			displayEnd=moment.unix(slotEnd).format('h:mm a')
 			slotDuration = moment.unix slotEnd
 			.diff moment.unix(slotStart),'minutes'
-			ModalData.setData status,slotStart,slotEnd,displayStart,displayEnd,slotDuration,task
+			ModalData.setData status,slotStart,slotEnd,displayStart,displayEnd,slotDuration,task,id+1
 			scope.openModal('edit')
 
 		scope.mergeFlag=false
