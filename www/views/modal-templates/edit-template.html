@@ -20,22 +20,38 @@
 				<span class="item-label">Task Duration: </span>
 				<span> {{ mData.slotDuration }} mins</span>
 			</label>
+			<label class="item">
+				<span class="item-label">Slot Status: </span>
+				<span> {{ mData.slotStatus }}</span>
+			</label>
 		</div>
 	<div class="card">
 		<div class="item item-divider item-dark">
    			Edit Task
   		</div>
   		<label class="item item-input item-select">
-	  		<div class="input-label" style="float:right">
-	  			Set Status
+	  		<div class="input-label" >
+	  			Set Slot Type
 			</div>
-	  		<select ng-model="status">
-				<option >available</option>
-				<option >offline</option>
+	  		<select ng-model="substatus" ng-change="substatusType=''">
+				<option >work</option>
+				<option >break</option>
+			</select>
+		</label>
+		<label class="item item-input item-select">
+	  		<div class="input-label" >
+	  			Slot Sub Type
+			</div>
+	  		<select ng-model="substatusType" ng-disabled="!substatus">
+				<option ng-if="substatus==='work'">Project</option>
+				<option ng-if="substatus==='work'">Training</option>
+				<option ng-if="substatus==='work'">Fun Wednesday</option>
+				<option ng-if="substatus==='break'">Lunch</option>
+				<option ng-if="substatus==='break'">Gone out</option>
 			</select>
 		</label>
 
-  		<label ng-show="status==='available'">
+  		<label ng-if="substatus==='work' && substatusType==='Project'">
 	  		<angucomplete 
 	              placeholder="Search Tasks"
 	              pause="300"
@@ -47,6 +63,10 @@
 	              inputClass="input-label"
 	              />
 
+		</label>
+		<label class="item item-input" ng-if="substatus==='work' && substatusType==='Training'">
+			<textarea ng-model="$parent.newTrainingTask" placeholder="Enter training info">
+			</textarea>
 		</label>
 
 		<label ng-repeat="task in tasks | filter:newTask.title | limitTo:1" ng-if="newTask">
@@ -63,8 +83,8 @@
 				<span>{{task.project}}</span>
 			</label>
 		</label>
-		<button ng-show="newTask" class="button button-block button-balanced" 
-  			ng-click='updateSlot(status,newTask.title)'>Update</button>
+		<button class="button button-block button-balanced" 
+  			ng-click='updateSlot(substatus,newTask.title,substatusType,newTrainingTask)'>Update</button>
 	</div>
 
 	

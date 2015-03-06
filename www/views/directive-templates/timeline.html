@@ -51,6 +51,11 @@
 				<option >available</option>
 				<option >idle</option>
 				<option >offline</option>
+				<option >Project</option>
+				<option >Training</option>
+				<option >Lunch</option>
+				<option >Gone out</option>
+				<option >Fun Wednesday</option>
 			</select>
 		</label>
 		<div class='time-description'>
@@ -62,7 +67,7 @@
 				data-slot="{{$index-1}}" 
 				class='row slot item item-text-wrap taskInfo responsive-sm' 
 				style='height:60px'
-				ng-show="searchtext==time.status || searchtext==='all'"
+				ng-show="searchtext==time.status || searchtext==='all' || searchtext==time.statusSubType"
 				>
 
 				<div ng-hide="showCtrl" class="row" ng-click="mergeFlag===false?showCtrl=true:showCtrl=false">
@@ -72,7 +77,7 @@
 					<div class='col col-50' data-slot="{{$index-1}}" style="padding:5px;" >{{getTask($index)}}
 					</div>
 					<div class='col col-20 '  data-slot="{{$index-1}}">
-						{{ time.status }}
+						{{ time.statusSubType }}
 					</div>
 				</div>
 

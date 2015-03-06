@@ -83,7 +83,7 @@ angular.module 'dilbert.home'
 			$rootScope.slotData.push
 				time:newMomentUnix
 				task:newTask
-				status:$scope.mData.status
+				status:$scope.mData.slotStatus
 			$scope.closeModal('split')
 
 		$rootScope.slotData = _.sortBy $rootScope.slotData, 'time'
@@ -91,9 +91,16 @@ angular.module 'dilbert.home'
 ]
 
 .controller 'EditController', ['$rootScope','$scope',($rootScope,$scope)->
-	$scope.updateSlot=(status,newTask)->
-		$rootScope.slotData[$scope.mData.slotId].task=newTask
-		$rootScope.slotData[$scope.mData.slotId].status=status
+	$scope.updateSlot=(statusType,newTask,substatusType,newTrainingTask)->
+		task
+		if typeof newTask is 'undefined' && typeof newTrainingTask is not 'undefined' then task = newTrainingTask 
+		else if typeof newTask is not 'undefined' && typeof newTrainingTask is 'undefined' then task = newTask
+		else if typeof newTask is 'undefined' && typeof newTrainingTask is 'undefined' then task = $scope.mData.slotTask
+			
+		console.log task
+		$rootScope.slotData[$scope.mData.slotId].task=task
+		$rootScope.slotData[$scope.mData.slotId].statusSubType=substatusType
+		$rootScope.slotData[$scope.mData.slotId].statusType=statusType
 		$scope.closeModal('edit')
 
 

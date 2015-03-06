@@ -8,31 +8,45 @@ angular.module('dilbert.home').factory('DailyAPI', [
       }, {
         task: 'Dilbert Mobile - Object Defination',
         status: 'available',
-        time: 1422526800
+        time: 1422526800,
+        statusType: 'work',
+        statusSubType: 'Project'
       }, {
         task: 'Dilbert Mobile - Object Defination',
         status: 'available',
-        time: 1422528000
+        time: 1422528000,
+        statusType: 'work',
+        statusSubType: 'Project'
       }, {
         task: 'Dilbert Mobile - WireFrame Design',
         status: 'idle',
-        time: 1422534600
+        time: 1422534600,
+        statusType: 'work',
+        statusSubType: 'Training'
       }, {
         task: 'Dilbert Mobile - WireFrame Design',
         status: 'available',
-        time: 1422538200
+        time: 1422538200,
+        statusType: 'work',
+        statusSubType: 'Training'
       }, {
         task: 'Dilbert Mobile - Static Layout',
         status: 'offline',
-        time: 1422541800
+        time: 1422541800,
+        statusType: 'break',
+        statusSubType: 'Lunch'
       }, {
         task: 'Dilbert Mobile - Static Layout',
         status: 'idle',
-        time: 1422546400
+        time: 1422546400,
+        statusType: 'work',
+        statusSubType: 'Project'
       }, {
         task: 'Dilbert Mobile - Bug Fixes',
         status: 'available',
-        time: 1422552600
+        time: 1422552600,
+        statusType: 'work',
+        statusSubType: 'Project'
       }
     ];
     return DailyAPI = {
@@ -53,7 +67,7 @@ angular.module('dilbert.home').factory('DailyAPI', [
     return {
       setData: function(status, slotStart, slotEnd, displayStart, displayEnd, slotDuration, slotTask, id) {
         return data = {
-          status: status,
+          slotStatus: status,
           slotStart: slotStart,
           slotEnd: slotEnd,
           displayStart: displayStart,

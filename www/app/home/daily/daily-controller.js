@@ -85,7 +85,7 @@ angular.module('dilbert.home').controller('DailyController', [
         $rootScope.slotData.push({
           time: newMomentUnix,
           task: newTask,
-          status: $scope.mData.status
+          status: $scope.mData.slotStatus
         });
         $scope.closeModal('split');
       }
@@ -94,9 +94,20 @@ angular.module('dilbert.home').controller('DailyController', [
   }
 ]).controller('EditController', [
   '$rootScope', '$scope', function($rootScope, $scope) {
-    return $scope.updateSlot = function(status, newTask) {
-      $rootScope.slotData[$scope.mData.slotId].task = newTask;
-      $rootScope.slotData[$scope.mData.slotId].status = status;
+    return $scope.updateSlot = function(statusType, newTask, substatusType, newTrainingTask) {
+      task;
+      var task;
+      if (typeof newTask === 'undefined' && typeof newTrainingTask === !'undefined') {
+        task = newTrainingTask;
+      } else if (typeof newTask === !'undefined' && typeof newTrainingTask === 'undefined') {
+        task = newTask;
+      } else if (typeof newTask === 'undefined' && typeof newTrainingTask === 'undefined') {
+        task = $scope.mData.slotTask;
+      }
+      console.log(task);
+      $rootScope.slotData[$scope.mData.slotId].task = task;
+      $rootScope.slotData[$scope.mData.slotId].statusSubType = substatusType;
+      $rootScope.slotData[$scope.mData.slotId].statusType = statusType;
       return $scope.closeModal('edit');
     };
   }
