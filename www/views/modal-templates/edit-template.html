@@ -64,12 +64,13 @@
 	              />
 
 		</label>
+
 		<label class="item item-input" ng-if="substatus==='work' && substatusType==='Training'">
 			<textarea ng-model="$parent.newTrainingTask" placeholder="Enter training info">
 			</textarea>
 		</label>
 
-		<label ng-repeat="task in tasks | filter:newTask.title | limitTo:1" ng-if="newTask">
+		<!-- <label ng-repeat="task in tasks | filter:newTask.title | limitTo:1" ng-if="newTask">
 			<label class="item">
 				<span class="item-label">Task ID: </span>
 				<span>#{{task.taskId}}</span>
@@ -82,9 +83,26 @@
 				<span class="item-label">Project Name: </span>
 				<span>{{task.project}}</span>
 			</label>
-		</label>
+		</label> -->
+
+		<!-- <label>
+			<label class="item">
+				<span class="item-label">Task ID: </span>
+				<span>#{{task.taskId}}</span>
+			</label>
+			<label class="item">
+				<span class="item-label">Task Label: </span>
+				<span>{{task.label}}</span>
+			</label>
+			<label class="item">
+				<span class="item-label">Project Name: </span>
+				<span>{{task.project}}</span>
+			</label>
+		</label> -->
+		
 		<button class="button button-block button-balanced" 
-  			ng-click='updateSlot(substatus,newTask.title,substatusType,newTrainingTask)'>Update</button>
+  			ng-click="updateSlot(substatus,newTask,substatusType,newTrainingTask)">Update</button>
+
 	</div>
 
 	

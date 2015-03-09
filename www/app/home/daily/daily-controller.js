@@ -94,21 +94,22 @@ angular.module('dilbert.home').controller('DailyController', [
   }
 ]).controller('EditController', [
   '$rootScope', '$scope', function($rootScope, $scope) {
+    console.log($scope.tasks);
     return $scope.updateSlot = function(statusType, newTask, substatusType, newTrainingTask) {
-      task;
       var task;
-      if (typeof newTask === 'undefined' && typeof newTrainingTask === !'undefined') {
+      console.log($scope.newTask);
+      task = '';
+      if (_.isUndefined(newTask) && !_.isUndefined(newTrainingTask)) {
         task = newTrainingTask;
-      } else if (typeof newTask === !'undefined' && typeof newTrainingTask === 'undefined') {
+      } else if (!_.isUndefined(newTask) && _.isUndefined(newTrainingTask)) {
         task = newTask;
-      } else if (typeof newTask === 'undefined' && typeof newTrainingTask === 'undefined') {
+      } else if (_.isUndefined(newTask) && _.isUndefined(newTrainingTask)) {
         task = $scope.mData.slotTask;
       }
       console.log(task);
       $rootScope.slotData[$scope.mData.slotId].task = task;
       $rootScope.slotData[$scope.mData.slotId].statusSubType = substatusType;
-      $rootScope.slotData[$scope.mData.slotId].statusType = statusType;
-      return $scope.closeModal('edit');
+      return $rootScope.slotData[$scope.mData.slotId].statusType = statusType;
     };
   }
 ]);

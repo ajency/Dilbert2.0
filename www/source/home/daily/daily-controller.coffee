@@ -91,17 +91,20 @@ angular.module 'dilbert.home'
 ]
 
 .controller 'EditController', ['$rootScope','$scope',($rootScope,$scope)->
+
+	console.log $scope.tasks
+
 	$scope.updateSlot=(statusType,newTask,substatusType,newTrainingTask)->
-		task
-		if typeof newTask is 'undefined' && typeof newTrainingTask is not 'undefined' then task = newTrainingTask 
-		else if typeof newTask is not 'undefined' && typeof newTrainingTask is 'undefined' then task = newTask
-		else if typeof newTask is 'undefined' && typeof newTrainingTask is 'undefined' then task = $scope.mData.slotTask
+		console.log $scope.newTask
+		task=''
+		if _.isUndefined(newTask) && not _.isUndefined(newTrainingTask) then task = newTrainingTask 
+		else if not  _.isUndefined(newTask) && _.isUndefined(newTrainingTask) then task = newTask
+		else if  _.isUndefined(newTask) &&  _.isUndefined(newTrainingTask) then task = $scope.mData.slotTask
 			
 		console.log task
 		$rootScope.slotData[$scope.mData.slotId].task=task
 		$rootScope.slotData[$scope.mData.slotId].statusSubType=substatusType
 		$rootScope.slotData[$scope.mData.slotId].statusType=statusType
-		$scope.closeModal('edit')
 
 
 ]
