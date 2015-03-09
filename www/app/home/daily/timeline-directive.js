@@ -40,7 +40,7 @@ angular.module('dilbert.home').directive('timeLine', [
           if (index === 0) {
             return;
           }
-          if (timeData[index].status === 'offline') {
+          if (timeData[index].statusType === 'break') {
             task = 'Break';
           } else {
             task = timeData[index].task;
@@ -78,7 +78,7 @@ angular.module('dilbert.home').directive('timeLine', [
           } else if (status === 'idle') {
             color = '#FFB03B';
           } else {
-            color = '#4B4E50';
+            color = '#AAB3B6';
           }
           return color;
         };

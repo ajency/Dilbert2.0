@@ -42,7 +42,7 @@ angular.module 'dilbert.home'
 
 		scope.getTask = (index)->
 			if index is 0 then return
-			if timeData[index].status is 'offline'
+			if timeData[index].statusType is 'break'
 				task = 'Break'
 			else
 				task = timeData[index].task
@@ -73,7 +73,7 @@ angular.module 'dilbert.home'
 				color = '#FFB03B'
 
 			else 
-				color = '#4B4E50'
+				color = '#AAB3B6'
 
 			color
 

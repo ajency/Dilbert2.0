@@ -31,9 +31,10 @@
   		</div>
   		<label class="item item-input item-select">
 	  		<div class="input-label" >
-	  			Set Slot Type
+	  			Slot Type
 			</div>
-	  		<select ng-model="substatus" ng-change="substatusType=''">
+	  		<select ng-model="subStatus" ng-change="substatusType=''" 
+	  			<option> select</option>
 				<option >work</option>
 				<option >break</option>
 			</select>
@@ -42,20 +43,20 @@
 	  		<div class="input-label" >
 	  			Slot Sub Type
 			</div>
-	  		<select ng-model="substatusType" ng-disabled="!substatus">
-				<option ng-if="substatus==='work'">Project</option>
-				<option ng-if="substatus==='work'">Training</option>
-				<option ng-if="substatus==='work'">Fun Wednesday</option>
-				<option ng-if="substatus==='break'">Lunch</option>
-				<option ng-if="substatus==='break'">Gone out</option>
+	  		<select ng-model="substatusType" ng-disabled="!subStatus || subStatus==='select'">
+				<option ng-if="subStatus==='work'">Project</option>
+				<option ng-if="subStatus==='work'">Training</option>
+				<option ng-if="subStatus==='work'">Fun Wednesday</option>
+				<option ng-if="subStatus==='break'">Lunch</option>
+				<option ng-if="subStatus==='break'">Gone out</option>
 			</select>
 		</label>
 
-  		<label ng-if="substatus==='work' && substatusType==='Project'">
+  		<label ng-if="subStatus==='work' && substatusType==='Project'">
 	  		<angucomplete 
 	              placeholder="Search Tasks"
 	              pause="300"
-	              selectedobject="newTask"
+	              selectedobject="newTask.task"
 	              localdata="tasks"
 	              searchfields="task"
 	              titlefield="task"
@@ -65,43 +66,28 @@
 
 		</label>
 
-		<label class="item item-input" ng-if="substatus==='work' && substatusType==='Training'">
-			<textarea ng-model="$parent.newTrainingTask" placeholder="Enter training info">
+		<label class="item item-input" ng-if="subStatus==='work' && substatusType==='Training'">
+			<textarea ng-model="$parent.newTask.task.title" placeholder="Enter training info" >
 			</textarea>
 		</label>
 
-		<!-- <label ng-repeat="task in tasks | filter:newTask.title | limitTo:1" ng-if="newTask">
+		<label ng-if="newTask.task.title && substatusType==='Project'">
 			<label class="item">
 				<span class="item-label">Task ID: </span>
-				<span>#{{task.taskId}}</span>
+				<span>#{{newTask.task.originalObject.taskId}}</span>
 			</label>
 			<label class="item">
 				<span class="item-label">Task Label: </span>
-				<span>{{task.label}}</span>
+				<span>{{newTask.task.originalObject.label}}</span>
 			</label>
 			<label class="item">
 				<span class="item-label">Project Name: </span>
-				<span>{{task.project}}</span>
+				<span>{{newTask.task.originalObject.project}}</span>
 			</label>
-		</label> -->
-
-		<!-- <label>
-			<label class="item">
-				<span class="item-label">Task ID: </span>
-				<span>#{{task.taskId}}</span>
-			</label>
-			<label class="item">
-				<span class="item-label">Task Label: </span>
-				<span>{{task.label}}</span>
-			</label>
-			<label class="item">
-				<span class="item-label">Project Name: </span>
-				<span>{{task.project}}</span>
-			</label>
-		</label> -->
+		</label>
 		
 		<button class="button button-block button-balanced" 
-  			ng-click="updateSlot(substatus,newTask,substatusType,newTrainingTask)">Update</button>
+  			ng-click="updateSlot(subStatus,newTask.task.title,substatusType);subStatus='select'">Update</button>
 
 	</div>
 

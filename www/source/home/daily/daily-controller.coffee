@@ -13,7 +13,7 @@ angular.module 'dilbert.home'
 		$rootScope.slotData = []
 		$scope.tasks=[]
 		$scope.mData=[]
-		$scope.searchtext='all'
+		$scope.subStatusSearch='all'
 
 		DailyAPI.getDailyData()
 		.then (dailyData)->
@@ -62,7 +62,8 @@ angular.module 'dilbert.home'
 		$scope.closeModal =(modal_name)->
 			if modal_name is 'calendar' then $scope.calModal.hide()
 			else if modal_name is 'split' then $scope.splitModal.hide()
-			else if modal_name is 'edit' then $scope.editModal.hide()
+			else if modal_name is 'edit' 
+				$scope.editModal.hide()
 
 ]
 
@@ -92,19 +93,18 @@ angular.module 'dilbert.home'
 
 .controller 'EditController', ['$rootScope','$scope',($rootScope,$scope)->
 
-	console.log $scope.tasks
+	$scope.newTask = {}
 
-	$scope.updateSlot=(statusType,newTask,substatusType,newTrainingTask)->
-		console.log $scope.newTask
+	$scope.updateSlot=(statusType,newTask,substatusType)->
 		task=''
-		if _.isUndefined(newTask) && not _.isUndefined(newTrainingTask) then task = newTrainingTask 
-		else if not  _.isUndefined(newTask) && _.isUndefined(newTrainingTask) then task = newTask
-		else if  _.isUndefined(newTask) &&  _.isUndefined(newTrainingTask) then task = $scope.mData.slotTask
+		if _.isUndefined(newTask) then task = $scope.mData.slotTask
+		else task = newTask
 			
-		console.log task
 		$rootScope.slotData[$scope.mData.slotId].task=task
 		$rootScope.slotData[$scope.mData.slotId].statusSubType=substatusType
 		$rootScope.slotData[$scope.mData.slotId].statusType=statusType
+		$scope.closeModal('edit')
+		$scope.newTask.task={}
 
 
 ]

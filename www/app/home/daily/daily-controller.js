@@ -11,7 +11,7 @@ angular.module('dilbert.home').controller('DailyController', [
     $rootScope.slotData = [];
     $scope.tasks = [];
     $scope.mData = [];
-    $scope.searchtext = 'all';
+    $scope.subStatusSearch = 'all';
     DailyAPI.getDailyData().then(function(dailyData) {
       $rootScope.slotData = dailyData;
       $scope.duration = $rootScope.slotData[0].duration;
@@ -94,22 +94,20 @@ angular.module('dilbert.home').controller('DailyController', [
   }
 ]).controller('EditController', [
   '$rootScope', '$scope', function($rootScope, $scope) {
-    console.log($scope.tasks);
-    return $scope.updateSlot = function(statusType, newTask, substatusType, newTrainingTask) {
+    $scope.newTask = {};
+    return $scope.updateSlot = function(statusType, newTask, substatusType) {
       var task;
-      console.log($scope.newTask);
       task = '';
-      if (_.isUndefined(newTask) && !_.isUndefined(newTrainingTask)) {
-        task = newTrainingTask;
-      } else if (!_.isUndefined(newTask) && _.isUndefined(newTrainingTask)) {
-        task = newTask;
-      } else if (_.isUndefined(newTask) && _.isUndefined(newTrainingTask)) {
+      if (_.isUndefined(newTask)) {
         task = $scope.mData.slotTask;
+      } else {
+        task = newTask;
       }
-      console.log(task);
       $rootScope.slotData[$scope.mData.slotId].task = task;
       $rootScope.slotData[$scope.mData.slotId].statusSubType = substatusType;
-      return $rootScope.slotData[$scope.mData.slotId].statusType = statusType;
+      $rootScope.slotData[$scope.mData.slotId].statusType = statusType;
+      $scope.closeModal('edit');
+      return $scope.newTask.task = {};
     };
   }
 ]);

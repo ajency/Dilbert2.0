@@ -42,22 +42,30 @@
 		<div class="item item-divider item-dark">
    			Time Logs
   		</div>
-  		<label class="item item-input item-select">
-	  		<div class="input-label" style="float:right">
-	  			Search by Status
-			</div>
-	  		<select ng-model="searchtext">
-				<option >all</option>
-				<option >available</option>
-				<option >idle</option>
-				<option >offline</option>
-				<option >Project</option>
-				<option >Training</option>
-				<option >Lunch</option>
-				<option >Gone out</option>
-				<option >Fun Wednesday</option>
-			</select>
-		</label>
+  		<div class="row  responsive-sm">
+	  		<label class="item item-input item-select col col-50">
+		  		<div class="input-label">
+		  			Slot Type
+				</div>
+		  		<select ng-model="subStatusSearch" ng-change="substatusTypeSearch=''">
+					<option >all</option>
+					<option >work</option>
+					<option >break</option>
+				</select>
+			</label>
+			<label class="item item-input item-select col col-50">
+		  		<div class="input-label">
+		  			Slot Sub Type
+				</div>
+		  		<select ng-model="substatusTypeSearch" ng-disabled="subStatusSearch==='all'">
+		  		<option ng-if="subStatusSearch==='work'">Project</option>
+				<option ng-if="subStatusSearch==='work'">Training</option>
+				<option ng-if="subStatusSearch==='work'">Fun Wednesday</option>
+				<option ng-if="subStatusSearch==='break'">Lunch</option>
+				<option ng-if="subStatusSearch==='break'">Gone out</option>
+				</select>
+			</label>
+		</div>
 		<div class='time-description'>
 
 			<div 
@@ -67,7 +75,8 @@
 				data-slot="{{$index-1}}" 
 				class='row slot item item-text-wrap taskInfo responsive-sm' 
 				style='height:60px'
-				ng-show="searchtext==time.status || searchtext==='all' || searchtext==time.statusSubType"
+				ng-show="(substatusTypeSearch.length>0?substatusTypeSearch==time.statusSubType:subStatusSearch==time.statusType)|| subStatusSearch==='all'"
+
 				>
 
 				<div ng-hide="showCtrl" class="row" ng-click="mergeFlag===false?showCtrl=true:showCtrl=false">
