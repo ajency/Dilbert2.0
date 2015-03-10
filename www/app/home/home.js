@@ -22,7 +22,8 @@ angular.module('dilbert.home', ["angucomplete"]).config([
       parent: 'home',
       views: {
         "weeklyContent": {
-          templateUrl: "views/weekly.html"
+          templateUrl: "views/weekly.html",
+          controller: "WeeklyController"
         }
       }
     });

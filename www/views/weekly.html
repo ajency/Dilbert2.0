@@ -1,7 +1,23 @@
-<ion-view view-title="Weekly">
-  <ion-content class="padding">
-   <div align="center">
-   	<h1>Weekly</h1>
-   </div>
-  </ion-content>
+<ion-view view-title="Weekly" ng-init="setup()">
+	<ion-nav-buttons side="right">
+		<button class="button button-clear icon ion-calendar " ng-click="openModal('calendar')"></button>
+	</ion-nav-buttons>
+	<ion-content class="padding">
+		<serial-graph ng-if="dateSummary.length>0" graph-data="dateSummary"></serial-graph>
+<!-- 		<custom-calendar></custom-calendar> -->
+		<div class="card">
+			<div class="item item-divider item-dark">
+				Weekly Summary
+			</div>
+			<div class="item item-text-wrap">
+				Weekly Requirement: {{expectedHrs}} hrs
+			</div>
+			<div class="item item-text-wrap">
+				Weekly Done: {{totalHrs}} hrs
+			</div>
+			<div class="item item-text-wrap">
+				{{endSummary}}
+			</div>
+		</div>
+	</ion-content>
 </ion-view>

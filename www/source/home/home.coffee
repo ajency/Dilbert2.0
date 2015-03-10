@@ -26,6 +26,7 @@ angular.module 'dilbert.home', ["angucomplete"]
 			views:
 				"weeklyContent":
 					templateUrl: "views/weekly.html"
+					controller:"WeeklyController"
 		
 		# .state "coming-soon",
 		# 	url:"/coming-soon"
