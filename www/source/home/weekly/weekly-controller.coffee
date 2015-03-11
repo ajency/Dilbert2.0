@@ -1,16 +1,20 @@
 angular.module 'dilbert.home'
 
 .controller 'WeeklyController',['$scope','$ionicModal','$ionicPopup','$ionicLoading','WeekConfig','dateSummary',($scope,$ionicModal,$ionicPopup,$ionicLoading,WeekConfig,dateSummary)->
+		
 		$ionicLoading.show
 			template: '<i class="icon ion-loading-c"></i> Loading...'
 			animation: 'fade-in'
 			showBackdrop: true
 			maxWidth: 200
 			showDelay: 0
+
+		$scope.displayPeriod
 		$scope.summary=[]
 		$scope.weeklyConfig = []
 		$scope.dateSummary = []
 		$scope.weekStart=moment().startOf('isoWeek').format('DD-MM-YYYY');
+		$scope.displayCalender = false
 
 		dateSummary.getDataSummary()
 		.then (summaryData)->
@@ -27,12 +31,13 @@ angular.module 'dilbert.home'
 			dateSummary.getDataSummary()
 			.then (summaryData)->
 				$scope.dateSummary = summaryData
-				$scope.calSummary()
+				calSummary()
+				$scope.displayPeriod=moment(time,'DD-MM-YYYY').format('Do MMM YY')+" to "+moment(time,'DD-MM-YYYY').add($scope.weeklyConfig.expected_time_org ,'d').format('Do MMM YY')
 				$ionicLoading.hide()
 			
 
 
-		$scope.calSummary=()->
+		calSummary=()->
 			$scope.expectedHrs=$scope.weeklyConfig.expected_time_user * $scope.weeklyConfig.expected_time_org 
 			console.log $scope.expectedHrs
 			$scope.totalHrs=null
@@ -47,4 +52,28 @@ angular.module 'dilbert.home'
 				$scope.endSummary='Extra Hours: '+($scope.totalHrs - $scope.expectedHrs)+' hrs'
 
 			console.log $scope.endSummary
+
+
+		$scope.calender =
+			display: false
+
+		$ionicModal.fromTemplateUrl 'views/modal-templates/weekly-calendar-template.html',
+			backdrop: true
+			scope:$scope
+		.then (modal)->
+			$scope.calModal = modal
+			$scope.calender.modal = modal
+
+
+		$scope.openModal =(modal_name)->
+			if modal_name is 'calendar'
+				# $scope.displayCalender = true
+				$scope.calender.display = true
+				$scope.calender.modal.show()
+
+		$scope.closeModal =(modal_name)->
+			if modal_name is 'calendar'
+				$scope.calender.display = false
+				$scope.calender.modal.hide()
+
 ]	

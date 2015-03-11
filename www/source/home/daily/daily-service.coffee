@@ -1,7 +1,7 @@
 angular.module 'dilbert.home'
 
 
-.factory 'DailyAPI', ['$q', '$timeout', ($q, $timeout)->
+.factory 'DailyAPI', ['$q', '$timeout', '$http' ,($q, $timeout,$http)->
 
 	data =[
 		{
@@ -64,11 +64,21 @@ angular.module 'dilbert.home'
 
 		getDailyData : ->
 
+			# q = $q.defer()
+
+			# $timeout ->
+			# 	q.resolve data
+			# # , 1500
+
+			# q.promise
+
 			q = $q.defer()
 
-			$timeout ->
+			$http.get 'http://www.mocky.io/v2/5185415ba171ea3a00704eed'
+			.success ()->
 				q.resolve data
-			# , 1500
+			.error (error)->
+				q.reject error
 
 			q.promise
 
@@ -91,7 +101,7 @@ angular.module 'dilbert.home'
 		data
 ]
 
-.factory 'DailyTasks', ['$q', '$timeout', ($q, $timeout)->
+.factory 'DailyTasks', ['$q', '$timeout','$http' ,($q, $timeout,$http)->
 
 	data =[
 		{
@@ -149,11 +159,21 @@ angular.module 'dilbert.home'
 
 		getDailyTasks : ->
 
+			# q = $q.defer()
+
+			# $timeout ->
+			# 	q.resolve data
+			# # , 1500
+
+			# q.promise
+
 			q = $q.defer()
 
-			$timeout ->
+			$http.get 'http://www.mocky.io/v2/5185415ba171ea3a00704eed'
+			.success ()->
 				q.resolve data
-			# , 1500
+			.error (error)->
+				q.reject error
 
 			q.promise
 

@@ -1,5 +1,6 @@
 angular.module('dilbert.home').controller('WeeklyController', [
   '$scope', '$ionicModal', '$ionicPopup', '$ionicLoading', 'WeekConfig', 'dateSummary', function($scope, $ionicModal, $ionicPopup, $ionicLoading, WeekConfig, dateSummary) {
+    var calSummary;
     $ionicLoading.show({
       template: '<i class="icon ion-loading-c"></i> Loading...',
       animation: 'fade-in',
@@ -7,10 +8,12 @@ angular.module('dilbert.home').controller('WeeklyController', [
       maxWidth: 200,
       showDelay: 0
     });
+    $scope.displayPeriod;
     $scope.summary = [];
     $scope.weeklyConfig = [];
     $scope.dateSummary = [];
     $scope.weekStart = moment().startOf('isoWeek').format('DD-MM-YYYY');
+    $scope.displayCalender = false;
     dateSummary.getDataSummary().then(function(summaryData) {
       return $scope.dateSummary = summaryData;
     });
@@ -23,11 +26,12 @@ angular.module('dilbert.home').controller('WeeklyController', [
       });
       return dateSummary.getDataSummary().then(function(summaryData) {
         $scope.dateSummary = summaryData;
-        $scope.calSummary();
+        calSummary();
+        $scope.displayPeriod = moment(time, 'DD-MM-YYYY').format('Do MMM YY') + " to " + moment(time, 'DD-MM-YYYY').add($scope.weeklyConfig.expected_time_org, 'd').format('Do MMM YY');
         return $ionicLoading.hide();
       });
     };
-    return $scope.calSummary = function() {
+    calSummary = function() {
       var i, _i, _ref;
       $scope.expectedHrs = $scope.weeklyConfig.expected_time_user * $scope.weeklyConfig.expected_time_org;
       console.log($scope.expectedHrs);
@@ -43,6 +47,28 @@ angular.module('dilbert.home').controller('WeeklyController', [
         $scope.endSummary = 'Extra Hours: ' + ($scope.totalHrs - $scope.expectedHrs) + ' hrs';
       }
       return console.log($scope.endSummary);
+    };
+    $scope.calender = {
+      display: false
+    };
+    $ionicModal.fromTemplateUrl('views/modal-templates/weekly-calendar-template.html', {
+      backdrop: true,
+      scope: $scope
+    }).then(function(modal) {
+      $scope.calModal = modal;
+      return $scope.calender.modal = modal;
+    });
+    $scope.openModal = function(modal_name) {
+      if (modal_name === 'calendar') {
+        $scope.calender.display = true;
+        return $scope.calender.modal.show();
+      }
+    };
+    return $scope.closeModal = function(modal_name) {
+      if (modal_name === 'calendar') {
+        $scope.calender.display = false;
+        return $scope.calender.modal.hide();
+      }
     };
   }
 ]);

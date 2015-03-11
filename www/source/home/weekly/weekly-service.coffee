@@ -1,6 +1,6 @@
 angular.module 'dilbert.home'
 
-.factory 'WeekConfig', ['$q', '$timeout', ($q, $timeout)->
+.factory 'WeekConfig', ['$q', '$timeout','$http' ,($q, $timeout, $http)->
 
 	data={
 		expected_time_user:8
@@ -10,15 +10,25 @@ angular.module 'dilbert.home'
 	WeekConfigAPI = 
 
 		getConfig : ->
+			# q = $q.defer()
+			# # $timeout ->
+			# q.resolve data
+			# # , 1500
+			# q.promise
+
 			q = $q.defer()
-			# $timeout ->
-			q.resolve data
-			# , 1500
+
+			$http.get 'http://www.mocky.io/v2/5185415ba171ea3a00704eed'
+			.success ()->
+				q.resolve data
+			.error (error)->
+				q.reject error
+
 			q.promise
 
 ]
 
-.factory 'dateSummary', ['$q', '$timeout', ($q, $timeout)->
+.factory 'dateSummary', ['$q', '$timeout', '$http',($q, $timeout,$http)->
 
 	data=[
 		{
@@ -40,13 +50,13 @@ angular.module 'dilbert.home'
 				{
 					slot_type:'work'
 					slot_duration:120
-					slot_project:'Dilbert Mobile'
+					slot_project:'Proj 1'
 					slot_label:'feature'
 				},
 				{
 					slot_type:'work'
 					slot_duration:120
-					slot_project:'Dilbert Mobile'
+					slot_project:'Proj 2'
 					slot_label:'bug'
 				}
 			]
@@ -70,13 +80,13 @@ angular.module 'dilbert.home'
 				{
 					slot_type:'work'
 					slot_duration:120
-					slot_project:'Dilbert Mobile'
+					slot_project:'Proj 1'
 					slot_label:'feature'
 				},
 				{
 					slot_type:'work'
 					slot_duration:120
-					slot_project:'Dilbert Mobile'
+					slot_project:'Proj 3'
 					slot_label:'bug'
 				}
 			]
@@ -100,13 +110,13 @@ angular.module 'dilbert.home'
 				{
 					slot_type:'work'
 					slot_duration:120
-					slot_project:'Dilbert Mobile'
+					slot_project:'Proj 2'
 					slot_label:'feature'
 				},
 				{
 					slot_type:'work'
 					slot_duration:120
-					slot_project:'Dilbert Mobile'
+					slot_project:'Proj 3'
 					slot_label:'bug'
 				}
 			]
@@ -130,13 +140,13 @@ angular.module 'dilbert.home'
 				{
 					slot_type:'work'
 					slot_duration:120
-					slot_project:'Dilbert Mobile'
+					slot_project:'Proj 1'
 					slot_label:'feature'
 				},
 				{
 					slot_type:'work'
 					slot_duration:120
-					slot_project:'Dilbert Mobile'
+					slot_project:'Proj 1'
 					slot_label:'bug'
 				}
 			]
@@ -160,13 +170,13 @@ angular.module 'dilbert.home'
 				{
 					slot_type:'work'
 					slot_duration:120
-					slot_project:'Dilbert Mobile'
+					slot_project:'Proj'
 					slot_label:'feature'
 				},
 				{
 					slot_type:'work'
 					slot_duration:120
-					slot_project:'Dilbert Mobile'
+					slot_project:'Proj'
 					slot_label:'bug'
 				}
 			]
@@ -176,10 +186,20 @@ angular.module 'dilbert.home'
 	dateSummaryAPI = 
 
 		getDataSummary : ->
+			# q = $q.defer()
+			# # $timeout ->
+			# q.resolve data
+			# # , 1500
+			# q.promise
+
 			q = $q.defer()
-			# $timeout ->
-			q.resolve data
-			# , 1500
+
+			$http.get 'http://www.mocky.io/v2/5185415ba171ea3a00704eed'
+			.success ()->
+				q.resolve data
+			.error (error)->
+				q.reject error
+
 			q.promise
 
 ]

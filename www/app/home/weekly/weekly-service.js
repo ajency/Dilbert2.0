@@ -1,5 +1,5 @@
 angular.module('dilbert.home').factory('WeekConfig', [
-  '$q', '$timeout', function($q, $timeout) {
+  '$q', '$timeout', '$http', function($q, $timeout, $http) {
     var WeekConfigAPI, data;
     data = {
       expected_time_user: 8,
@@ -9,13 +9,17 @@ angular.module('dilbert.home').factory('WeekConfig', [
       getConfig: function() {
         var q;
         q = $q.defer();
-        q.resolve(data);
+        $http.get('http://www.mocky.io/v2/5185415ba171ea3a00704eed').success(function() {
+          return q.resolve(data);
+        }).error(function(error) {
+          return q.reject(error);
+        });
         return q.promise;
       }
     };
   }
 ]).factory('dateSummary', [
-  '$q', '$timeout', function($q, $timeout) {
+  '$q', '$timeout', '$http', function($q, $timeout, $http) {
     var data, dateSummaryAPI;
     data = [
       {
@@ -35,12 +39,12 @@ angular.module('dilbert.home').factory('WeekConfig', [
           }, {
             slot_type: 'work',
             slot_duration: 120,
-            slot_project: 'Dilbert Mobile',
+            slot_project: 'Proj 1',
             slot_label: 'feature'
           }, {
             slot_type: 'work',
             slot_duration: 120,
-            slot_project: 'Dilbert Mobile',
+            slot_project: 'Proj 2',
             slot_label: 'bug'
           }
         ]
@@ -61,12 +65,12 @@ angular.module('dilbert.home').factory('WeekConfig', [
           }, {
             slot_type: 'work',
             slot_duration: 120,
-            slot_project: 'Dilbert Mobile',
+            slot_project: 'Proj 1',
             slot_label: 'feature'
           }, {
             slot_type: 'work',
             slot_duration: 120,
-            slot_project: 'Dilbert Mobile',
+            slot_project: 'Proj 3',
             slot_label: 'bug'
           }
         ]
@@ -87,12 +91,12 @@ angular.module('dilbert.home').factory('WeekConfig', [
           }, {
             slot_type: 'work',
             slot_duration: 120,
-            slot_project: 'Dilbert Mobile',
+            slot_project: 'Proj 2',
             slot_label: 'feature'
           }, {
             slot_type: 'work',
             slot_duration: 120,
-            slot_project: 'Dilbert Mobile',
+            slot_project: 'Proj 3',
             slot_label: 'bug'
           }
         ]
@@ -113,12 +117,12 @@ angular.module('dilbert.home').factory('WeekConfig', [
           }, {
             slot_type: 'work',
             slot_duration: 120,
-            slot_project: 'Dilbert Mobile',
+            slot_project: 'Proj 1',
             slot_label: 'feature'
           }, {
             slot_type: 'work',
             slot_duration: 120,
-            slot_project: 'Dilbert Mobile',
+            slot_project: 'Proj 1',
             slot_label: 'bug'
           }
         ]
@@ -139,12 +143,12 @@ angular.module('dilbert.home').factory('WeekConfig', [
           }, {
             slot_type: 'work',
             slot_duration: 120,
-            slot_project: 'Dilbert Mobile',
+            slot_project: 'Proj',
             slot_label: 'feature'
           }, {
             slot_type: 'work',
             slot_duration: 120,
-            slot_project: 'Dilbert Mobile',
+            slot_project: 'Proj',
             slot_label: 'bug'
           }
         ]
@@ -154,7 +158,11 @@ angular.module('dilbert.home').factory('WeekConfig', [
       getDataSummary: function() {
         var q;
         q = $q.defer();
-        q.resolve(data);
+        $http.get('http://www.mocky.io/v2/5185415ba171ea3a00704eed').success(function() {
+          return q.resolve(data);
+        }).error(function(error) {
+          return q.reject(error);
+        });
         return q.promise;
       }
     };
