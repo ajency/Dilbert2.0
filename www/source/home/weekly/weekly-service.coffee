@@ -33,7 +33,7 @@ angular.module 'dilbert.home'
 	data=[
 		{
 			date:'2/3/15'
-			duration:8
+			duration:10
 			slots:[
 				{
 					slot_type:'work'
@@ -63,7 +63,7 @@ angular.module 'dilbert.home'
 		},
 		{
 			date:'3/3/15'
-			duration:8
+			duration:9
 			slots:[
 				{
 					slot_type:'work'
@@ -153,7 +153,7 @@ angular.module 'dilbert.home'
 		},
 		{
 			date:'6/3/15'
-			duration:8
+			duration:9
 			slots:[
 				{
 					slot_type:'work'

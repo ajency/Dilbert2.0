@@ -5,7 +5,8 @@ angular.module('dilbert.home').directive('customCalendar', [
       template: '<div><div class="myCalendar" id="myCalendar"></div></div>',
       replace: true,
       scope: {
-        display: '='
+        display: '=',
+        changeDate: '&onMonday'
       },
       link: function(scope, elem, attrs) {
         return scope.$watch('display', function(value) {
@@ -18,9 +19,10 @@ angular.module('dilbert.home').directive('customCalendar', [
                 sundayFirst: false,
                 onClick: function(date) {
                   if (date.indexOf('Mon') >= 0) {
-                    console.log(date + ' is a monday');
                     value = moment(date, 'DD.MM.YYYY,ddd').format('DD-MM-YYYY');
-                    return scope.setup(value);
+                    return scope.changeDate({
+                      value: value
+                    });
                   }
                 }
               });

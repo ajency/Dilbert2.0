@@ -8,6 +8,7 @@ angular.module 'dilbert.home'
 		replace: true
 		scope:
 			display: '='
+			changeDate: '&onMonday'
 		
 		link: (scope, elem, attrs)->
 
@@ -24,8 +25,9 @@ angular.module 'dilbert.home'
 								sundayFirst: false
 								onClick:(date)->
 									if date.indexOf('Mon') >= 0
-										console.log date+' is a monday'
+										# console.log date+' is a monday'
 										value = moment(date,'DD.MM.YYYY,ddd').format('DD-MM-YYYY')
-										scope.setup(value)
+										# scope.setup(value)
+										scope.changeDate({value: value});
 										
 ]

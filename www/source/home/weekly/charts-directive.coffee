@@ -20,28 +20,28 @@ angular.module 'dilbert.home'
 			dataDateFormat: "MM-DD-YYYY",
 			panEventsEnabled:false
 			dataProvider: dataProvider
-			"gridAboveGraphs": true,
-			"startDuration": 1,
-			"graphs": [{
-				"balloonText": "[[category]]: <b>[[value]]</b> hrs",
-				"fillAlphas": 1,
-				"lineAlpha": 0.2,
-				"type": "column",
-				"valueField": "duration"
-				"fillColors": "#FFB03B"     
+			gridAboveGraphs: true,
+			startDuration: 1,
+			graphs: [{
+				balloonText: "[[category]]: <b>[[value]]</b> hrs",
+				fillAlphas: 1,
+				lineAlpha: 0.2,
+				type: "column",
+				valueField: "duration"
+				fillColors: "#FFB03B"     
 			}],
-			"chartCursor": {
-				"categoryBalloonEnabled": false,
-				"cursorAlpha": 0,
-				"zoomable": false
+			chartCursor: {
+				categoryBalloonEnabled: false,
+				cursorAlpha: 0,
+				zoomable: false
 			},
-			"categoryField": "day",
-			"categoryAxis": {
-				"gridPosition": "start",
-				"gridAlpha": 0,
-				"tickPosition":"start",
-				"tickLength":20
-				"labelRotation":90
+			categoryField: "day",
+			categoryAxis: {
+				gridPosition: "start",
+				gridAlpha: 0,
+				tickPosition:"start",
+				tickLength:20
+				labelRotation:90
 			}
 
 ]

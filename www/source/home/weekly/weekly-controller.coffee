@@ -23,6 +23,8 @@ angular.module 'dilbert.home'
 
 		$scope.setup=(time)->
 			if _.isUndefined(time) then time = moment().startOf('isoWeek').format('DD-MM-YYYY');
+			else $scope.calender.modal.hide()
+
 
 			WeekConfig.getConfig()
 			.then (configData)->
@@ -39,11 +41,11 @@ angular.module 'dilbert.home'
 
 		calSummary=()->
 			$scope.expectedHrs=$scope.weeklyConfig.expected_time_user * $scope.weeklyConfig.expected_time_org 
-			console.log $scope.expectedHrs
+			# console.log $scope.expectedHrs
 			$scope.totalHrs=null
 			for i in [0..$scope.dateSummary.length-1] 
 				$scope.totalHrs += $scope.dateSummary[i].duration
-			console.log $scope.totalHrs
+			# console.log $scope.totalHrs
 
 			$scope.endSummary=''
 			if $scope.expectedHrs > $scope.totalHrs
@@ -51,7 +53,7 @@ angular.module 'dilbert.home'
 			else
 				$scope.endSummary='Extra Hours: '+($scope.totalHrs - $scope.expectedHrs)+' hrs'
 
-			console.log $scope.endSummary
+			# console.log $scope.endSummary
 
 
 		$scope.calender =

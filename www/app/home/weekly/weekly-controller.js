@@ -20,6 +20,8 @@ angular.module('dilbert.home').controller('WeeklyController', [
     $scope.setup = function(time) {
       if (_.isUndefined(time)) {
         time = moment().startOf('isoWeek').format('DD-MM-YYYY');
+      } else {
+        $scope.calender.modal.hide();
       }
       WeekConfig.getConfig().then(function(configData) {
         return $scope.weeklyConfig = configData;
@@ -34,19 +36,16 @@ angular.module('dilbert.home').controller('WeeklyController', [
     calSummary = function() {
       var i, _i, _ref;
       $scope.expectedHrs = $scope.weeklyConfig.expected_time_user * $scope.weeklyConfig.expected_time_org;
-      console.log($scope.expectedHrs);
       $scope.totalHrs = null;
       for (i = _i = 0, _ref = $scope.dateSummary.length - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
         $scope.totalHrs += $scope.dateSummary[i].duration;
       }
-      console.log($scope.totalHrs);
       $scope.endSummary = '';
       if ($scope.expectedHrs > $scope.totalHrs) {
-        $scope.endSummary = 'Weekly hours not met';
+        return $scope.endSummary = 'Weekly hours not met';
       } else {
-        $scope.endSummary = 'Extra Hours: ' + ($scope.totalHrs - $scope.expectedHrs) + ' hrs';
+        return $scope.endSummary = 'Extra Hours: ' + ($scope.totalHrs - $scope.expectedHrs) + ' hrs';
       }
-      return console.log($scope.endSummary);
     };
     $scope.calender = {
       display: false

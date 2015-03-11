@@ -24,7 +24,7 @@ angular.module('dilbert.home').factory('WeekConfig', [
     data = [
       {
         date: '2/3/15',
-        duration: 8,
+        duration: 10,
         slots: [
           {
             slot_type: 'work',
@@ -50,7 +50,7 @@ angular.module('dilbert.home').factory('WeekConfig', [
         ]
       }, {
         date: '3/3/15',
-        duration: 8,
+        duration: 9,
         slots: [
           {
             slot_type: 'work',
@@ -128,7 +128,7 @@ angular.module('dilbert.home').factory('WeekConfig', [
         ]
       }, {
         date: '6/3/15',
-        duration: 8,
+        duration: 9,
         slots: [
           {
             slot_type: 'work',
