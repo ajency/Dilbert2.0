@@ -1,4 +1,4 @@
-angular.module("dilbert", ["ionic", "dilbert.login", "dilbert.home"]).run([
+angular.module("dilbert", ["ionic", "ngCordova", "dilbert.network", "dilbert.login", "dilbert.home"]).run([
   '$ionicPlatform', '$rootScope', '$ionicPopup', function($ionicPlatform, $rootScope, $ionicPopup) {
     $rootScope.slotData = [];
     return $ionicPlatform.ready(function() {

@@ -64,20 +64,12 @@ angular.module 'dilbert.home'
 
 		getDailyData : ->
 
-			# q = $q.defer()
-
-			# $timeout ->
-			# 	q.resolve data
-			# # , 1500
-
-			# q.promise
-
 			q = $q.defer()
 
 			$http.get 'http://www.mocky.io/v2/5185415ba171ea3a00704eed'
-			.success ()->
+			.then ->
 				q.resolve data
-			.error (error)->
+			, (error)->
 				q.reject error
 
 			q.promise
@@ -159,20 +151,12 @@ angular.module 'dilbert.home'
 
 		getDailyTasks : ->
 
-			# q = $q.defer()
-
-			# $timeout ->
-			# 	q.resolve data
-			# # , 1500
-
-			# q.promise
-
 			q = $q.defer()
 
 			$http.get 'http://www.mocky.io/v2/5185415ba171ea3a00704eed'
-			.success ()->
+			.then ->
 				q.resolve data
-			.error (error)->
+			, (error)->
 				q.reject error
 
 			q.promise

@@ -7,7 +7,9 @@
 			<div class="item item-divider item-dark">
 				Hours completed this week
 			</div>
-			<serial-graph ng-if="dateSummary.length>0" graph-data="dateSummary"></serial-graph>
+			<div ng-if="dateSummary.length>0" >
+				<serial-graph graph-data="dateSummary" ></serial-graph>
+			</div>
 		</div>
 		<!-- <custom-calendar></custom-calendar> -->
 		<div class="card">
@@ -26,9 +28,20 @@
 		</div>
 		<div class="card">
 			<div class="item item-divider item-dark">
-				Donut Charts
+				Productivity
 			</div>
-			<donut-graph graph-data="dateSummary" ></donut-graph>
+			<label class="item item-input item-select">
+		  		<div class="input-label">
+		  			Select
+				</div>
+		  		<select ng-model="graphType" ng-init="graphType='Project'">
+					<option >Project</option>
+					<option >Label</option>
+				</select>
+			</label>
+			<div ng-if="dateSummary.length>0">
+				<donut-graph graph-data="dateSummary" type="graphType"></donut-graph>
+			</div>
 		</div>
 	</ion-content>
 </ion-view>

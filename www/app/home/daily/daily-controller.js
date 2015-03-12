@@ -16,11 +16,25 @@ angular.module('dilbert.home').controller('DailyController', [
       $rootScope.slotData = dailyData;
       $scope.duration = $rootScope.slotData[0].duration;
       return $scope.dataAvailable = true;
+    }, function(error) {
+      return $ionicPopup.alert({
+        title: 'ERROR!',
+        template: 'Please Check your Internet connectivity'
+      }).then(function(res) {
+        return $ionicLoading.hide();
+      });
     });
     DailyTasks.getDailyTasks().then(function(dailyTask) {
       $scope.tasks = dailyTask;
       $scope.tasks = _.sortBy($scope.tasks, 'taskId');
       return $ionicLoading.hide();
+    }, function(error) {
+      return $ionicPopup.alert({
+        title: 'ERROR!',
+        template: 'Please Check your Internet connectivity'
+      }).then(function(res) {
+        return $ionicLoading.hide();
+      });
     });
     $scope.getCurrentDate = function() {
       return moment().format("ddd MMM Do YYYY");

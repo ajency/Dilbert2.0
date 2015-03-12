@@ -9,9 +9,9 @@ angular.module('dilbert.home').factory('WeekConfig', [
       getConfig: function() {
         var q;
         q = $q.defer();
-        $http.get('http://www.mocky.io/v2/5185415ba171ea3a00704eed').success(function() {
+        $http.get('http://www.mocky.io/v2/5185415ba171ea3a00704eed').then(function() {
           return q.resolve(data);
-        }).error(function(error) {
+        }, function(error) {
           return q.reject(error);
         });
         return q.promise;
@@ -137,7 +137,7 @@ angular.module('dilbert.home').factory('WeekConfig', [
             slot_label: 'bug'
           }, {
             slot_type: 'work',
-            slot_duration: 120,
+            slot_duration: 140,
             slot_project: 'Dilbert Mobile',
             slot_label: 'feature'
           }, {
@@ -155,12 +155,12 @@ angular.module('dilbert.home').factory('WeekConfig', [
       }
     ];
     return dateSummaryAPI = {
-      getDataSummary: function() {
+      getDateSummary: function() {
         var q;
         q = $q.defer();
-        $http.get('http://www.mocky.io/v2/5185415ba171ea3a00704eed').success(function() {
+        $http.get('http://www.mocky.io/v2/5185415ba171ea3a00704eed').then(function() {
           return q.resolve(data);
-        }).error(function(error) {
+        }, function(error) {
           return q.reject(error);
         });
         return q.promise;

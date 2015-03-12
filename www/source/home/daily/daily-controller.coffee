@@ -16,16 +16,31 @@ angular.module 'dilbert.home'
 		$scope.subStatusSearch='all'
 
 		DailyAPI.getDailyData()
-		.then (dailyData)->
-			$rootScope.slotData = dailyData
-			$scope.duration = $rootScope.slotData[0].duration
-			$scope.dataAvailable=true
+			.then (dailyData)->
+				$rootScope.slotData = dailyData
+				$scope.duration = $rootScope.slotData[0].duration
+				$scope.dataAvailable=true
+			, (error)->
+					
+					$ionicPopup
+						.alert
+							title: 'ERROR!',
+							template: 'Please Check your Internet connectivity'
+						.then (res)->
+							$ionicLoading.hide()
 
 		DailyTasks.getDailyTasks()
-		.then (dailyTask)->
-			$scope.tasks = dailyTask
-			$scope.tasks =_.sortBy $scope.tasks, 'taskId'
-			$ionicLoading.hide();
+			.then (dailyTask)->
+				$scope.tasks = dailyTask
+				$scope.tasks =_.sortBy $scope.tasks, 'taskId'
+				$ionicLoading.hide();
+			, (error)->
+					$ionicPopup
+						.alert
+							title: 'ERROR!',
+							template: 'Please Check your Internet connectivity'
+						.then (res)->
+							$ionicLoading.hide()
 
 		
 		$scope.getCurrentDate = ->

@@ -14,9 +14,6 @@ angular.module('dilbert.home').controller('WeeklyController', [
     $scope.dateSummary = [];
     $scope.weekStart = moment().startOf('isoWeek').format('DD-MM-YYYY');
     $scope.displayCalender = false;
-    dateSummary.getDataSummary().then(function(summaryData) {
-      return $scope.dateSummary = summaryData;
-    });
     $scope.setup = function(time) {
       if (_.isUndefined(time)) {
         time = moment().startOf('isoWeek').format('DD-MM-YYYY');
@@ -25,12 +22,26 @@ angular.module('dilbert.home').controller('WeeklyController', [
       }
       WeekConfig.getConfig().then(function(configData) {
         return $scope.weeklyConfig = configData;
+      }, function(error) {
+        return $ionicPopup.alert({
+          title: 'ERROR!',
+          template: 'Please Check your Internet connectivity'
+        }).then(function(res) {
+          return $ionicLoading.hide();
+        });
       });
-      return dateSummary.getDataSummary().then(function(summaryData) {
+      return dateSummary.getDateSummary().then(function(summaryData) {
         $scope.dateSummary = summaryData;
         calSummary();
         $scope.displayPeriod = moment(time, 'DD-MM-YYYY').format('Do MMM YY') + " to " + moment(time, 'DD-MM-YYYY').add($scope.weeklyConfig.expected_time_org, 'd').format('Do MMM YY');
         return $ionicLoading.hide();
+      }, function(error) {
+        return $ionicPopup.alert({
+          title: 'ERROR!',
+          template: 'Please Check your Internet connectivity'
+        }).then(function(res) {
+          return $ionicLoading.hide();
+        });
       });
     };
     calSummary = function() {

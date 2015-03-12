@@ -53,9 +53,9 @@ angular.module('dilbert.home').factory('DailyAPI', [
       getDailyData: function() {
         var q;
         q = $q.defer();
-        $http.get('http://www.mocky.io/v2/5185415ba171ea3a00704eed').success(function() {
+        $http.get('http://www.mocky.io/v2/5185415ba171ea3a00704eed').then(function() {
           return q.resolve(data);
-        }).error(function(error) {
+        }, function(error) {
           return q.reject(error);
         });
         return q.promise;
@@ -134,9 +134,9 @@ angular.module('dilbert.home').factory('DailyAPI', [
       getDailyTasks: function() {
         var q;
         q = $q.defer();
-        $http.get('http://www.mocky.io/v2/5185415ba171ea3a00704eed').success(function() {
+        $http.get('http://www.mocky.io/v2/5185415ba171ea3a00704eed').then(function() {
           return q.resolve(data);
-        }).error(function(error) {
+        }, function(error) {
           return q.reject(error);
         });
         return q.promise;

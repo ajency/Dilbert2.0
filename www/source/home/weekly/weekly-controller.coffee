@@ -15,10 +15,6 @@ angular.module 'dilbert.home'
 		$scope.dateSummary = []
 		$scope.weekStart=moment().startOf('isoWeek').format('DD-MM-YYYY');
 		$scope.displayCalender = false
-
-		dateSummary.getDataSummary()
-		.then (summaryData)->
-			$scope.dateSummary = summaryData
 		
 
 		$scope.setup=(time)->
@@ -27,15 +23,31 @@ angular.module 'dilbert.home'
 
 
 			WeekConfig.getConfig()
-			.then (configData)->
-				$scope.weeklyConfig = configData
+				.then (configData)->
+					$scope.weeklyConfig = configData
+				, (error)->
+					$ionicPopup
+						.alert
+							title: 'ERROR!',
+							template: 'Please Check your Internet connectivity'
+						.then (res)->
+							$ionicLoading.hide()
+     
 
-			dateSummary.getDataSummary()
-			.then (summaryData)->
-				$scope.dateSummary = summaryData
-				calSummary()
-				$scope.displayPeriod=moment(time,'DD-MM-YYYY').format('Do MMM YY')+" to "+moment(time,'DD-MM-YYYY').add($scope.weeklyConfig.expected_time_org ,'d').format('Do MMM YY')
-				$ionicLoading.hide()
+			dateSummary.getDateSummary()
+				.then (summaryData)->
+					$scope.dateSummary = summaryData
+					calSummary()
+					$scope.displayPeriod=moment(time,'DD-MM-YYYY').format('Do MMM YY')+" to "+moment(time,'DD-MM-YYYY').add($scope.weeklyConfig.expected_time_org ,'d').format('Do MMM YY')
+					$ionicLoading.hide()
+				, (error)->
+					$ionicPopup
+						.alert
+							title: 'ERROR!',
+							template: 'Please Check your Internet connectivity'
+						.then (res)->
+							$ionicLoading.hide()
+
 			
 
 

@@ -1,6 +1,6 @@
 #Dilbert
-angular.module "dilbert", ["ionic" 
-	,"dilbert.login", "dilbert.home"]
+angular.module "dilbert", ["ionic", "ngCordova"
+	,"dilbert.network", "dilbert.login", "dilbert.home"]
 
 
 .run ['$ionicPlatform', '$rootScope', '$ionicPopup'
