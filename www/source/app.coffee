@@ -1,6 +1,6 @@
 #Dilbert
 angular.module "dilbert", ["ionic", "ngCordova"
-	,"dilbert.network", "dilbert.login", "dilbert.home"]
+	,"dilbert.network", "dilbert.common", "dilbert.login", "dilbert.home"]
 
 
 .run ['$ionicPlatform', '$rootScope', '$ionicPopup'
@@ -15,18 +15,6 @@ angular.module "dilbert", ["ionic", "ngCordova"
 
 			StatusBar.styleDefault()  if window.StatusBar
 
-			if window.connection
-				if navigator.connection.type is Connection.NONE
-					$ionicPopup.confirm (
-							title: "Internet Disconnected"
-							content: "Please connect to the internet and try again"
-						)
-					.then (result)->
-							if !result
-								ionic.Platform.exitApp
-						
-				else 
-					console.log "Internet Connected"
 ]
 
 

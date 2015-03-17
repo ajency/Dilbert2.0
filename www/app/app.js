@@ -1,4 +1,4 @@
-angular.module("dilbert", ["ionic", "ngCordova", "dilbert.network", "dilbert.login", "dilbert.home"]).run([
+angular.module("dilbert", ["ionic", "ngCordova", "dilbert.network", "dilbert.common", "dilbert.login", "dilbert.home"]).run([
   '$ionicPlatform', '$rootScope', '$ionicPopup', function($ionicPlatform, $rootScope, $ionicPopup) {
     $rootScope.slotData = [];
     return $ionicPlatform.ready(function() {
@@ -6,21 +6,7 @@ angular.module("dilbert", ["ionic", "ngCordova", "dilbert.network", "dilbert.log
         cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       }
       if (window.StatusBar) {
-        StatusBar.styleDefault();
-      }
-      if (window.connection) {
-        if (navigator.connection.type === Connection.NONE) {
-          return $ionicPopup.confirm({
-            title: "Internet Disconnected",
-            content: "Please connect to the internet and try again"
-          }).then(function(result) {
-            if (!result) {
-              return ionic.Platform.exitApp;
-            }
-          });
-        } else {
-          return console.log("Internet Connected");
-        }
+        return StatusBar.styleDefault();
       }
     });
   }

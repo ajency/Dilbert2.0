@@ -1,6 +1,6 @@
  angular.module 'dilbert.home'
 
-.directive 'serialGraph', ['$rootScope','$parse', '$compile' ,'$ionicPopup',($rootScope,$parse , $compile,$ionicPopup)->
+.directive 'serialGraph',['$rootScope','$parse', '$compile' ,'$ionicPopup',($rootScope,$parse , $compile,$ionicPopup)->
 	
 	restrict:'E'
 	template:'<div><div id="chartdiv-serial" style="width: 100%; height: 400px; font-size:11px"></div></div>'
